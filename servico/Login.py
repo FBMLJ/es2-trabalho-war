@@ -14,4 +14,4 @@ def cadastro(email, senha):
 def sign_in(email, senha):
     url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={}".format(API_KEY)
     r = requests.post(url, {"email":email,"password":senha})
-    print(r.content.decode('utf-8'))
+    print(r.text)
