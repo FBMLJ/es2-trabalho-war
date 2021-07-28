@@ -1,7 +1,10 @@
 
 import servico.Login as login
 
+token = None
+
 
 if __name__ == "__main__":
     
-    login.sign_in(1,2)
+    token = login.sign_in('lucas@lucas.com','123456')
+    login.verificarUsuario(token)
