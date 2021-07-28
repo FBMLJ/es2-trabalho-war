@@ -1,9 +1,7 @@
-import servico.firebase
+
 from  servico.firestore import db
 from firebase_admin import auth
-
 import requests
-
 from constant import API_KEY
 import json
 
@@ -12,10 +10,8 @@ def cadastro(email, senha):
     res = auth.create_user(email=email,password = senha)
     uid = res.uid
     try:
-    
         user_ref =  db.collection('usuario').document(uid)
         user_ref.set({"nome": "teste"})
-        
     except:
         
         auth.delete_user(uid)
