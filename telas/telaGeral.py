@@ -3,8 +3,10 @@
 class TelaGeral:
     
 
-    def __init__(self,pygame):
-        self.pygame =  pygame
+    def __init__(self,controleDeTela):
+        self.pygame =  controleDeTela.pygame
+        self.screen = controleDeTela.screen
+        self.controleDeTela = controleDeTela
 
     def exibir(self):
         self.trataEvento()

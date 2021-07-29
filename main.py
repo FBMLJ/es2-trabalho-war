@@ -7,17 +7,6 @@ pygame.display.set_caption(constant.NOME_JOGO)
 clock = pygame.time.Clock()
 
 
-controleDeTelas = ControleDeTelas(pygame)
+controleDeTelas = ControleDeTelas(pygame, screen,clock)
+controleDeTelas.gameLoop()
 
-while True:
-
-    #apaga tudo do frame anterio
-    screen.fill((255,255,255))
-    controleDeTelas.exebirTelaAtual()
-
-    #desenha tudo no novo frame
-    pygame.display.flip()
-
-    #limita fps em 60
-    clock.tick(60)
-pygame.quit()
