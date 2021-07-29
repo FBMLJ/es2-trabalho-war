@@ -1,6 +1,8 @@
+from telas.menuPrincipal import TelaGeral
+
 class ControleDeTelas:
-    def __init__(self):
-        self.telas = {"menu_principal": None}
+    def __init__(self, pygame):
+        self.telas = {"menu_principal": TelaGeral(pygame)}
         self.tela_atual = "menu_principal"
 
     def trocaTela(self, novaTela):
