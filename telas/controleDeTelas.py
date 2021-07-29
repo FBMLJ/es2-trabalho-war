@@ -1,4 +1,4 @@
-from telas.menuPrincipal import TelaGeral
+from telas.menuPrincipal import MenuPrincipal, TelaGeral
 
 class ControleDeTelas:
     def __init__(self, pygame,screen, clock):
@@ -6,13 +6,14 @@ class ControleDeTelas:
         self.screen = screen
         self.pygame = pygame
         self.clock = clock
-        self.telas = {"menu_principal": TelaGeral(self)}
+        self.telas = {"menu_principal": MenuPrincipal(self)}
 
     def trocaTela(self, novaTela):
         self.tela_atual = novaTela
     
     def exebirTelaAtual(self):
         if (self.telas[self.tela_atual]!= None):
+            
             self.telas[self.tela_atual].exibir()
         else:
             print("Tela ainda não atribuida")
