@@ -1,0 +1,2 @@
+TAMANHO_PADRAO = (400,400)
+NOME_JOGO = "Projeto WAR"
