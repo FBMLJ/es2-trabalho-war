@@ -12,3 +12,6 @@ class JanelaPadrao:
     
     def evento(self):
         pass
+
+    def draw(self):
+        self.trataEvento()
