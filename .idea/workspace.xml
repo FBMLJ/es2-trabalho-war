@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a8025e2-0bd5-45c5-bb74-db842c054f88" name="Changes" comment="" />
-    <list id="032dbea0-30fd-4665-92fc-efa2786f6346" name="Changes by andre" comment="" />
-    <list id="012bc7b6-089b-4745-94a7-b6fcab00e775" name="Changes by danie" comment="" />
+    <list id="39e4f6ed-b4d0-4b3e-a558-9667f3a58966" name="Changes by andre" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,14 +18,13 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/telas/Menu.py">
-      <ranges>
-        <range start1="1" end1="2" start2="1" end2="2" changelist="032dbea0-30fd-4665-92fc-efa2786f6346" />
-        <range start1="4" end1="4" start2="4" end2="6" changelist="012bc7b6-089b-4745-94a7-b6fcab00e775" />
-        <range start1="6" end1="8" start2="8" end2="16" changelist="2a8025e2-0bd5-45c5-bb74-db842c054f88" />
-      </ranges>
-    </file>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="1wBSzHwEE3WUMsDzhaHPHPDOPsR" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -37,6 +35,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
@@ -53,6 +52,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -76,8 +76,13 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1627930749817</updated>
+      <workItem from="1627937800947" duration="3115000" />
+      <workItem from="1627943604433" duration="2648000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
