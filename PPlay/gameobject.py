@@ -9,9 +9,8 @@ class GameObject():
         self.width = 0
         self.height = 0
 
-
     def collided(self, obj):
         # Module import
         from . import collision
-
+        
         return collision.Collision.collided(self, obj)

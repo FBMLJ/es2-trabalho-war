@@ -63,6 +63,10 @@ class Sound():
         self.loop = repeat
 
     def fadeout(self, time_ms):
+<<<<<<< HEAD
        self.sound.fadeout(time_ms)
+=======
+       self.sound.fadeout(time)
+>>>>>>> 99f5abe889d87c971953f4afbd4d8c0a2763009b
 
 
