@@ -2,12 +2,13 @@ from typing import Text
 from  componentes.componenteGeral import ComponenteGeral
 import pygame
 from PPlay.mouse import Mouse
-class CampoTexto(ComponenteGeral):
+class CampoSenha(ComponenteGeral):
     def __init__(self, window, x=0, y=0, w=0, h=0,tamanho_maximo=24):
         super().__init__(window, x, y, w, h)
         self.retango_fora = pygame.Rect([self.x,self.y,self.width,self.height])
         self.retango_dentro = pygame.Rect([self.x,self.y,self.width,self.height])
         self.texto = ""
+        self.texto_exibir = ""
         self.tamanho_maximo = tamanho_maximo
         self.size = round((self.height)/2)
         self.cor_ativa = (0,0,200)
@@ -26,7 +27,7 @@ class CampoTexto(ComponenteGeral):
         
         self.window.draw_text(
             # Essa parte pega somente as letras que irão ser exibidas na tela
-            self.texto[max(0,len(self.texto)-self.tamanho_maximo):], 
+            self.texto_exibir[max(0,len(self.texto)-self.tamanho_maximo):], 
         self.x+5,self.y+self.height/4, size = self.size, font_name ="FreeMono, Monospace")
 
 
@@ -36,11 +37,14 @@ class CampoTexto(ComponenteGeral):
             if e.type  == pygame.KEYDOWN:
                 if e.key == pygame.K_BACKSPACE:
                     self.texto = self.texto[:-1]
+                    self.texto_exibir = self.texto_exibir[:-1]
                 elif e.key == pygame.K_RETURN:
                     self.ativo = False
                     self.cor = self.cor_inativa
                 else:
                     self.texto += e.unicode
+                    self.texto_exibir = "#"*len(self.texto)
+                    print(self.texto)
             elif e.type == pygame.MOUSEBUTTONDOWN and not self.retango_fora.collidepoint(self.mouse.get_position()):
                     self.ativo = False
                     self.cor = self.cor_inativa
