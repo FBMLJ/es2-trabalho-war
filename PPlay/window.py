@@ -73,9 +73,10 @@ class Window():
     def update(self):
         pygame.display.update()  # refresh
         
-        for event in pygame.event.get():  # necessary to not get errors
-            if event.type==QUIT:
-                self.close()
+        # for event in pygame.event.get():  # necessary to not get errors
+            
+        #     if event.type==QUIT:
+        #         self.close()
         self.last_time = self.curr_time  # set last frame time
         self.curr_time = pygame.time.get_ticks()  # since pygame.init()  
         self.total_time += (self.curr_time - self.last_time)  # == curr_time
