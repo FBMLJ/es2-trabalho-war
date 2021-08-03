@@ -1,3 +1,4 @@
+from typing import Text
 from  componentes.componenteGeral import ComponenteGeral
 import pygame
 class CampoTexto(ComponenteGeral):
@@ -12,6 +13,7 @@ class CampoTexto(ComponenteGeral):
         super().draw()
         pygame.draw.rect(self.window.get_screen(), (255,255,255),self.retango_dentro)
         pygame.draw.rect(self.window.get_screen(), (0,0,0),self.retango_fora, 1)
+        self.window.draw_text(self.texto, self.x+5,self.y+self.height/2)
 
 
     def evento(self, e):
