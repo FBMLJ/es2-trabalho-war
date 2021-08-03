@@ -3,7 +3,7 @@ class JanelaPadrao:
 
     def __init__(self, janela):
         self.janela = janela
-        self.pygame = pygame
+        
 
 
     def trataEvento(self):

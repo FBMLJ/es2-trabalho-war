@@ -2,7 +2,7 @@ import pygame
 from PPlay import window
 from telas.Login import Login
 
-janela = window.Window(1200,400)
+janela = window.Window(800,400)
 l = Login(janela)
 
 
