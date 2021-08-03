@@ -56,10 +56,13 @@ class GameImage(gameobject.GameObject):
         self.x = x
         self.y = y
 
+    """Função criada para escalar as imagens"""
     def set_scale(self,width, height):
         self.width = width
         self.height = height
         self.image = pygame.transform.scale(self.image, (self.width,self.height))
+
+
     """Checks collision with hitmask"""
     def collided_perfect(self, target):
         # Module import
