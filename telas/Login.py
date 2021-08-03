@@ -9,6 +9,7 @@ class Login(JanelaPadrao):
         self.bg.set_scale(self.janela.width , self.janela.height)
         self.loginCampo = CampoTexto(janela,30, 30 ,40,10)
         
+        
 
     def draw(self):
         super().draw()
@@ -18,5 +19,4 @@ class Login(JanelaPadrao):
     def evento(self, e):
         super().evento(e)
 
-        if e.type == pygame.KEYDOWN:
-            print(pygame.key.name(e.key))
+        self.loginCampo.evento(e)

@@ -5,6 +5,7 @@ class CampoTexto(ComponenteGeral):
         super().__init__(window, x, y, w, h)
         self.retango_fora = pygame.Rect([self.x,self.y,self.width,self.height])
         self.retango_dentro = pygame.Rect([self.x,self.y,self.width,self.height])
+        self.texto = ""
 
 
     def draw(self):
@@ -15,3 +16,9 @@ class CampoTexto(ComponenteGeral):
 
     def evento(self, e):
         super().evento(e)
+        if e.type  == pygame.KEYDOWN:
+            if e.key == pygame.K_BACKSPACE:
+                self.texto = self.texto[:-1]
+            else:
+                self.texto += e.unicode
+                print(self.texto)
