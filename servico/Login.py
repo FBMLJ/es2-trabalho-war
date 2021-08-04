@@ -12,9 +12,11 @@ def cadastro(email, senha):
     try:
         user_ref =  db.collection('usuario').document(uid)
         user_ref.set({"nome": "teste"})
+        return True
     except:
         
         auth.delete_user(uid)
+        return False
     
 
 
@@ -23,11 +25,10 @@ def sign_in(email, senha):
     res = requests.post(url, {"email":email,"password":senha})
     if res.status_code == 200:
         token = json.loads(res.text)['idToken']
-        print('login realizado com sucesso')
+        
         return token
     else:
-        print(res.status_code)
-        print('Erro ao fazer o login')
+        return False
     
 def verificarUsuario(token):
     url = 'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key={}'.format(API_KEY)
