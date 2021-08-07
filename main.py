@@ -1,10 +1,10 @@
 from telas.Cadastro import Cadastro
 import pygame
 from PPlay import window
-from telas.Cadastro import Cadastro
+from telas.Login import Login
 
 janela = window.Window(800,400)
-l = Cadastro(janela)
+l = Login(janela)
 
 
 while 1:

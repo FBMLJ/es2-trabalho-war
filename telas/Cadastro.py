@@ -38,3 +38,4 @@ class Cadastro(JanelaPadrao):
                 print("Cadastro feito com sucesso")
         self.loginCampo.evento(e)
         self.senhaCampo.evento(e)
+        self.confirmaSenhaCampo.evento(e)

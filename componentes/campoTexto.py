@@ -21,7 +21,7 @@ class CampoTexto(ComponenteGeral):
         super().draw()
         #branco do campo de texto
         pygame.draw.rect(self.window.get_screen(), (255,255,255),self.retango_dentro)
-        #borda do campo de textoKSCAN_KP_ENTER
+        #borda do campo de texto
         pygame.draw.rect(self.window.get_screen(), self.cor,self.retango_fora, 2)
         
         self.window.draw_text(
