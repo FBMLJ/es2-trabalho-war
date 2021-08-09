@@ -13,10 +13,10 @@ class Cadastro(JanelaPadrao):
         super().__init__(janela)
         self.bg = GameImage(image_file="./assets/imagem/tela_inicial/Credit-Marines-Flickr-CC-BY-NC-2.png")
         self.bg.set_scale(self.janela.width , self.janela.height)
-        self.loginCampo = CampoTexto(janela,30, 30 ,40,10)
-        self.senhaCampo = CampoSenha(janela,30, 50 ,40,10)
-        self.confirmaSenhaCampo = CampoSenha(janela,30, 70 ,40,10)
-        self.botao = pygame.Rect([380,380,70,30])
+        self.loginCampo = CampoTexto(janela,320, 180 ,640,60)
+        self.senhaCampo = CampoSenha(janela,320, 280 ,640,60)
+        self.confirmaSenhaCampo = CampoSenha(janela,320, 380 ,640,60)
+        self.botao = pygame.Rect([480,490,320,60])
         
         
 
