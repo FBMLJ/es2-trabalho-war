@@ -11,7 +11,7 @@ from servico.Login import sign_in
 class Login(JanelaPadrao):
     def __init__(self, janela):
         super().__init__(janela)
-        self.bg = GameImage(image_file="./assets/imagem/tela_inicial/Credit-Marines-Flickr-CC-BY-NC-2.png")
+        self.bg = GameImage(image_file="./assets/imagem/tela_inicial/fundo.png")
         self.bg.set_scale(self.janela.width , self.janela.height)
         self.loginCampo = CampoTexto(janela,320, 240 ,640,60)
         self.senhaCampo = CampoSenha(janela,320, 380 ,640,60)
