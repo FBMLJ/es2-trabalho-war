@@ -1,6 +1,6 @@
 from PPlay.window import *
 from PPlay.gameimage import *
-from componentes.texto import *
+from componentes.Texto import *
 
 
 class PartidaInfo:
