@@ -1,25 +1,28 @@
-from PPlay.sprite import *
-from PPlay.mouse import *
 """
 Classe responsavel por implementar as funcionalidades de um botão da interface.
 """
 
-class Button:
+from PPlay.sprite import *
+from PPlay.mouse import *
 
-    def __init__(self, caminhos, code):
+
+class Botao:
+
+    def __init__(self, sprite_normal: Sprite, sprite_destacado: Sprite, code: int):
         self.sprites = []
-        self.sprites.append(Sprite(caminhos[0]))
-        self.sprites.append(Sprite(caminhos[1]))
-        self.width = self.sprites[0].width
-        self.height = self.sprites[0].height
-        self.code = code
+        self.sprites.append(sprite_normal)
+        self.sprites.append(sprite_destacado)
+        self.width = sprite_normal.width
+        self.height = sprite_normal.height
+        self.code = code  # atributo que guarda um codigo referente ao botao
         self.spriteAtual = 0
         self.mouse = Mouse()
 
     def update(self):
-        if self.mouse.is_over_area((self.sprites[0].x, self.sprites[0].y), (self.sprites[0].x + self.sprites[0].width,
-                                                                            self.sprites[0].y + self.sprites[
-                                                                                0].height)):
+        if self.mouse.is_over_area(
+                (self.sprites[0].x, self.sprites[0].y),
+                (self.sprites[0].x + self.sprites[0].width, self.sprites[0].y + self.sprites[0].height)
+        ):
             self.spriteAtual = 1
             if self.mouse.is_button_pressed(1):
                 return True
