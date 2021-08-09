@@ -1,4 +1,4 @@
-from ..PPlay.gameimage import *
+from PPlay.gameimage import *
 
 class Territorio:
 

@@ -1,8 +1,9 @@
-import Territorio
+from typing import List
+from jogo.Territorio import *
 
 class Continente:
 
-    def __init__(self, nome, lista_territorios, tropas_bonus):
+    def __init__(self, nome, lista_territorios:List[Territorio], tropas_bonus):
         self.nome = nome
         self.territorios = lista_territorios
         self.bonus = tropas_bonus

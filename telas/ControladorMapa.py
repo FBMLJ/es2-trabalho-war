@@ -1,11 +1,17 @@
-from ..jogo import Continente
-from ..jogo import Territorio
+from PPlay.mouse import Mouse
+from PPlay.window import Window
+from PPlay.gameimage import GameImage
+from jogo.Territorio import *
+from jogo.Continente import *
 import constant
 
 class ControladorMapa:
 
-    caminho_img_territorios = "..assets/imagem/mapa/territorios/"
-    caminho_matrix_adjacencia = "..jogo/matrixAdjacencia.txt"
+    caminho_img_mapa = "assets/imagem/mapa/"
+    caminho_img_territorios = caminho_img_mapa+"territorios/"
+    caminho_matriz_adjacencia = "jogo/matrizAdjacencia.txt"
+    img_mapa = "mapa_war.png"
+    img_fundo = "fundo.jpg"
 
     lista_territorios = []
     africa = None
@@ -59,14 +65,22 @@ class ControladorMapa:
         41:"Nova Guine",
         42:"Australia Ocidental"
     }
+
+    def __init__(self, janela:Window):
+        self.janela = janela
+        self.fundo = GameImage(self.caminho_img_mapa+self.img_fundo)
+        self.mapa = GameImage(self.caminho_img_mapa+self.img_mapa)
+        self.inicia_territorios()
+        self.inicia_continentes()
+
     def inicia_territorios(self):
         #Criando uma lista com todas as instancias de territorios
         for id_territorio in self.dicionario_territorios:
             nome_territorio = self.dicionario_territorios[id_territorio]
-            self.lista_territorios.append(Territorio(nome_territorio, self.caminho_img_territorios + str(id_territorio)))
+            self.lista_territorios.append(Territorio(nome_territorio, self.caminho_img_territorios + str(id_territorio)+".png"))
         
         #Criando lista de vizinhos de cada territorio
-        arq = open(self.caminho_matrix_adjacencia,'r')
+        arq = open(self.caminho_matriz_adjacencia,'r')
         linhas = arq.readlines()
         arq.close()
         matriz_adj = []
@@ -110,5 +124,15 @@ class ControladorMapa:
         self.europa = Continente("Europa", territorios_eu, 5)
         self.oceania = Continente("Oceania", territorios_oc, 2)
     
-    def inicia_mapa(self):
-        pass    
+    def loop(self):
+        self.janela.clear()
+        mouse = Mouse()
+        while True:
+            self.render()
+            self.janela.update()
+
+    def render(self):
+        self.fundo.draw()
+        self.mapa.draw()
+        for territorio in self.lista_territorios:
+            territorio.img.draw()
