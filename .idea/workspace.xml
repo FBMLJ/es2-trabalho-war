@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2a8025e2-0bd5-45c5-bb74-db842c054f88" name="Changes" comment="" />
+    <list default="true" id="2a8025e2-0bd5-45c5-bb74-db842c054f88" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jogo/empty" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/telas/Menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/telas/Menu.py" afterDir="false" />
+    </list>
     <list id="39e4f6ed-b4d0-4b3e-a558-9667f3a58966" name="Changes by andre" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

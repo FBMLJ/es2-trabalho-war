@@ -1,8 +1,7 @@
 """
 Classe responsavel por, de acordo com o estado, gerar o menu correspondente
 """
-
-
+from PPlay.window import *
 from telas import(
     ControladorJogo,
     MenuLogin,
