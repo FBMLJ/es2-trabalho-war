@@ -14,7 +14,7 @@ class ControladorMapa:
     caminho_matriz_adjacencia = "jogo/matrizAdjacencia.txt"
     img_mapa = "mapa_war.png"
     img_fundo = "fundo.jpg"
-
+    img_colisao = "mouse_colisao.jpg"
     lista_territorios = []
     africa = None
     america_do_norte = None
@@ -22,6 +22,7 @@ class ControladorMapa:
     asia = None
     europa = None
     oceania = None
+    botao_clicado = False
 
     dicionario_territorios = {
         1:"Congo",
@@ -69,6 +70,7 @@ class ControladorMapa:
     }
 
     def __init__(self, janela:Window):
+        self.colisao_mouse = GameImage(self.caminho_img_mapa+self.img_colisao)
         self.janela = janela
         self.fundo = GameImage(self.caminho_img_mapa+self.img_fundo)
         self.mapa = GameImage(self.caminho_img_mapa+self.img_mapa)
@@ -133,15 +135,18 @@ class ControladorMapa:
         self.europa = Continente("Europa", territorios_eu, 5)
         self.oceania = Continente("Oceania", territorios_oc, 2)
     
-    def loop(self):
-        self.janela.clear()
-        mouse = Mouse()
-        while True:
-            self.render()
-            self.janela.update()
+    def selecionar_territorio(self, mouse:Mouse):
+        x,y = mouse.get_position()
+        self.colisao_mouse.set_position(x,y)
+        if mouse.is_button_pressed(1):
+            for territorio in self.lista_territorios:
+                if self.colisao_mouse.collided_perfect(territorio.img):
+                    return False
+            return False
 
     def render(self):
         self.fundo.draw()
         self.mapa.draw()
         for territorio in self.lista_territorios:
             territorio.img.draw()
+        self.colisao_mouse.draw()
