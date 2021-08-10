@@ -1,9 +1,11 @@
+from pygame import transform
 from PPlay.mouse import Mouse
 from PPlay.window import Window
 from PPlay.gameimage import GameImage
 from jogo.Territorio import *
 from jogo.Continente import *
 import constant
+import pygame
 
 class ControladorMapa:
 
@@ -72,6 +74,13 @@ class ControladorMapa:
         self.mapa = GameImage(self.caminho_img_mapa+self.img_mapa)
         self.inicia_territorios()
         self.inicia_continentes()
+
+        #Redimensionando as imagens
+        prop = constant.LARGURA_PADRAO/self.fundo.width
+        self.fundo.image = transform.scale(self.fundo.image, (constant.LARGURA_PADRAO, constant.ALTURA_PADRAO))
+        self.mapa.image = transform.scale(self.mapa.image, (constant.LARGURA_PADRAO, constant.ALTURA_PADRAO))
+        for territorio in self.lista_territorios:
+            territorio.img.image = transform.scale(territorio.img.image, (constant.LARGURA_PADRAO, constant.ALTURA_PADRAO))
 
     def inicia_territorios(self):
         #Criando uma lista com todas as instancias de territorios
