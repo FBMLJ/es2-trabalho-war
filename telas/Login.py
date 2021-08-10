@@ -17,7 +17,14 @@ class Login(JanelaPadrao):
         self.senhaCampo = CampoSenha(janela,320, 380 ,640,60)
         self.botao = pygame.Rect([480,490,320,60])
         
-        
+
+    def loop(self):
+
+        self.janela.input_pygame = True
+
+        while True:
+            self.draw()
+            self.janela.update()
 
     def draw(self):
         super().draw()

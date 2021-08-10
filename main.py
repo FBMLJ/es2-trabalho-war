@@ -7,12 +7,4 @@ janela = window.Window(1280,720)
 l = Login(janela)
 
 
-while 1:
-    
-     
-    janela.set_background_color((0,0,0))  
-    l.draw()
-    
-    janela.update()
-
-    
+l.loop()

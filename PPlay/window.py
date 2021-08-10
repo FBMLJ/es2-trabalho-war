@@ -9,19 +9,22 @@ from . import mouse
 
 # Initializes pygame's modules
 pygame.init()
-    
+
 """A simple Window class, it's the primary Surface(from pygame).
 All the other game's renderable objects will be drawn on it. """
 class Window():
     #A class attribute in Python, this case is similar to Java statics
     screen = None
-    
+
     """Initialize a Window (width x height)"""
     def __init__(self, width, height):
+
+        self.input_pygame = False
+
         # Input controllers
         Window.keyboard = keyboard.Keyboard()
         Window.mouse = mouse.Mouse()
-        
+
         # Size
         self.width = width
         self.height = height
@@ -34,7 +37,7 @@ class Window():
 
         # Time Control
         self.curr_time = 0  # current frame time
-        self.last_time = 0  # last frame time 
+        self.last_time = 0  # last frame time
         self.total_time = 0  # += curr-last(delta_time), update()
 
         # Creates the screen (pygame.Surface)
@@ -67,18 +70,19 @@ class Window():
     # The same problem as fullscreen
     def set_resolution(self, width, height): pass
     # TODO
-    
+
 #-----------------------CONTROL METHODS---------------------------
     """Refreshes the Window - makes changes visible, AND updates the Time"""
     def update(self):
         pygame.display.update()  # refresh
-        
-        # for event in pygame.event.get():  # necessary to not get errors
-            
-        #     if event.type==QUIT:
-        #         self.close()
+
+        if not self.input_pygame:
+            for event in pygame.event.get():
+
+                if event.type==QUIT:
+                    self.close()
         self.last_time = self.curr_time  # set last frame time
-        self.curr_time = pygame.time.get_ticks()  # since pygame.init()  
+        self.curr_time = pygame.time.get_ticks()  # since pygame.init()
         self.total_time += (self.curr_time - self.last_time)  # == curr_time
         # curr_time should be the REAL current time, but in Python
         # the method returns the time in seconds.
@@ -96,7 +100,7 @@ class Window():
     def close(self):
         pygame.quit()
         sys.exit()
-        
+
 #---------------------GETTERS AND SETTERS METHODS-----------------
     """
     Changes background color - receives a vector [R, G, B] value
@@ -123,7 +127,7 @@ class Window():
         return self.title
 
 #----------------------TIME CONTROL METHODS--------------------------
-        
+
     """Pause the program for an amount of time - milliseconds"""
     # Uses the processor to make delay accurate instead of
     # pygame.time.wait that SLEEPS the proccess
@@ -161,7 +165,7 @@ class Window():
         # That's because pygame does NOT provide a way
         # to directly draw text on an existing Surface.
         # So you must use Font.render() -> Surface and BLIT
-        
+
         # Finally! BLIT!
         self.screen.blit(font_surface, [x, y])
 
@@ -180,10 +184,10 @@ class Window():
     @classmethod
     def get_mouse(cls):
         return cls.mouse
-    
 
 
-        
-        
-        
-    
+
+
+
+
+

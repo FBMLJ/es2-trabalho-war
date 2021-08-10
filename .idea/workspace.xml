@@ -31,7 +31,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2a8025e2-0bd5-45c5-bb74-db842c054f88" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/constant.py" beforeDir="false" afterPath="$PROJECT_DIR$/constant.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPlay/window.py" beforeDir="false" afterPath="$PROJECT_DIR$/PPlay/window.py" afterDir="false" />
     </list>
     <list id="39e4f6ed-b4d0-4b3e-a558-9667f3a58966" name="Changes by andre" comment="" />
     <option name="SHOW_DIALOG" value="false" />
