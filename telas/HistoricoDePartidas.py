@@ -90,8 +90,8 @@ class HistoricoDePartidas:
             sprite_normal = Sprite("assets/imagem/historico/slot_derrota_2.png")
             sprite_destacado = Sprite("assets/imagem/historico/slot_derrota_select.png")
             if self.partidas[i].to_dict()["vencedor"]:
-                sprite_normal = Sprite("assets/imagem/historico/slot_vitoria.png")
-                sprite_destacado = Sprite("assets/imagem/historico/slot_vitoria.png")
+                sprite_normal = Sprite("assets/imagem/historico/slot_vitoria_2.png")
+                sprite_destacado = Sprite("assets/imagem/historico/slot_vitoria_select.png")
 
             self.botoes.append(ItemDoHistorico(sprite_normal,
                                                sprite_destacado,
@@ -103,7 +103,7 @@ class HistoricoDePartidas:
                                                ))
             self.botoes[i].setposition(
                 50,
-                pos_inicial + tamanho_acumulado + 20 + i*30
+                pos_inicial + tamanho_acumulado + 20 + i*25
             )
 
             tamanho_acumulado += sprite_normal.height
