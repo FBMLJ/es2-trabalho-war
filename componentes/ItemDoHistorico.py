@@ -4,9 +4,11 @@ from PPlay.window import *
 
 class ItemDoHistorico(Botao):
 
-    def __init__(self, sprite, codigo, data_inicio, data_fim, qtd_rodadas, janela: Window):
+    def __init__(self, sprite_normal, sprite_destacado, codigo, data_inicio, data_fim, qtd_rodadas, janela: Window):
 
-        super().__init__(sprite, sprite, codigo)
+        super().__init__(sprite_normal, sprite_destacado, codigo)
+
+        self.selecionado = False
 
         duracao_s = data_fim - data_inicio
         duracao_s = duracao_s.total_seconds()
@@ -30,6 +32,9 @@ class ItemDoHistorico(Botao):
         self.janela = janela
 
     def render(self):
+
+        if self.selecionado:
+            self.spriteAtual = 1
 
         super().render()
         self.janela.draw_text("Data de Início: {}".format(self.data_inicio),

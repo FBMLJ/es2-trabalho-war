@@ -1,5 +1,4 @@
-
-from  servico.firestore import db
+from servico.firestore import db
 from firebase_admin import auth
 import requests
 from constant import API_KEY
@@ -17,7 +16,6 @@ def cadastro(email, senha):
         
         auth.delete_user(uid)
         return False
-    
 
 
 def sign_in(email, senha):
@@ -29,7 +27,8 @@ def sign_in(email, senha):
         return token
     else:
         return False
-    
+
+
 def verificarUsuario(token):
     url = 'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key={}'.format(API_KEY)
     res = requests.post(url,{"idToken": token})
