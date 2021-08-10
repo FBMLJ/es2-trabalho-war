@@ -2,6 +2,7 @@ from componentes.ItemDoHistorico import *
 from componentes.PartidaInfo import *
 from servico.firestore import db
 from PPlay.gameimage import *
+from constant import estados
 from PPlay.window import *
 from firebase_admin import firestore
 
@@ -34,7 +35,15 @@ class HistoricoDePartidas:
     def loop(self):
 
         self.janela.clear()
+        self.janela.set_background_color([0, 0, 0])
+        carregando = GameImage("assets/imagem/historico/carregando.png")
+        carregando.set_position(self.janela.width/2 - carregando.width/2, self.janela.height/2 - carregando.height/2)
+        carregando.draw()
+        self.janela.update()
+
         self.carrega_partidas()
+
+        self.janela.clear()
         mouse = Mouse()
         mouse_foi_clicado = False  # variavel que impede que o usuário clique várias vezes
         botao_clicado = -1
@@ -56,7 +65,7 @@ class HistoricoDePartidas:
             if mouse_foi_clicado and not mouse.is_button_pressed(1):  # evitar que seja clicados diversas vezes
                 mouse_foi_clicado = False
                 if botao_clicado == 20:
-                    return
+                    return estados["menu_logado"]
                 else:
                     self.partida_info.atualiza_dados(self.partidas[botao_clicado].to_dict())
 
@@ -90,8 +99,8 @@ class HistoricoDePartidas:
             sprite_normal = Sprite("assets/imagem/historico/slot_derrota_2.png")
             sprite_destacado = Sprite("assets/imagem/historico/slot_derrota_select.png")
             if self.partidas[i].to_dict()["vencedor"]:
-                sprite_normal = Sprite("assets/imagem/historico/slot_vitoria.png")
-                sprite_destacado = Sprite("assets/imagem/historico/slot_vitoria.png")
+                sprite_normal = Sprite("assets/imagem/historico/slot_vitoria_2.png")
+                sprite_destacado = Sprite("assets/imagem/historico/slot_vitoria_select.png")
 
             self.botoes.append(ItemDoHistorico(sprite_normal,
                                                sprite_destacado,
@@ -103,7 +112,7 @@ class HistoricoDePartidas:
                                                ))
             self.botoes[i].setposition(
                 50,
-                pos_inicial + tamanho_acumulado + 20 + i*30
+                pos_inicial + tamanho_acumulado + 20 + i*25
             )
 
             tamanho_acumulado += sprite_normal.height

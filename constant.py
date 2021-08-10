@@ -4,6 +4,12 @@ ALTURA_PADRAO = 720
 estados = {
     "menu_inicial": 1,
     "login": 2,
+    "cadastro": 3,
+    "menu_logado": 4,
+    "buscar_sala": 5,
+    "partida_local": 6,
+    "historico": 7,
+    "desconectar": 8,
     "sair": 20
 }
 
