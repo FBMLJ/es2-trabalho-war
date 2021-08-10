@@ -39,10 +39,10 @@ class MenuLogado:
         self.botoes.append(botao_historico)
 
         #substituir por botao de logout
-        sair_sprite_normal = Sprite("assets/imagem/tela_inicial/botao_sair.png")
-        sair_sprite_destacado = Sprite("assets/imagem/tela_inicial/botao_sair_select.png")
-        botao_sair = Botao(sair_sprite_normal, sair_sprite_destacado, estados["sair"])
-        self.botoes.append(botao_sair)
+        desconectar_sprite_normal = Sprite("assets/imagem/tela_logado/botao_desconectar.png")
+        desconectar_sprite_destacado = Sprite("assets/imagem/tela_logado/botao_desconectar_select.png")
+        botao_desconectar = Botao(desconectar_sprite_normal, desconectar_sprite_destacado, estados["desconectar"])
+        self.botoes.append(botao_desconectar)
 
         # loop que calcula a posição de cada botão baseado na posição do anterior
         tamanho_acumulado = 0

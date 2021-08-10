@@ -9,6 +9,7 @@ estados = {
     "buscar_sala": 5,
     "partida_local": 6,
     "historico": 7,
+    "desconectar": 8,
     "sair": 20
 }
 
