@@ -15,14 +15,16 @@ class ControladorMapa:
     img_mapa = "mapa_war.png"
     img_fundo = "fundo.jpg"
     img_colisao = "mouse_colisao.jpg"
-    lista_territorios = []
+    lista_territorios = [] #Lista de todos os territorios do jogo
+    #Instancias da classe Continentes
     africa = None
     america_do_norte = None
     america_do_sul = None
     asia = None
     europa = None
     oceania = None
-    botao_clicado = False
+
+    perct_mapa = 0.85 #Variavel para diminuir o tamanho do mapa e continentes
 
     dicionario_territorios = {
         1:"Congo",
@@ -78,11 +80,10 @@ class ControladorMapa:
         self.inicia_continentes()
 
         #Redimensionando as imagens
-        prop = constant.LARGURA_PADRAO/self.fundo.width
-        self.fundo.image = transform.scale(self.fundo.image, (constant.LARGURA_PADRAO, constant.ALTURA_PADRAO))
-        self.mapa.image = transform.scale(self.mapa.image, (constant.LARGURA_PADRAO, constant.ALTURA_PADRAO))
+        self.fundo.image = transform.scale(self.fundo.image, (janela.width, janela.height))
+        self.mapa.image = transform.scale(self.mapa.image, (int(self.perct_mapa*constant.LARGURA_PADRAO), int(self.perct_mapa*constant.ALTURA_PADRAO)))
         for territorio in self.lista_territorios:
-            territorio.img.image = transform.scale(territorio.img.image, (constant.LARGURA_PADRAO, constant.ALTURA_PADRAO))
+            territorio.img.image = transform.scale(territorio.img.image, (int(self.perct_mapa*constant.LARGURA_PADRAO), int(self.perct_mapa*constant.ALTURA_PADRAO)))
 
     def inicia_territorios(self):
         #Criando uma lista com todas as instancias de territorios
@@ -96,13 +97,14 @@ class ControladorMapa:
         arq.close()
         matriz_adj = []
         for linha in linhas:
-            matriz_adj.append(linha.split('\t'))
-
+            matriz_adj.append(linha.strip('\n').split('\t'))
         for i in range(len(matriz_adj)):
             for j in range(len(matriz_adj[0])):
-                if matriz_adj[i][j] == 1:
+                if matriz_adj[i][j] == '1':
+                    #print("territorio "+self.lista_territorios[i].nome+" vizinho de "+self.lista_territorios[j].nome)
                     self.lista_territorios[i].vizinho.append( self.lista_territorios[j] )
-    
+            #print(len(self.lista_territorios[i].vizinho))
+
     def inicia_continentes(self):
         #Listas de territorios por continentes para a criacao das instancias de continentes
         territorios_africa = []
@@ -141,6 +143,9 @@ class ControladorMapa:
         if mouse.is_button_pressed(1):
             for territorio in self.lista_territorios:
                 if self.colisao_mouse.collided_perfect(territorio.img):
+                    #print("Territorio: "+territorio.nome)
+                    for vizinho in territorio.vizinho:
+                        print(vizinho.nome)
                     return False
             return False
 
