@@ -1,5 +1,6 @@
 from componentes.ItemDoHistorico import *
 from componentes.PartidaInfo import *
+from servico.firestore import db
 from PPlay.gameimage import *
 from PPlay.window import *
 from firebase_admin import firestore
@@ -7,10 +8,10 @@ from firebase_admin import firestore
 
 class HistoricoDePartidas:
 
-    def __init__(self, janela: Window, database, usuario: str):
+    def __init__(self, janela: Window, usuario: str):
 
         self.janela = janela
-        self.database = database
+        self.database = db
         self.usuario = usuario
 
         self.partidas = []
@@ -36,7 +37,7 @@ class HistoricoDePartidas:
         self.carrega_partidas()
         mouse = Mouse()
         mouse_foi_clicado = False  # variavel que impede que o usuário clique várias vezes
-        botao_clicado = 0
+        botao_clicado = -1
 
         while True:
 
@@ -49,6 +50,7 @@ class HistoricoDePartidas:
                 clicou = botao.update()
                 if clicou:
                     mouse_foi_clicado = True #bloqueia o botao de ser clicado
+                    self.botoes[botao_clicado].selecionado = False
                     botao_clicado = botao.code
 
             if mouse_foi_clicado and not mouse.is_button_pressed(1):  # evitar que seja clicados diversas vezes
@@ -57,6 +59,9 @@ class HistoricoDePartidas:
                     return
                 else:
                     self.partida_info.atualiza_dados(self.partidas[botao_clicado].to_dict())
+
+            if botao_clicado != -1 and botao_clicado != 20:
+                self.botoes[botao_clicado].selecionado = True
 
             self.render()
             self.janela.update()
@@ -82,11 +87,14 @@ class HistoricoDePartidas:
         tamanho_acumulado = 0
         for i in range(len(self.partidas)):
 
-            sprite_atual = Sprite("assets/imagem/historico/slot_derrota.png")
+            sprite_normal = Sprite("assets/imagem/historico/slot_derrota_2.png")
+            sprite_destacado = Sprite("assets/imagem/historico/slot_derrota_select.png")
             if self.partidas[i].to_dict()["vencedor"]:
-                sprite_atual = Sprite("assets/imagem/historico/slot_vitoria.png")
+                sprite_normal = Sprite("assets/imagem/historico/slot_vitoria.png")
+                sprite_destacado = Sprite("assets/imagem/historico/slot_vitoria.png")
 
-            self.botoes.append(ItemDoHistorico(sprite_atual,
+            self.botoes.append(ItemDoHistorico(sprite_normal,
+                                               sprite_destacado,
                                                i,
                                                self.partidas[i].to_dict()["data_inicio"],
                                                self.partidas[i].to_dict()["data_fim"],
@@ -98,4 +106,4 @@ class HistoricoDePartidas:
                 pos_inicial + tamanho_acumulado + 20 + i*30
             )
 
-            tamanho_acumulado += sprite_atual.height
+            tamanho_acumulado += sprite_normal.height
