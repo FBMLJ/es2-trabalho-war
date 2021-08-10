@@ -1,14 +1,16 @@
 from PPlay import window
 from telas.HistoricoDePartidas import *
+from telas.MenuInicial import *
+from telas.ControladorJogo import *
 from servico.firestore import db
+from telas.Login import *
 from datetime import *
 import constant
 
 janela = window.Window(constant.LARGURA_PADRAO, constant.ALTURA_PADRAO)
 
-historico = HistoricoDePartidas(janela, "id2")
-
-historico.loop()
+jogo = ControladorJogo(janela)
+jogo.iniciar_jogo()
 
 #Inserção de dados de teste nos bancos
 """""

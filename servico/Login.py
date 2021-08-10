@@ -6,7 +6,7 @@ import json
 
 
 def cadastro(email, senha):
-    res = auth.create_user(email=email,password = senha)
+    res = auth.create_user(email=email, password=senha)
     uid = res.uid
     try:
         user_ref =  db.collection('usuario').document(uid)
@@ -23,7 +23,7 @@ def sign_in(email, senha):
     res = requests.post(url, {"email":email,"password":senha})
     if res.status_code == 200:
         token = json.loads(res.text)['idToken']
-        
+
         return token
     else:
         return False
