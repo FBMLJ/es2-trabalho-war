@@ -1,8 +1,13 @@
 from PPlay.gameimage import *
 from PPlay.window import *
+from servico.firestore import db
+from firebase_admin import firestore
+from componentes.RetanguloTexto import *
+from datetime import *
 from PPlay.sprite import *
 import pygame
 from componentes.campoTexto import *
+from componentes.campoSenha import *
 from componentes.botao import *
 
 
@@ -11,12 +16,14 @@ class BuscaSaguao:
     def __init__(self, janela: Window, usuario: str):
 
         self.janela = janela
+        self.database = db
+        self.usuario = usuario
         self.fundo = GameImage("assets/imagem/busca_saguao/buscador_saguao.png")
         self.fundo.set_position(janela.width/2 - self.fundo.width/2, janela.height/2 - self.fundo.height/2)
 
-        self.busca_pelo_nome = 1
-        self.entrar = 2
-        self.criar_partida = 3
+        self.busca_pelo_nome = 20
+        self.entrar = 21
+        self.criar_partida = 22
 
         self.botoes = []
 
@@ -52,7 +59,8 @@ class BuscaSaguao:
             self.fundo.x + 30,
             self.fundo.y + self.fundo.height - self.janela.height*0.28,
             self.janela.width * 0.23,
-            self.janela.height * 0.06
+            self.janela.height * 0.06,
+            20
         )
 
         self.campo_nome_sala = CampoTexto(
@@ -60,23 +68,29 @@ class BuscaSaguao:
             self.fundo.x + self.fundo.width - self.janela.width * 0.15 - self.janela.width*0.04,
             self.fundo.y + self.fundo.height - self.janela.height * 0.28,
             self.janela.width * 0.15,
-            self.janela.height * 0.05
+            self.janela.height * 0.05,
+            17
         )
 
-        self.campo_senha_sala = CampoTexto(
+        self.campo_senha_sala = CampoSenha(
             janela,
             self.fundo.x + self.fundo.width - self.janela.width * 0.15 - self.janela.width*0.04,
             self.fundo.y + self.fundo.height - self.janela.height * 0.20,
             self.janela.width * 0.15,
-            self.janela.height * 0.05
+            self.janela.height * 0.05,
+            17
         )
 
         self.saguoes = []
+        self.consulta_saguoes = None
 
     def loop(self):
 
         self.janela.clear()
-        mouse_foi_clicado = False
+        botao_foi_clicado = False
+        saguao_foi_clicado = False
+        botao_clicado  = -1
+        saguao_clicado = -1
         mouse = Mouse()
         self.janela.input_pygame = True
 
@@ -85,11 +99,28 @@ class BuscaSaguao:
             for botao in self.botoes:
                 clicou = botao.update()
                 if clicou:
-                    mouse_foi_clicado = True  # bloqueia o botao de ser clicado
+                    botao_foi_clicado = True  # bloqueia o botao de ser clicado
                     botao_clicado = botao.code
 
-            if mouse_foi_clicado and not mouse.is_button_pressed(1):
-                
+            for saguao in self.saguoes:
+                clicou = saguao.update()
+                if clicou:
+                    saguao_foi_clicado = True
+                    self.saguoes[saguao_clicado].selecionado = False
+                    saguao_clicado = saguao.code
+
+            if botao_foi_clicado and not mouse.is_button_pressed(1):
+                botao_foi_clicado = False
+                if botao_clicado == self.busca_pelo_nome:
+                    self.buscaSaguoes(self.campo_busca_saguao.texto)
+                if botao_clicado == self.entrar:
+                    pass
+                if botao_clicado == self.criar_partida:
+                    self.criaSaguao()
+
+            if saguao_foi_clicado and not mouse.is_button_pressed(1):
+                if saguao_clicado != -1:
+                    self.saguoes[saguao_clicado].selecionado = True
 
             self.trataEvento()
             self.render()
@@ -102,6 +133,8 @@ class BuscaSaguao:
         self.campo_busca_saguao.draw()
         self.campo_nome_sala.draw()
         self.campo_senha_sala.draw()
+        for saguao in self.saguoes:
+            saguao.render()
         for botao in self.botoes:
             botao.render()
 
@@ -113,3 +146,56 @@ class BuscaSaguao:
             self.campo_senha_sala.evento(evento)
             if evento.type == pygame.QUIT:
                 exit()
+
+    def buscaSaguoes(self, nome):
+
+        self.saguoes = []
+
+        if nome == "":
+
+            self.consulta_saguoes = self.database.collection("saguoes")\
+                .order_by("data_criacao", direction=firestore.Query.DESCENDING)\
+                .limit(6)\
+                .get()
+
+        else:
+
+            self.consulta_saguoes = self.database.collection("saguoes")\
+                .where('nome', '==', nome)\
+                .limit(6)\
+                .get()
+
+        pos_inicial = self.fundo.y + 30
+        tamanho_acumulado = 0
+        for i in range(len(self.consulta_saguoes)):
+
+            self.saguoes.append(
+                RetanguloTexto(
+                    self.janela,
+                    self.consulta_saguoes[i].to_dict()["nome"],
+                    i,
+                    self.fundo.width - 150,
+                    35,
+                    22
+                )
+            )
+            self.saguoes[i].set_position(
+                self.fundo.x + 50,
+                pos_inicial + tamanho_acumulado + 10 + i * 12
+            )
+
+            tamanho_acumulado += 35
+
+    def criaSaguao(self):
+
+        dados = {
+            "nome": self.campo_nome_sala.texto,
+            "senha": self.campo_senha_sala.texto,
+            "data_criacao": datetime.now(),
+            "numero_de_jogadores": 1,
+            "anfitriao": self.usuario
+        }
+
+        db.collection("saguoes").\
+            document(self.usuario)\
+            .set(dados)

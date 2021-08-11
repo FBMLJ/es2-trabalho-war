@@ -6,18 +6,18 @@ from PPlay.mouse import *
 
 class RetanguloTexto:
 
-    def __init__(self, janela: Window, width=0, height=0, tamanho_texto=18, tamanho_maximo=10):
+    def __init__(self, janela: Window, texto: str, code, width=0, height=0, tamanho_texto=18):
 
         self.janela = janela
 
-        self.tamanho_maximo = tamanho_maximo
+        self.code = code
 
         self.x = 0
         self.y = 0
         self.width = width
         self.height = height
 
-        self.texto = ""
+        self.texto = texto
         self.tamanho_texto = tamanho_texto
 
         self.retangulo_fora = pygame.Rect([self.x, self.y, self.width, self.height])
@@ -54,10 +54,12 @@ class RetanguloTexto:
 
         self.janela.draw_text(
             # Essa parte pega somente as letras que irão ser exibidas na tela
-            self.texto[max(0, len(self.texto) - self.tamanho_maximo):],
-            self.x + 5, self.y + self.height / 4, size=self.tamanho_texto, font_name="FreeMono, Monospace"
+            self.texto,
+            self.x + 10, self.y + self.height / 4, size=self.tamanho_texto, font_name="FreeMono, Monospace"
         )
 
     def set_position(self, x, y):
-        self.retangulo_fora.update([self.x, self.y, self.width, self.height])
-        self.retangulo_dentro.update([self.x, self.y, self.width, self.height])
+        self.x = x
+        self.y = y
+        self.retangulo_fora = pygame.Rect([x, y, self.width, self.height])
+        self.retangulo_dentro = pygame.Rect([x, y, self.width, self.height])

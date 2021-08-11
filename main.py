@@ -10,7 +10,7 @@ import constant
 
 janela = window.Window(constant.LARGURA_PADRAO, constant.ALTURA_PADRAO)
 
-busca = BuscaSaguao(janela, 'id2')
+busca = BuscaSaguao(janela, 'id8')
 busca.loop()
 
 #jogo = ControladorJogo(janela)
