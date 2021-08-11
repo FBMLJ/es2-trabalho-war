@@ -3,14 +3,16 @@ class JanelaPadrao:
 
     def __init__(self, janela):
         self.janela = janela
-        self.pygame = pygame
+        
 
 
     def trataEvento(self):
         for e in pygame.event.get():
             self.evento(e)
+            if e.type==pygame.QUIT:
+                exit()
     
-    def evento(self):
+    def evento(self, e):
         pass
 
     def draw(self):

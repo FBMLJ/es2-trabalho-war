@@ -32,6 +32,7 @@ class GameImage(gameobject.GameObject):
         
         # Loads image from the source, converts to fast-blitting format
         self.image = pygame.image.load(image_file).convert_alpha()
+        
         # Gets the image pygame.Rect
         self.rect = self.image.get_rect()
         
@@ -54,6 +55,13 @@ class GameImage(gameobject.GameObject):
     def set_position(self, x, y):
         self.x = x
         self.y = y
+
+    """Função criada para escalar as imagens"""
+    def set_scale(self,width, height):
+        self.width = width
+        self.height = height
+        self.image = pygame.transform.scale(self.image, (self.width,self.height))
+
 
     """Checks collision with hitmask"""
     def collided_perfect(self, target):
