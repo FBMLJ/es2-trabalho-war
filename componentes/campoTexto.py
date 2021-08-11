@@ -1,7 +1,9 @@
 from typing import Text
-from  componentes.componenteGeral import ComponenteGeral
+from componentes.componenteGeral import ComponenteGeral
 import pygame
 from PPlay.mouse import Mouse
+
+
 class CampoTexto(ComponenteGeral):
     def __init__(self, window, x=0, y=0, w=0, h=0,tamanho_maximo=24):
         super().__init__(window, x, y, w, h)
@@ -33,7 +35,7 @@ class CampoTexto(ComponenteGeral):
     def evento(self, e):
         super().evento(e)
         if self.ativo:
-            if e.type  == pygame.KEYDOWN:
+            if e.type == pygame.KEYDOWN:
                 if e.key == pygame.K_BACKSPACE:
                     self.texto = self.texto[:-1]
                 elif e.key == pygame.K_RETURN:

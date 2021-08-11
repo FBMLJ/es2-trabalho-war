@@ -1,5 +1,5 @@
-LARGURA_PADRAO = 1280
-ALTURA_PADRAO = 720
+LARGURA_PADRAO = 1366
+ALTURA_PADRAO = 768
 
 estados = {
     "menu_inicial": 1,
