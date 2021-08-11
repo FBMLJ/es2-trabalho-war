@@ -5,12 +5,16 @@ from telas.ControladorJogo import *
 from servico.firestore import db
 from telas.Login import *
 from datetime import *
+from telas.BuscaSaguao import *
 import constant
 
 janela = window.Window(constant.LARGURA_PADRAO, constant.ALTURA_PADRAO)
 
-jogo = ControladorJogo(janela)
-jogo.iniciar_jogo()
+busca = BuscaSaguao(janela, 'id8')
+busca.loop()
+
+#jogo = ControladorJogo(janela)
+#jogo.iniciar_jogo()
 
 #Inserção de dados de teste nos bancos
 """""
