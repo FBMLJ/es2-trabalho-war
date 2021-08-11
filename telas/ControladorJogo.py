@@ -3,6 +3,7 @@ Classe responsavel por gerenciar e instanciar as diversas telas do jogo
 """
 from PPlay.window import *
 from telas.HistoricoDePartidas import *
+from telas.BuscaSaguao import *
 from telas.Login import *
 from telas.MenuLogado import *
 from telas.MenuInicial import *
@@ -34,6 +35,10 @@ class ControladorJogo:
             elif self.estado_do_jogo == estados["historico"]:
                 historico = HistoricoDePartidas(self.janela, "id2")
                 self.estado_do_jogo = historico.loop()
+
+            elif self.estado_do_jogo == estados["buscar_sala"]:
+                busca_saguao = BuscaSaguao(self.janela, "1d2")
+                busca_saguao.loop()
 
             elif self.estado_do_jogo == estados["sair"]:
                 exit(0)

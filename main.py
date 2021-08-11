@@ -10,11 +10,8 @@ import constant
 
 janela = window.Window(constant.LARGURA_PADRAO, constant.ALTURA_PADRAO)
 
-busca = BuscaSaguao(janela, 'id8')
-busca.loop()
-
-#jogo = ControladorJogo(janela)
-#jogo.iniciar_jogo()
+jogo = ControladorJogo(janela)
+jogo.iniciar_jogo()
 
 #Inserção de dados de teste nos bancos
 """""
