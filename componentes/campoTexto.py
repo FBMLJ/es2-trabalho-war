@@ -7,13 +7,13 @@ from PPlay.mouse import Mouse
 class CampoTexto(ComponenteGeral):
     def __init__(self, window, x=0, y=0, w=0, h=0,tamanho_maximo=24):
         super().__init__(window, x, y, w, h)
-        self.retango_fora = pygame.Rect([self.x,self.y,self.width,self.height])
-        self.retango_dentro = pygame.Rect([self.x,self.y,self.width,self.height])
+        self.retango_fora = pygame.Rect([self.x, self.y, self.width, self.height])
+        self.retango_dentro = pygame.Rect([self.x, self.y, self.width, self.height])
         self.texto = ""
         self.tamanho_maximo = tamanho_maximo
         self.size = round((self.height)/2)
-        self.cor_ativa = (0,0,200)
-        self.cor_inativa = (0,0,0)
+        self.cor_ativa = (0, 0, 200)
+        self.cor_inativa = (0, 0, 0)
         self.cor = self.cor_inativa
         self.ativo = False
         self.mouse = Mouse()

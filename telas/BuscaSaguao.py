@@ -55,10 +55,29 @@ class BuscaSaguao:
             self.janela.height * 0.06
         )
 
+        self.campo_nome_sala = CampoTexto(
+            janela,
+            self.fundo.x + self.fundo.width - self.janela.width * 0.15 - self.janela.width*0.04,
+            self.fundo.y + self.fundo.height - self.janela.height * 0.28,
+            self.janela.width * 0.15,
+            self.janela.height * 0.05
+        )
+
+        self.campo_senha_sala = CampoTexto(
+            janela,
+            self.fundo.x + self.fundo.width - self.janela.width * 0.15 - self.janela.width*0.04,
+            self.fundo.y + self.fundo.height - self.janela.height * 0.20,
+            self.janela.width * 0.15,
+            self.janela.height * 0.05
+        )
+
+        self.saguoes = []
+
     def loop(self):
 
         self.janela.clear()
         mouse_foi_clicado = False
+        mouse = Mouse()
         self.janela.input_pygame = True
 
         while True:
@@ -69,6 +88,9 @@ class BuscaSaguao:
                     mouse_foi_clicado = True  # bloqueia o botao de ser clicado
                     botao_clicado = botao.code
 
+            if mouse_foi_clicado and not mouse.is_button_pressed(1):
+                
+
             self.trataEvento()
             self.render()
             self.janela.update()
@@ -78,6 +100,8 @@ class BuscaSaguao:
         self.janela.set_background_color([0, 0, 0])
         self.fundo.draw()
         self.campo_busca_saguao.draw()
+        self.campo_nome_sala.draw()
+        self.campo_senha_sala.draw()
         for botao in self.botoes:
             botao.render()
 
@@ -85,5 +109,7 @@ class BuscaSaguao:
 
         for evento in pygame.event.get():
             self.campo_busca_saguao.evento(evento)
+            self.campo_nome_sala.evento(evento)
+            self.campo_senha_sala.evento(evento)
             if evento.type == pygame.QUIT:
                 exit()
