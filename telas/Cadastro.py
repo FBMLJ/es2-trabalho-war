@@ -15,10 +15,23 @@ class Cadastro(JanelaPadrao):
         super().__init__(janela)
         self.bg = GameImage(image_file="./assets/imagem/tela_inicial/fundo.png")
         self.bg.set_scale(self.janela.width , self.janela.height)
-        self.loginCampo = CampoTexto(janela,"Informe seu Email:", janela.width/2 - 320, 180 , 640,60)
-        self.usernameCampo = CampoTexto(janela, "Informe um nome de usuário:", janela.width/2 - 320, 280, 640, 60)
-        self.senhaCampo = CampoSenha(janela, "Defina uma senha:", janela.width/2 - 320, 380 , 640,60)
-        self.confirmaSenhaCampo = CampoSenha(janela,"Confirme a senha:", janela.width/2 - 320, 480 ,640,60)
+
+        self.loginCampo = CampoTexto(janela,
+                                     GameImage("assets/imagem/busca_saguao/busca_pelo_nome.png"),
+                                     janela.width/2 - 320, 180 , 640,60)
+
+        self.usernameCampo = CampoTexto(janela,
+                                        GameImage("assets/imagem/busca_saguao/busca_pelo_nome.png"),
+                                        janela.width/2 - 320, 280, 640, 60)
+
+        self.senhaCampo = CampoSenha(janela,
+                                     GameImage("assets/imagem/busca_saguao/busca_pelo_nome.png"),
+                                     janela.width/2 - 320, 380 , 640,60)
+
+        self.confirmaSenhaCampo = CampoSenha(janela,
+                                             GameImage("assets/imagem/busca_saguao/busca_pelo_nome.png"),
+                                             janela.width/2 - 320, 480 ,640,60)
+
         botao_sprite = Sprite("assets/imagem/cadastro/botao_cadastrar.png")
         botao_selecionado_sprite = Sprite("assets/imagem/cadastro/botao_cadastrar_select.png")
         self.botao = Botao(botao_sprite, botao_selecionado_sprite, estados["cadastro"])
@@ -27,6 +40,9 @@ class Cadastro(JanelaPadrao):
         #self.botao = pygame.Rect([480,490,320,60])
 
         self.barra_superior = GameImage("assets/imagem/historico/barra.jpg")
+
+        self.titulo_janela = GameImage("assets/imagem/cadastro/letrero_cadastro.png")
+        self.titulo_janela.set_position(50, self.barra_superior.height/2 - self.titulo_janela.height/2)
 
         sprite_x = Sprite("assets/imagem/historico/icon_x.png")
         self.botao_x = Botao(sprite_x, sprite_x, 20)
@@ -69,6 +85,7 @@ class Cadastro(JanelaPadrao):
         super().draw()
         self.bg.draw()
         self.barra_superior.draw()
+        self.titulo_janela.draw()
         self.botao_x.render()
         self.loginCampo.draw()
         self.usernameCampo.draw()

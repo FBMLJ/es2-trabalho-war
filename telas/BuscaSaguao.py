@@ -54,37 +54,37 @@ class BuscaSaguao:
         )
         self.botoes.append(botao_criar_saguao)
 
+        titulo = GameImage("assets/imagem/busca_saguao/busca_pelo_nome.png")
         self.campo_busca_saguao = CampoTexto(
             janela,
-            "Digite o nome do saguão:",
+            titulo,
             self.fundo.x + 30,
             self.fundo.y + self.fundo.height - self.janela.height*0.28,
             self.janela.width * 0.23,
             self.janela.height * 0.06,
-            20,
-            16
+            20
         )
 
+        titulo = GameImage("assets/imagem/busca_saguao/nome_da_sala.png")
         self.campo_nome_sala = CampoTexto(
             janela,
-            "Digite o nome da sala:",
+            titulo,
             self.fundo.x + self.fundo.width - self.janela.width * 0.15 - self.janela.width*0.04,
             self.fundo.y + self.fundo.height - self.janela.height * 0.28,
             self.janela.width * 0.15,
             self.janela.height * 0.05,
-            17,
-            14
+            17
         )
 
+        titulo = GameImage("assets/imagem/busca_saguao/senha_da_sala.png")
         self.campo_senha_sala = CampoSenha(
             janela,
-            "Digite a senha da sala:",
+            titulo,
             self.fundo.x + self.fundo.width - self.janela.width * 0.15 - self.janela.width*0.04,
             self.fundo.y + self.fundo.height - self.janela.height * 0.20,
             self.janela.width * 0.15,
             self.janela.height * 0.05,
-            17,
-            14
+            17
         )
 
         self.saguoes = []

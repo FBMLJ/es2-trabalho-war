@@ -5,16 +5,16 @@ from PPlay.mouse import Mouse
 
 
 class CampoTexto(ComponenteGeral):
-    def __init__(self, window, titulo: str, x=0, y=0, w=0, h=0,tamanho_maximo=24, tamanho_titulo=18):
+    def __init__(self, window, titulo, x=0, y=0, w=0, h=0,tamanho_maximo=24):
         super().__init__(window, x, y, w, h)
 
         self.titulo = titulo
+        self.titulo.set_position(x, self.y - titulo.height - 5)
         self.retango_fora = pygame.Rect([self.x, self.y, self.width, self.height])
         self.retango_dentro = pygame.Rect([self.x, self.y, self.width, self.height])
         self.texto = ""
         self.tamanho_maximo = tamanho_maximo
         self.size = round((self.height)/2)
-        self.tamanho_titulo = tamanho_titulo
         self.cor_ativa = (0, 0, 200)
         self.cor_inativa = (0, 0, 0)
         self.cor = self.cor_inativa
@@ -29,15 +29,7 @@ class CampoTexto(ComponenteGeral):
         #borda do campo de texto
         pygame.draw.rect(self.window.get_screen(), self.cor,self.retango_fora, 2)
         
-        self.window.draw_text( #desenha o título do campo
-            self.titulo,
-            self.x,
-            self.y - self.tamanho_titulo - 5,
-            self.tamanho_titulo,
-            [0, 0, 0],
-            font_name = "FreeMono, Monospace",
-            bold = True
-        )
+        self.titulo.draw()
         self.window.draw_text(
             # Essa parte pega somente as letras que irão ser exibidas na tela
             self.texto[max(0,len(self.texto)-self.tamanho_maximo):], 
