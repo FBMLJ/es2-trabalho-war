@@ -5,6 +5,7 @@ from PPlay.window import *
 from telas.HistoricoDePartidas import *
 from telas.BuscaSaguao import *
 from telas.Login import *
+from telas.Cadastro import *
 from telas.MenuLogado import *
 from telas.MenuInicial import *
 from constant import estados
@@ -27,6 +28,10 @@ class ControladorJogo:
             elif self.estado_do_jogo == estados["login"]:
                 login = Login(self.janela)
                 self.estado_do_jogo = login.loop()
+            
+            elif self.estado_do_jogo == estados["cadastro"]:
+                cadastro = Cadastro(self.janela)
+                self.estado_do_jogo = cadastro.loop()
 
             elif self.estado_do_jogo == estados["menu_logado"]:
                 menu_logado = MenuLogado(self.janela)

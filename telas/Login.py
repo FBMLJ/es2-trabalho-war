@@ -67,14 +67,5 @@ class Login(JanelaPadrao):
 
     def evento(self, e):
         super().evento(e)
-        """
-        if e.type == pygame.MOUSEBUTTONDOWN and self.botao.collidepoint(Mouse().get_position()):
-            token = sign_in(self.loginCampo.texto, self.senhaCampo.texto)
-            if not token:
-                print("Falha ao fazer o login")
-            else:
-                self.login_sucesso = True
-                print("Login feito com sucesso")
-        """
         self.loginCampo.evento(e)
         self.senhaCampo.evento(e)

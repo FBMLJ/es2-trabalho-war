@@ -1,11 +1,13 @@
 from telas.JanelaPadrao import JanelaPadrao
 from PPlay.gameimage import GameImage
+from PPlay.sprite import *
+from componentes.botao import *
 from  PPlay.mouse import Mouse
 from componentes.campoTexto import CampoTexto
 from componentes.campoSenha import CampoSenha
 import pygame
 from servico.Login import cadastro
-
+from constant import *
 
 """botão provisorio preciso ser refeito com componente"""
 class Cadastro(JanelaPadrao):
@@ -13,29 +15,64 @@ class Cadastro(JanelaPadrao):
         super().__init__(janela)
         self.bg = GameImage(image_file="./assets/imagem/tela_inicial/fundo.png")
         self.bg.set_scale(self.janela.width , self.janela.height)
-        self.loginCampo = CampoTexto(janela,320, 180 ,640,60)
-        self.senhaCampo = CampoSenha(janela,320, 280 ,640,60)
-        self.confirmaSenhaCampo = CampoSenha(janela,320, 380 ,640,60)
-        self.botao = pygame.Rect([480,490,320,60])
+        self.loginCampo = CampoTexto(janela,"Informe seu Email:", janela.width/2 - 320, 180 , 640,60)
+        self.usernameCampo = CampoTexto(janela, "Informe um nome de usuário:", janela.width/2 - 320, 280, 640, 60)
+        self.senhaCampo = CampoSenha(janela, "Defina uma senha:", janela.width/2 - 320, 380 , 640,60)
+        self.confirmaSenhaCampo = CampoSenha(janela,"Confirme a senha:", janela.width/2 - 320, 480 ,640,60)
+        botao_sprite = Sprite("assets/imagem/tela_inicial/botao_login.png")
+        botao_selecionado_sprite = Sprite("assets/imagem/tela_inicial/botao_login_select.png")
+        self.botao = Botao(botao_sprite, botao_selecionado_sprite, estados["cadastro"])
+        altura_botao = self.confirmaSenhaCampo.y + self.confirmaSenhaCampo.height + 25
+        self.botao.setposition(self.janela.width/2 - self.botao.width/2, altura_botao)
+        #self.botao = pygame.Rect([480,490,320,60])
+
+        self.barra_superior = GameImage("assets/imagem/historico/barra.jpg")
+
+        sprite_x = Sprite("assets/imagem/historico/icon_x.png")
+        self.botao_x = Botao(sprite_x, sprite_x, 20)
+        self.botao_x.setposition(self.janela.width- self.botao_x.width-15, 15)
         
-        
+
+    def loop(self):
+
+        self.janela.input_pygame = True
+        while True:
+
+            self.draw()
+
+            saiu = self.botao_x.update()
+            if saiu:
+                self.janela.input_pygame = False
+                return estados["menu_inicial"]
+
+            cadastrar = self.botao.update()
+            if cadastrar:
+                if self.confirmaSenhaCampo.texto == self.senhaCampo.texto:
+                    token = cadastro(self.loginCampo.texto, self.senhaCampo.texto)
+                    if not token:
+                        print("Falha ao fazer o cadastro")
+                    else:
+                        self.janela.input_pygame = False
+                        return estados["menu_logado"]
+                        print("Login feito com sucesso")
+            
+            self.janela.update()
 
     def draw(self):
         super().draw()
         self.bg.draw()
+        self.barra_superior.draw()
+        self.botao_x.render()
         self.loginCampo.draw()
+        self.usernameCampo.draw()
         self.confirmaSenhaCampo.draw()
         self.senhaCampo.draw()
-        pygame.draw.rect(self.janela.get_screen(), (200,15,51),self.botao)
+        self.botao.render()
+        #pygame.draw.rect(self.janela.get_screen(), (200,15,51),self.botao)
 
     def evento(self, e):
         super().evento(e)
-        if e.type == pygame.MOUSEBUTTONDOWN and self.botao.collidepoint(Mouse().get_position()) and self.confirmaSenhaCampo.texto == self.senhaCampo.texto:
-            token = cadastro(self.loginCampo.texto, self.senhaCampo.texto)
-            if not token:
-                print("Falha ao fazer o cadastro")
-            else:
-                print("Cadastro feito com sucesso")
+        self.usernameCampo.evento(e)
         self.loginCampo.evento(e)
         self.senhaCampo.evento(e)
         self.confirmaSenhaCampo.evento(e)
