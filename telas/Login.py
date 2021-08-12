@@ -16,11 +16,13 @@ class Login(JanelaPadrao):
         super().__init__(janela)
         self.bg = GameImage(image_file="./assets/imagem/tela_inicial/fundo.png")
         self.bg.set_scale(self.janela.width , self.janela.height)
-        titulo = GameImage("assets/imagem/busca_saguao/busca_pelo_nome.png")
+
+        titulo = GameImage("assets/imagem/Login/email.png")
         self.loginCampo = CampoTexto(janela, titulo, janela.width/2 - 320, 240 ,640,60)
-        titulo = GameImage("assets/imagem/busca_saguao/busca_pelo_nome.png")
+
+        titulo = GameImage("assets/imagem/Login/senha.png")
         self.senhaCampo = CampoSenha(janela,titulo, janela.width/2 - 320, 380 ,640,60)
-        #self.botao = pygame.Rect([480,490,320,60])
+
         login_sprite = Sprite("assets/imagem/Login/botao_fazer_login.png")
         login_sprite_selecionado = Sprite("assets/imagem/Login/botao_fazer_login_select.png")
         self.botao_login = Botao(login_sprite, login_sprite_selecionado, estados["login"])

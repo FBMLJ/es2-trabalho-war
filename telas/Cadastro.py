@@ -17,20 +17,20 @@ class Cadastro(JanelaPadrao):
         self.bg.set_scale(self.janela.width , self.janela.height)
 
         self.loginCampo = CampoTexto(janela,
-                                     GameImage("assets/imagem/busca_saguao/busca_pelo_nome.png"),
-                                     janela.width/2 - 320, 180 , 640,60)
+                                     GameImage("assets/imagem/cadastro/informe_email.png"),
+                                     janela.width/2 - 320, 180, 640, 60)
 
         self.usernameCampo = CampoTexto(janela,
-                                        GameImage("assets/imagem/busca_saguao/busca_pelo_nome.png"),
-                                        janela.width/2 - 320, 280, 640, 60)
+                                        GameImage("assets/imagem/cadastro/informe_nome_usuario.png"),
+                                        janela.width/2 - 320, 300, 640, 60)
 
         self.senhaCampo = CampoSenha(janela,
-                                     GameImage("assets/imagem/busca_saguao/busca_pelo_nome.png"),
-                                     janela.width/2 - 320, 380 , 640,60)
+                                     GameImage("assets/imagem/cadastro/defina_senha.png"),
+                                     janela.width/2 - 320, 420, 640, 60)
 
         self.confirmaSenhaCampo = CampoSenha(janela,
-                                             GameImage("assets/imagem/busca_saguao/busca_pelo_nome.png"),
-                                             janela.width/2 - 320, 480 ,640,60)
+                                             GameImage("assets/imagem/cadastro/confirme_senha.png"),
+                                             janela.width/2 - 320, 540, 640, 60)
 
         botao_sprite = Sprite("assets/imagem/cadastro/botao_cadastrar.png")
         botao_selecionado_sprite = Sprite("assets/imagem/cadastro/botao_cadastrar_select.png")

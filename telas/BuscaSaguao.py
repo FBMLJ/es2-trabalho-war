@@ -34,7 +34,7 @@ class BuscaSaguao:
 
         sprite_x = Sprite("assets/imagem/busca_saguao/x_saguao.png")
         botao_x = Botao(sprite_x, sprite_x, self.sair)
-        botao_x.setposition(self.fundo.x + self.fundo.width - botao_x.width - 15, self.fundo.y + 15)
+        botao_x.setposition(self.fundo.x + self.fundo.width - botao_x.width - 17, self.fundo.y + 15)
         self.botoes.append(botao_x)
 
         buscar_saguao_sprite_normal = Sprite("assets/imagem/busca_saguao/botao_buscar.png")
