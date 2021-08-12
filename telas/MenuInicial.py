@@ -29,7 +29,7 @@ class MenuInicial:
         self.botoes.append(botao_login)
 
         cadastro_sprite_normal = Sprite("assets/imagem/tela_inicial/botao_login.png")
-        cadastro_sprite_destacado = Sprite("assets/imagem/tela_inicial/botao_login.png")
+        cadastro_sprite_destacado = Sprite("assets/imagem/tela_inicial/botao_login_select.png")
         botao_cadastro = Botao(cadastro_sprite_normal, cadastro_sprite_destacado, estados["cadastro"])
         self.botoes.append(botao_cadastro)
 
