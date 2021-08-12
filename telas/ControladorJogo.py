@@ -44,7 +44,7 @@ class ControladorJogo:
 
             elif self.estado_do_jogo == estados["buscar_sala"]:
                 busca_saguao = BuscaSaguao(self.janela, self.usuario)
-                busca_saguao.loop()
+                self.estado_do_jogo = busca_saguao.loop()
 
             elif self.estado_do_jogo == estados["desconectar"]:
                 self.usuario = None

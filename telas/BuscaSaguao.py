@@ -1,6 +1,7 @@
 from PPlay.gameimage import *
 from PPlay.window import *
 from servico.firestore import db
+from constant import estados
 from firebase_admin import firestore
 from componentes.RetanguloTexto import *
 from datetime import *
@@ -13,7 +14,7 @@ from componentes.botao import *
 
 class BuscaSaguao:
 
-    def __init__(self, janela: Window, usuario: str):
+    def __init__(self, janela: Window, usuario):
 
         self.janela = janela
         self.database = db
@@ -21,35 +22,35 @@ class BuscaSaguao:
         self.fundo = GameImage("assets/imagem/busca_saguao/buscador_saguao.png")
         self.fundo.set_position(janela.width/2 - self.fundo.width/2, janela.height/2 - self.fundo.height/2)
 
+        self.barra_superior = GameImage("assets/imagem/busca_saguao/barra_superior_busca.png")
+        self.barra_superior.set_position(self.fundo.x+12, self.fundo.y+10)
+
         self.busca_pelo_nome = 20
         self.entrar = 21
         self.criar_partida = 22
+        self.sair = 23
 
         self.botoes = []
+
+        sprite_x = Sprite("assets/imagem/busca_saguao/x_saguao.png")
+        botao_x = Botao(sprite_x, sprite_x, self.sair)
+        botao_x.setposition(self.fundo.x + self.fundo.width - botao_x.width - 15, self.fundo.y + 15)
+        self.botoes.append(botao_x)
 
         buscar_saguao_sprite_normal = Sprite("assets/imagem/busca_saguao/botao_buscar.png")
         buscar_saguao_sprite_destacado = Sprite("assets/imagem/busca_saguao/busca_saguao_select.png")
         botao_busca_saguao = Botao(buscar_saguao_sprite_normal, buscar_saguao_sprite_destacado, self.busca_pelo_nome)
         botao_busca_saguao.setposition(
-            self.fundo.x + 30,
-            self.fundo.y + self.fundo.height - self.janela.height*0.17
+            self.fundo.x + 50,
+            self.fundo.y + self.fundo.height - self.janela.height*0.23
         )
         self.botoes.append(botao_busca_saguao)
-
-        entrar_saguao_sprite_normal = Sprite("assets/imagem/busca_saguao/botao_entrar.png")
-        entrar_saguao_sprite_destacado = Sprite("assets/imagem/busca_saguao/botao_entrar_select.png")
-        botao_entrar_saguao = Botao(entrar_saguao_sprite_normal, entrar_saguao_sprite_destacado, self.entrar)
-        botao_entrar_saguao.setposition(
-            self.fundo.x + 30,
-            self.fundo.y + self.fundo.height - self.janela.height*0.10
-        )
-        self.botoes.append(botao_entrar_saguao)
 
         criar_saguao_sprite_normal = Sprite("assets/imagem/busca_saguao/botao_criar.png")
         criar_saguao_sprite_destacado = Sprite("assets/imagem/busca_saguao/botao_criar_select.png")
         botao_criar_saguao = Botao(criar_saguao_sprite_normal, criar_saguao_sprite_destacado, self.criar_partida)
         botao_criar_saguao.setposition(
-            self.fundo.x + self.fundo.width - criar_saguao_sprite_destacado.width - self.janela.width*0.055,
+            self.fundo.x + self.fundo.width - criar_saguao_sprite_destacado.width - self.janela.width*0.1,
             self.fundo.y + self.fundo.height - self.janela.height*0.10
         )
         self.botoes.append(botao_criar_saguao)
@@ -58,10 +59,10 @@ class BuscaSaguao:
         self.campo_busca_saguao = CampoTexto(
             janela,
             titulo,
-            self.fundo.x + 30,
-            self.fundo.y + self.fundo.height - self.janela.height*0.28,
-            self.janela.width * 0.23,
-            self.janela.height * 0.06,
+            self.fundo.x + 50,
+            self.fundo.y + self.fundo.height - self.janela.height*0.30,
+            self.janela.width * 0.27,
+            self.janela.height * 0.05,
             20
         )
 
@@ -69,9 +70,9 @@ class BuscaSaguao:
         self.campo_nome_sala = CampoTexto(
             janela,
             titulo,
-            self.fundo.x + self.fundo.width - self.janela.width * 0.15 - self.janela.width*0.04,
-            self.fundo.y + self.fundo.height - self.janela.height * 0.28,
-            self.janela.width * 0.15,
+            self.fundo.x + self.fundo.width - self.janela.width * 0.15 - self.janela.width*0.112,
+            self.fundo.y + self.fundo.height - self.janela.height * 0.30,
+            self.janela.width * 0.20,
             self.janela.height * 0.05,
             17
         )
@@ -80,9 +81,9 @@ class BuscaSaguao:
         self.campo_senha_sala = CampoSenha(
             janela,
             titulo,
-            self.fundo.x + self.fundo.width - self.janela.width * 0.15 - self.janela.width*0.04,
+            self.fundo.x + self.fundo.width - self.janela.width * 0.15 - self.janela.width*0.112,
             self.fundo.y + self.fundo.height - self.janela.height * 0.20,
-            self.janela.width * 0.15,
+            self.janela.width * 0.20,
             self.janela.height * 0.05,
             17
         )
@@ -128,6 +129,9 @@ class BuscaSaguao:
                     self.buscaSaguoes(self.campo_busca_saguao.texto)
                 if botao_clicado == self.entrar:
                     pass
+                if botao_clicado == self.sair:
+                    self.janela.input_pygame = False
+                    return estados["menu_logado"]
                 if botao_clicado == self.criar_partida:
                     self.criaSaguao()
 
@@ -143,6 +147,7 @@ class BuscaSaguao:
 
         self.janela.set_background_color([0, 0, 0])
         self.fundo.draw()
+        self.barra_superior.draw()
         self.campo_busca_saguao.draw()
         self.campo_nome_sala.draw()
         self.campo_senha_sala.draw()
@@ -193,8 +198,8 @@ class BuscaSaguao:
                 )
             )
             self.saguoes[i].set_position(
-                self.fundo.x + 50,
-                pos_inicial + tamanho_acumulado + 10 + i * 12
+                self.fundo.x + 65,
+                pos_inicial + tamanho_acumulado + 45 + i * 12
             )
 
             tamanho_acumulado += 35
@@ -206,9 +211,9 @@ class BuscaSaguao:
             "senha": self.campo_senha_sala.texto,
             "data_criacao": datetime.now(),
             "numero_de_jogadores": 1,
-            "anfitriao": self.usuario
+            "anfitriao": self.usuario.uid
         }
 
         db.collection("saguoes").\
-            document(self.usuario)\
+            document(self.usuario.uid)\
             .set(dados)
