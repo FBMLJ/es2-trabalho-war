@@ -47,14 +47,14 @@ class Cadastro(JanelaPadrao):
             saiu = self.botao_x.update()
             if saiu:
                 self.janela.input_pygame = False
-                return estados["menu_inicial"]
+                return estados["menu_inicial"], None
 
             cadastrar = self.botao.update()
             if cadastrar:
                 clicou_cadastro = True
 
             if clicou_cadastro and not mouse.is_button_pressed(1):
-                if self.confirmaSenhaCampo.texto == self.senhaCampo.texto and clicou_cadastro:
+                if self.confirmaSenhaCampo.texto == self.senhaCampo.texto:
                     clicou_cadastro = False
                     sucesso, resultado = cadastro(self.loginCampo.texto, self.usernameCampo.texto, self.senhaCampo.texto)
                     if not sucesso:

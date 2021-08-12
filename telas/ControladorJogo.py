@@ -28,7 +28,7 @@ class ControladorJogo:
 
             elif self.estado_do_jogo == estados["login"]:
                 login = Login(self.janela)
-                self.estado_do_jogo = login.loop()
+                self.estado_do_jogo, self.usuario = login.loop()
             
             elif self.estado_do_jogo == estados["cadastro"]:
                 cadastro = Cadastro(self.janela)

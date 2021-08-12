@@ -31,12 +31,12 @@ def cadastro(email, nome_de_usuario, senha):
 def sign_in(email, senha):
     url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={}".format(API_KEY)
     res = requests.post(url, {"email":email,"password":senha})
+    res_json = json.loads(res.text)
     if res.status_code == 200:
-        token = json.loads(res.text)['idToken']
-
-        return token
+        usuario = auth.get_user(res_json["localId"])
+        return True, usuario
     else:
-        return False
+        return False, "Falha no login, Verifique seus campos e tente novamente"
 
 
 def verificarUsuario(token):

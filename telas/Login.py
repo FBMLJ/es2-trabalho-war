@@ -35,23 +35,30 @@ class Login(JanelaPadrao):
 
         self.janela.input_pygame = True
 
+        clicou_login = False
+        mouse = Mouse()
+
         while True:
             self.draw()
 
             saiu = self.botao_x.update()
             if saiu:
                 self.janela.input_pygame = False
-                return estados["menu_inicial"]
+                return estados["menu_inicial"], None
             
             logar = self.botao_login.update()
             if logar:
-                token = sign_in(self.loginCampo.texto, self.senhaCampo.texto)
-                if not token:
-                    print("Falha ao fazer o login")
+                clicou_login = True
+
+            if clicou_login and not mouse.is_button_pressed(1):
+                sucesso, resultado = sign_in(self.loginCampo.texto, self.senhaCampo.texto)
+                clicou_login = False
+                if not sucesso:
+                    print(resultado)
                 else:
                     self.janela.input_pygame = False
                     print("Login feito com sucesso")
-                    return estados["menu_logado"]
+                    return estados["menu_logado"], resultado
 
             self.janela.update()
 
