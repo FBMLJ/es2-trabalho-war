@@ -50,9 +50,9 @@ class Login(JanelaPadrao):
                     print("Falha ao fazer o login")
                 else:
                     self.janela.input_pygame = False
-                    return estados["menu_logado"]
                     print("Login feito com sucesso")
-                
+                    return estados["menu_logado"]
+
             self.janela.update()
 
     def draw(self):

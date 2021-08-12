@@ -36,6 +36,10 @@ class Cadastro(JanelaPadrao):
     def loop(self):
 
         self.janela.input_pygame = True
+
+        clicou_cadastro = False
+        mouse = Mouse()
+
         while True:
 
             self.draw()
@@ -47,14 +51,17 @@ class Cadastro(JanelaPadrao):
 
             cadastrar = self.botao.update()
             if cadastrar:
-                if self.confirmaSenhaCampo.texto == self.senhaCampo.texto:
-                    token = cadastro(self.loginCampo.texto, self.senhaCampo.texto)
-                    if not token:
-                        print("Falha ao fazer o cadastro")
+                clicou_cadastro = True
+
+            if clicou_cadastro and not mouse.is_button_pressed(1):
+                if self.confirmaSenhaCampo.texto == self.senhaCampo.texto and clicou_cadastro:
+                    clicou_cadastro = False
+                    sucesso, resultado = cadastro(self.loginCampo.texto, self.usernameCampo.texto, self.senhaCampo.texto)
+                    if not sucesso:
+                        print(resultado)
                     else:
                         self.janela.input_pygame = False
-                        return estados["menu_logado"]
-                        print("Login feito com sucesso")
+                        return estados["menu_logado"], resultado
             
             self.janela.update()
 

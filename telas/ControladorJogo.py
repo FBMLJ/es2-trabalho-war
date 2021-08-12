@@ -15,6 +15,7 @@ class ControladorJogo:
 
     def __init__(self, janela):
         self.janela = janela
+        self.usuario = None
         self.estado_do_jogo = estados["menu_inicial"]
 
     def iniciar_jogo(self):
@@ -31,19 +32,23 @@ class ControladorJogo:
             
             elif self.estado_do_jogo == estados["cadastro"]:
                 cadastro = Cadastro(self.janela)
-                self.estado_do_jogo = cadastro.loop()
+                self.estado_do_jogo, self.usuario = cadastro.loop()
 
             elif self.estado_do_jogo == estados["menu_logado"]:
                 menu_logado = MenuLogado(self.janela)
                 self.estado_do_jogo = menu_logado.loop()
 
             elif self.estado_do_jogo == estados["historico"]:
-                historico = HistoricoDePartidas(self.janela, "id2")
+                historico = HistoricoDePartidas(self.janela, self.usuario)
                 self.estado_do_jogo = historico.loop()
 
             elif self.estado_do_jogo == estados["buscar_sala"]:
-                busca_saguao = BuscaSaguao(self.janela, "1d2")
+                busca_saguao = BuscaSaguao(self.janela, self.usuario)
                 busca_saguao.loop()
+
+            elif self.estado_do_jogo == estados["desconectar"]:
+                self.usuario = None
+                self.estado_do_jogo = estados["menu_inicial"]
 
             elif self.estado_do_jogo == estados["sair"]:
                 exit(0)
