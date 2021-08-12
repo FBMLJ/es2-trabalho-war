@@ -13,6 +13,24 @@ janela = window.Window(constant.LARGURA_PADRAO, constant.ALTURA_PADRAO)
 jogo = ControladorJogo(janela)
 jogo.iniciar_jogo()
 
+# inserção de dados de teste do historico de partidas para um novo usuario
+"""
+login = Login(janela)
+
+sucesso, resultado = login.loop()
+
+if sucesso:
+    partidas = db.collection("usuarios") \
+        .document("wd2xmut0prTgv8FcT1Z4O6UDJxP2") \
+        .collection("HistoricoDePartidas") \
+        .order_by("data_inicio", direction=firestore.Query.DESCENDING) \
+        .limit(10) \
+        .get()
+
+    for partida in partidas:
+        db.collection("usuarios").document(resultado.uid).collection("HistoricoDePartidas").add(partida.to_dict())
+"""
+
 #Inserção de dados de teste nos bancos
 """""
 data_inicio = datetime.strptime("06/03/2021 11:00", "%d/%m/%Y %H:%M")
