@@ -5,7 +5,7 @@ from PPlay.mouse import Mouse
 
 
 class CampoTexto(ComponenteGeral):
-    def __init__(self, window, titulo: str, x=0, y=0, w=0, h=0,tamanho_maximo=24):
+    def __init__(self, window, titulo: str, x=0, y=0, w=0, h=0,tamanho_maximo=24, tamanho_titulo=18):
         super().__init__(window, x, y, w, h)
 
         self.titulo = titulo
@@ -14,6 +14,7 @@ class CampoTexto(ComponenteGeral):
         self.texto = ""
         self.tamanho_maximo = tamanho_maximo
         self.size = round((self.height)/2)
+        self.tamanho_titulo = tamanho_titulo
         self.cor_ativa = (0, 0, 200)
         self.cor_inativa = (0, 0, 0)
         self.cor = self.cor_inativa
@@ -32,7 +33,7 @@ class CampoTexto(ComponenteGeral):
             self.titulo,
             self.x,
             self.y - 35,
-            self.size,
+            self.tamanho_titulo,
             [0, 0, 0],
             font_name = "FreeMono, Monospace",
             bold = True

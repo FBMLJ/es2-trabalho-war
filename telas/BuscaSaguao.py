@@ -56,29 +56,35 @@ class BuscaSaguao:
 
         self.campo_busca_saguao = CampoTexto(
             janela,
+            "Digite o nome do saguão",
             self.fundo.x + 30,
             self.fundo.y + self.fundo.height - self.janela.height*0.28,
             self.janela.width * 0.23,
             self.janela.height * 0.06,
-            20
+            20,
+            16
         )
 
         self.campo_nome_sala = CampoTexto(
             janela,
+            "Digite o nome da sala",
             self.fundo.x + self.fundo.width - self.janela.width * 0.15 - self.janela.width*0.04,
             self.fundo.y + self.fundo.height - self.janela.height * 0.28,
             self.janela.width * 0.15,
             self.janela.height * 0.05,
-            17
+            17,
+            14
         )
 
         self.campo_senha_sala = CampoSenha(
             janela,
+            "Digite a senha da sala",
             self.fundo.x + self.fundo.width - self.janela.width * 0.15 - self.janela.width*0.04,
             self.fundo.y + self.fundo.height - self.janela.height * 0.20,
             self.janela.width * 0.15,
             self.janela.height * 0.05,
-            17
+            17,
+            14
         )
 
         self.saguoes = []

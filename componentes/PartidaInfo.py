@@ -8,7 +8,7 @@ class PartidaInfo:
     def __init__(self, janela: Window, tamanho_da_fonte, cor_do_texto):
 
         self.janela = janela
-        self.moldura = GameImage("assets/imagem/historico/detalhes.png")
+        self.moldura = GameImage("assets/imagem/historico/detalhes2.png")
 
         self.tamanho_da_fonte = tamanho_da_fonte
         self.cor_do_texto = cor_do_texto
@@ -27,7 +27,7 @@ class PartidaInfo:
         self.moldura.set_position(x, y)
 
         for i in range(len(self.textos)):
-            self.textos[i].set_position(x + 10, y + 150 + i*50)
+            self.textos[i].set_position(x + 10, y + 45 + i*50)
 
     def atualiza_dados(self, dados):
 
