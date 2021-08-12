@@ -2,7 +2,7 @@ from telas.JanelaPadrao import JanelaPadrao
 from PPlay.gameimage import GameImage
 from PPlay.sprite import *
 from componentes.botao import *
-from  PPlay.mouse import Mouse
+from PPlay.mouse import Mouse
 from componentes.campoTexto import CampoTexto
 from componentes.campoSenha import CampoSenha
 import pygame

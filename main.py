@@ -6,13 +6,19 @@ from telas.ControladorJogo import *
 from servico.firestore import db
 from telas.Login import *
 from datetime import *
+from telas.Saguao import *
 from telas.BuscaSaguao import *
 import constant
 
 janela = window.Window(constant.LARGURA_PADRAO, constant.ALTURA_PADRAO)
+janela.set_title("War Online")
 
-jogo = ControladorJogo(janela)
-jogo.iniciar_jogo()
+#jogo = ControladorJogo(janela)
+#jogo.iniciar_jogo()
+
+saguao = Saguao(janela)
+saguao.loop()
+
 
 # inserção de dados de teste do historico de partidas para um novo usuario
 """
