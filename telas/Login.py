@@ -19,8 +19,8 @@ class Login(JanelaPadrao):
         self.loginCampo = CampoTexto(janela, "Email:", janela.width/2 - 320, 240 ,640,60, tamanho_titulo=30)
         self.senhaCampo = CampoSenha(janela,"Senha:", janela.width/2 - 320, 380 ,640,60, tamanho_titulo=30)
         #self.botao = pygame.Rect([480,490,320,60])
-        login_sprite = Sprite("assets/imagem/tela_inicial/botao_login.png")
-        login_sprite_selecionado = Sprite("assets/imagem/tela_inicial/botao_login_select.png")
+        login_sprite = Sprite("assets/imagem/Login/botao_fazer_login.png")
+        login_sprite_selecionado = Sprite("assets/imagem/Login/botao_fazer_login_select.png")
         self.botao_login = Botao(login_sprite, login_sprite_selecionado, estados["login"])
         self.botao_login.setposition(janela.width/2 - login_sprite.width/2, self.senhaCampo.y + self.senhaCampo.height + 50)
         

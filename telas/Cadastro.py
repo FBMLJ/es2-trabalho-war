@@ -19,8 +19,8 @@ class Cadastro(JanelaPadrao):
         self.usernameCampo = CampoTexto(janela, "Informe um nome de usuário:", janela.width/2 - 320, 280, 640, 60)
         self.senhaCampo = CampoSenha(janela, "Defina uma senha:", janela.width/2 - 320, 380 , 640,60)
         self.confirmaSenhaCampo = CampoSenha(janela,"Confirme a senha:", janela.width/2 - 320, 480 ,640,60)
-        botao_sprite = Sprite("assets/imagem/tela_inicial/botao_login.png")
-        botao_selecionado_sprite = Sprite("assets/imagem/tela_inicial/botao_login_select.png")
+        botao_sprite = Sprite("assets/imagem/cadastro/botao_cadastrar.png")
+        botao_selecionado_sprite = Sprite("assets/imagem/cadastro/botao_cadastrar_select.png")
         self.botao = Botao(botao_sprite, botao_selecionado_sprite, estados["cadastro"])
         altura_botao = self.confirmaSenhaCampo.y + self.confirmaSenhaCampo.height + 25
         self.botao.setposition(self.janela.width/2 - self.botao.width/2, altura_botao)

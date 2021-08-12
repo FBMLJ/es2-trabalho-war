@@ -1,4 +1,5 @@
 from PPlay import window
+import pygame
 from telas.HistoricoDePartidas import *
 from telas.MenuInicial import *
 from telas.ControladorJogo import *

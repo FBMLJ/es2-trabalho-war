@@ -31,7 +31,7 @@ class CampoSenha(ComponenteGeral):
         self.window.draw_text( #desenha o título do campo
             self.titulo,
             self.x,
-            self.y - 35,
+            self.y - self.tamanho_titulo - 5,
             self.tamanho_titulo,
             [0, 0, 0],
             font_name = "FreeMono, Monospace",

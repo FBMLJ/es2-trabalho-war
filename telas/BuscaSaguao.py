@@ -56,7 +56,7 @@ class BuscaSaguao:
 
         self.campo_busca_saguao = CampoTexto(
             janela,
-            "Digite o nome do saguão",
+            "Digite o nome do saguão:",
             self.fundo.x + 30,
             self.fundo.y + self.fundo.height - self.janela.height*0.28,
             self.janela.width * 0.23,
@@ -67,7 +67,7 @@ class BuscaSaguao:
 
         self.campo_nome_sala = CampoTexto(
             janela,
-            "Digite o nome da sala",
+            "Digite o nome da sala:",
             self.fundo.x + self.fundo.width - self.janela.width * 0.15 - self.janela.width*0.04,
             self.fundo.y + self.fundo.height - self.janela.height * 0.28,
             self.janela.width * 0.15,
@@ -78,7 +78,7 @@ class BuscaSaguao:
 
         self.campo_senha_sala = CampoSenha(
             janela,
-            "Digite a senha da sala",
+            "Digite a senha da sala:",
             self.fundo.x + self.fundo.width - self.janela.width * 0.15 - self.janela.width*0.04,
             self.fundo.y + self.fundo.height - self.janela.height * 0.20,
             self.janela.width * 0.15,
@@ -93,12 +93,19 @@ class BuscaSaguao:
     def loop(self):
 
         self.janela.clear()
+        self.janela.set_background_color([0, 0, 0])
+        carregando = GameImage("assets/imagem/historico/carregando.png")
+        carregando.set_position(self.janela.width / 2 - carregando.width / 2,
+                                self.janela.height / 2 - carregando.height / 2)
+        carregando.draw()
+        self.janela.update()
         botao_foi_clicado = False
         saguao_foi_clicado = False
         botao_clicado  = -1
         saguao_clicado = -1
         mouse = Mouse()
         self.janela.input_pygame = True
+        self.buscaSaguoes("")
 
         while True:
 
