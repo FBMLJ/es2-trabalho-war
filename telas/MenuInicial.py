@@ -28,10 +28,15 @@ class MenuInicial:
         botao_login = Botao(login_sprite_normal, login_sprite_destacado, estados["login"])
         self.botoes.append(botao_login)
 
-        convidado_sprite_normal = Sprite("assets/imagem/tela_inicial/botao_convidado.png")
-        convidado_sprite_destacado = Sprite("assets/imagem/tela_inicial/botao_convidado_select.png")
-        botao_convidado = Botao(convidado_sprite_normal, convidado_sprite_destacado, 3)
-        self.botoes.append(botao_convidado)
+        cadastro_sprite_normal = Sprite("assets/imagem/tela_inicial/botao_login.png")
+        cadastro_sprite_destacado = Sprite("assets/imagem/tela_inicial/botao_login.png")
+        botao_cadastro = Botao(cadastro_sprite_normal, cadastro_sprite_destacado, estados["cadastro"])
+        self.botoes.append(botao_cadastro)
+
+        partida_local_sprite_normal = Sprite("assets/imagem/tela_logado/botao_p_local.png")
+        partida_local_sprite_destacado = Sprite("assets/imagem/tela_logado/botao_p_local_select.png")
+        botao_partida_local = Botao(partida_local_sprite_normal, partida_local_sprite_destacado, estados["partida_local"])
+        self.botoes.append(botao_partida_local)
 
         sair_sprite_normal = Sprite("assets/imagem/tela_inicial/botao_sair.png")
         sair_sprite_destacado = Sprite("assets/imagem/tela_inicial/botao_sair_select.png")

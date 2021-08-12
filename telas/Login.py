@@ -15,8 +15,8 @@ class Login(JanelaPadrao):
         self.login_sucesso = False
         self.bg = GameImage(image_file="./assets/imagem/tela_inicial/fundo.png")
         self.bg.set_scale(self.janela.width , self.janela.height)
-        self.loginCampo = CampoTexto(janela,320, 240 ,640,60)
-        self.senhaCampo = CampoSenha(janela,320, 380 ,640,60)
+        self.loginCampo = CampoTexto(janela, "Email:", 320, 240 ,640,60)
+        self.senhaCampo = CampoSenha(janela,"Senha:", 320, 380 ,640,60)
         self.botao = pygame.Rect([480,490,320,60])
         
 
