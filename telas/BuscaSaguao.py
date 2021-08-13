@@ -10,6 +10,7 @@ import pygame
 from componentes.campoTexto import *
 from componentes.campoSenha import *
 from componentes.botao import *
+from componentes.SenhaSalaPopUp import *
 
 
 class BuscaSaguao:
@@ -90,6 +91,9 @@ class BuscaSaguao:
 
         self.saguoes = []
         self.consulta_saguoes = None
+        self.in_popup = False
+
+        self.popup = SenhaPopUp(janela)
 
     def loop(self):
 
@@ -109,39 +113,60 @@ class BuscaSaguao:
         self.buscaSaguoes("")
 
         while True:
+            
+            if not self.in_popup:
+                for botao in self.botoes:
+                    clicou = botao.update()
+                    if clicou:
+                        botao_foi_clicado = True  # bloqueia o botao de ser clicado
+                        botao_clicado = botao.code
 
-            for botao in self.botoes:
-                clicou = botao.update()
-                if clicou:
-                    botao_foi_clicado = True  # bloqueia o botao de ser clicado
-                    botao_clicado = botao.code
+                for saguao in self.saguoes:
+                    clicou = saguao.update()
+                    if clicou:
+                        saguao_foi_clicado = True
+                        if not saguao_clicado == saguao.code:
+                            self.saguoes[saguao_clicado].selecionado = False
+                        saguao_clicado = saguao.code
 
-            for saguao in self.saguoes:
-                clicou = saguao.update()
-                if clicou:
-                    saguao_foi_clicado = True
-                    self.saguoes[saguao_clicado].selecionado = False
-                    saguao_clicado = saguao.code
+                if botao_foi_clicado and not mouse.is_button_pressed(1):
+                    botao_foi_clicado = False
+                    if botao_clicado == self.busca_pelo_nome:
+                        self.buscaSaguoes(self.campo_busca_saguao.texto)
+                    if botao_clicado == self.entrar:
+                        pass
+                    if botao_clicado == self.sair:
+                        self.janela.input_pygame = False
+                        return estados["menu_logado"], -1
+                    if botao_clicado == self.criar_partida:
+                        self.criaSaguao()
+                        return estados["em_saguao"], self.usuario.uid
 
-            if botao_foi_clicado and not mouse.is_button_pressed(1):
-                botao_foi_clicado = False
-                if botao_clicado == self.busca_pelo_nome:
-                    self.buscaSaguoes(self.campo_busca_saguao.texto)
-                if botao_clicado == self.entrar:
-                    pass
-                if botao_clicado == self.sair:
-                    self.janela.input_pygame = False
-                    return estados["menu_logado"], -1
-                if botao_clicado == self.criar_partida:
-                    self.criaSaguao()
-                    return estados["em_saguao"], self.usuario.uid
+                if saguao_foi_clicado and not mouse.is_button_pressed(1):
+                    saguao_foi_clicado = False
+                    if saguao_clicado != -1:
+                        if self.saguoes[saguao_clicado].selecionado:
+                            self.in_popup = True
+                            self.saguao_clicado = -1
+                        else:
+                            self.saguoes[saguao_clicado].selecionado = True
+                self.trataEvento()
+                self.render()
 
-            if saguao_foi_clicado and not mouse.is_button_pressed(1):
-                if saguao_clicado != -1:
-                    self.saguoes[saguao_clicado].selecionado = True
-
-            self.trataEvento()
-            self.render()
+            else:
+                retorno_popup = self.popup.update()
+                if retorno_popup == 2:
+                    self.in_popup = False
+                    self.popup.input.texto = ""
+                    continue
+                elif retorno_popup == 1:
+                    if self.popup.input.texto == self.consulta_saguoes[saguao_clicado].to_dict()["senha"] or self.consulta_saguoes[saguao_clicado].to_dict()["senha"] == "":
+                        self.entrar_no_saguao(saguao_clicado)
+                        return estados["em_saguao"], self.consulta_saguoes[saguao_clicado].to_dict()["anfitriao"] 
+                    else:
+                        print(":(")
+                self.render()
+                self.popup.render()
             self.janela.update()
 
     def render(self):
@@ -227,6 +252,19 @@ class BuscaSaguao:
 
         db.collection("saguoes") \
             .document(self.usuario.uid) \
+            .collection("participantes")\
+            .document(self.usuario.uid)\
+            .set(dados_participante)
+
+    def entrar_no_saguao(self, saguao_clicado):
+        dados_participante = {
+            "nome": self.usuario.display_name,
+            "id_usuario": self.usuario.uid,
+            "pronto": False
+        }
+
+        db.collection("saguoes") \
+            .document(self.consulta_saguoes[saguao_clicado].to_dict()["anfitriao"]) \
             .collection("participantes")\
             .document(self.usuario.uid)\
             .set(dados_participante)
