@@ -1,9 +1,7 @@
-import pygame
-import constant
 from PPlay.window import Window
 from PPlay.mouse import Mouse
 from telas.ControladorMapa import ControladorMapa
-
+from constant import *
 
 janela = Window(1366, 768)
 mouse = Mouse()
