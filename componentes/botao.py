@@ -17,6 +17,8 @@ class Botao:
         self.code = code  # atributo que guarda um codigo referente ao botao
         self.spriteAtual = 0
         self.mouse = Mouse()
+        self.x = 0
+        self.y = 0
 
     def update(self):
         if self.mouse.is_over_area(
@@ -37,3 +39,5 @@ class Botao:
     def setposition(self, x, y):
         self.sprites[0].set_position(x, y)
         self.sprites[1].set_position(x, y)
+        self.x = x
+        self.y = y

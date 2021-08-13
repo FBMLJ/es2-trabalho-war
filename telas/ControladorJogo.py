@@ -9,6 +9,7 @@ from telas.Login import *
 from telas.Cadastro import *
 from telas.MenuLogado import *
 from telas.MenuInicial import *
+from jogo.ControladorPartida import ControladorPartida
 from constant import estados
 
 
@@ -58,6 +59,10 @@ class ControladorJogo:
 
             elif self.estado_do_jogo == estados["sair"]:
                 exit(0)
+
+            elif self.estado_do_jogo == estados["partida_local"]:
+                controlador_partida = ControladorPartida(self.janela)
+                self.estado_do_jogo = controlador_partida.loop()
 
             else:
                 exit(0)
