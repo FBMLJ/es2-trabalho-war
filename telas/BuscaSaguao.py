@@ -106,8 +106,10 @@ class BuscaSaguao:
         self.janela.update()
         botao_foi_clicado = False
         saguao_foi_clicado = False
+        popup_foi_clicado = False
         botao_clicado  = -1
         saguao_clicado = -1
+        popup_clicado = -1
         mouse = Mouse()
         self.janela.input_pygame = True
         self.buscaSaguoes("")
@@ -155,16 +157,22 @@ class BuscaSaguao:
 
             else:
                 retorno_popup = self.popup.update()
-                if retorno_popup == 2:
-                    self.in_popup = False
-                    self.popup.input.texto = ""
-                    continue
-                elif retorno_popup == 1:
-                    if self.popup.input.texto == self.consulta_saguoes[saguao_clicado].to_dict()["senha"] or self.consulta_saguoes[saguao_clicado].to_dict()["senha"] == "":
-                        self.entrar_no_saguao(saguao_clicado)
-                        return estados["em_saguao"], self.consulta_saguoes[saguao_clicado].to_dict()["anfitriao"] 
-                    else:
-                        print(":(")
+                if retorno_popup != 0:
+                    popup_clicado = retorno_popup
+                    popup_foi_clicado = True
+
+                if popup_foi_clicado and not mouse.is_button_pressed(1):
+                    popup_foi_clicado = False
+                    if popup_clicado == 2:
+                        self.in_popup = False
+                        self.popup.input.texto = ""
+                        continue
+                    elif popup_clicado == 1:
+                        if self.popup.input.texto == self.consulta_saguoes[saguao_clicado].to_dict()["senha"] or self.consulta_saguoes[saguao_clicado].to_dict()["senha"] == "":
+                            self.entrar_no_saguao(saguao_clicado)
+                            return estados["em_saguao"], self.consulta_saguoes[saguao_clicado].to_dict()["anfitriao"]
+                        else:
+                            print(":(")
                 self.render()
                 self.popup.render()
             self.janela.update()
