@@ -9,7 +9,7 @@ from firebase_admin import firestore
 
 class HistoricoDePartidas:
 
-    def __init__(self, janela: Window, usuario: str):
+    def __init__(self, janela: Window, usuario):
 
         self.janela = janela
         self.database = db
@@ -85,12 +85,15 @@ class HistoricoDePartidas:
 
     def carrega_partidas(self):
 
-        self.partidas = self.database.collection("usuarios")\
-            .document(self.usuario)\
-            .collection("HistoricoDePartidas")\
-            .order_by("data_inicio", direction=firestore.Query.DESCENDING)\
-            .limit(5)\
-            .get()
+        try:
+            self.partidas = self.database.collection("usuarios")\
+                .document(self.usuario.uid)\
+                .collection("HistoricoDePartidas")\
+                .order_by("data_inicio", direction=firestore.Query.DESCENDING)\
+                .limit(5)\
+                .get()
+        except:
+            self.partidas = []
 
         pos_inicial = self.barra_superior.y + self.barra_superior.height
         tamanho_acumulado = 0

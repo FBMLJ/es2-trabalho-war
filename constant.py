@@ -10,6 +10,7 @@ estados = {
     "partida_local": 6,
     "historico": 7,
     "desconectar": 8,
+    "em_saguao": 9,
     "sair": 20
 }
 
