@@ -22,6 +22,7 @@ class BuscaSaguao:
         self.usuario = usuario
         self.fundo = GameImage("assets/imagem/busca_saguao/buscador_saguao.png")
         self.fundo.set_position(janela.width/2 - self.fundo.width/2, janela.height/2 - self.fundo.height/2)
+        self.fundo_real = GameImage("assets/imagem/tela_inicial/fundo.png")
 
         self.barra_superior = GameImage("assets/imagem/busca_saguao/barra_superior_busca.png")
         self.barra_superior.set_position(self.fundo.x+12, self.fundo.y+10)
@@ -106,8 +107,10 @@ class BuscaSaguao:
         self.janela.update()
         botao_foi_clicado = False
         saguao_foi_clicado = False
+        popup_foi_clicado = False
         botao_clicado  = -1
         saguao_clicado = -1
+        popup_clicado = -1
         mouse = Mouse()
         self.janela.input_pygame = True
         self.buscaSaguoes("")
@@ -155,23 +158,29 @@ class BuscaSaguao:
 
             else:
                 retorno_popup = self.popup.update()
-                if retorno_popup == 2:
-                    self.in_popup = False
-                    self.popup.input.texto = ""
-                    continue
-                elif retorno_popup == 1:
-                    if self.popup.input.texto == self.consulta_saguoes[saguao_clicado].to_dict()["senha"] or self.consulta_saguoes[saguao_clicado].to_dict()["senha"] == "":
-                        self.entrar_no_saguao(saguao_clicado)
-                        return estados["em_saguao"], self.consulta_saguoes[saguao_clicado].to_dict()["anfitriao"] 
-                    else:
-                        print(":(")
+                if retorno_popup != 0:
+                    popup_clicado = retorno_popup
+                    popup_foi_clicado = True
+
+                if popup_foi_clicado and not mouse.is_button_pressed(1):
+                    popup_foi_clicado = False
+                    if popup_clicado == 2:
+                        self.in_popup = False
+                        self.popup.input.texto = ""
+                        continue
+                    elif popup_clicado == 1:
+                        if self.popup.input.texto == self.consulta_saguoes[saguao_clicado].to_dict()["senha"] or self.consulta_saguoes[saguao_clicado].to_dict()["senha"] == "":
+                            self.entrar_no_saguao(saguao_clicado)
+                            return estados["em_saguao"], self.consulta_saguoes[saguao_clicado].to_dict()["anfitriao"]
+                        else:
+                            print(":(")
                 self.render()
                 self.popup.render()
             self.janela.update()
 
     def render(self):
 
-        self.janela.set_background_color([0, 0, 0])
+        self.fundo_real.draw()
         self.fundo.draw()
         self.barra_superior.draw()
         self.campo_busca_saguao.draw()
@@ -247,7 +256,7 @@ class BuscaSaguao:
         dados_participante = {
             "nome": self.usuario.display_name,
             "id_usuario": self.usuario.uid,
-            "pronto": False
+            "pronto": True
         }
 
         db.collection("saguoes") \

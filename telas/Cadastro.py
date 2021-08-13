@@ -39,7 +39,7 @@ class Cadastro(JanelaPadrao):
         self.botao.setposition(self.janela.width/2 - self.botao.width/2, altura_botao)
         #self.botao = pygame.Rect([480,490,320,60])
 
-        self.barra_superior = GameImage("assets/imagem/historico/barra.jpg")
+        self.barra_superior = GameImage("assets/imagem/barra_superior_geral.png")
 
         self.titulo_janela = GameImage("assets/imagem/cadastro/letrero_cadastro.png")
         self.titulo_janela.set_position(50, self.barra_superior.height/2 - self.titulo_janela.height/2)

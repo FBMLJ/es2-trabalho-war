@@ -28,7 +28,7 @@ class Login(JanelaPadrao):
         self.botao_login = Botao(login_sprite, login_sprite_selecionado, estados["login"])
         self.botao_login.setposition(janela.width/2 - login_sprite.width/2, self.senhaCampo.y + self.senhaCampo.height + 50)
         
-        self.barra_superior = GameImage("assets/imagem/historico/barra.jpg")
+        self.barra_superior = GameImage("assets/imagem/barra_superior_geral.png")
         self.titulo_janela = GameImage("assets/imagem/Login/letrero_login.png")
         self.titulo_janela.set_position(50, self.barra_superior.height / 2 - self.titulo_janela.height / 2)
 
