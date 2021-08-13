@@ -16,6 +16,7 @@ class Saguao:
         self.janela = janela
         self.fundo = GameImage("assets/imagem/saguao/saguao.png")
         self.fundo.set_position(janela.width/2 - self.fundo.width/2, self.janela.height/2 - self.fundo.height/2)
+        self.fundo_real = GameImage("assets/imagem/tela_inicial/fundo.png")
         self.id_anfitriao = id_anfitriao
         self.usuario = usuario
 
@@ -26,7 +27,7 @@ class Saguao:
             "iniciar": 4
         }
 
-        self.pronto = False
+        self.pronto = id_anfitriao == usuario.uid
 
         self.botoes = []
 
@@ -146,6 +147,7 @@ class Saguao:
 
     def render(self):
 
+        self.fundo_real.draw()
         self.fundo.draw()
         self.barra_superior.draw()
         self.campo_chat.draw()

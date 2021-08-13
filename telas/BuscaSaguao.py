@@ -22,6 +22,7 @@ class BuscaSaguao:
         self.usuario = usuario
         self.fundo = GameImage("assets/imagem/busca_saguao/buscador_saguao.png")
         self.fundo.set_position(janela.width/2 - self.fundo.width/2, janela.height/2 - self.fundo.height/2)
+        self.fundo_real = GameImage("assets/imagem/tela_inicial/fundo.png")
 
         self.barra_superior = GameImage("assets/imagem/busca_saguao/barra_superior_busca.png")
         self.barra_superior.set_position(self.fundo.x+12, self.fundo.y+10)
@@ -179,7 +180,7 @@ class BuscaSaguao:
 
     def render(self):
 
-        self.janela.set_background_color([0, 0, 0])
+        self.fundo_real.draw()
         self.fundo.draw()
         self.barra_superior.draw()
         self.campo_busca_saguao.draw()
@@ -255,7 +256,7 @@ class BuscaSaguao:
         dados_participante = {
             "nome": self.usuario.display_name,
             "id_usuario": self.usuario.uid,
-            "pronto": False
+            "pronto": True
         }
 
         db.collection("saguoes") \
