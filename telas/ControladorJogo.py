@@ -3,6 +3,7 @@ Classe responsavel por gerenciar e instanciar as diversas telas do jogo
 """
 from PPlay.window import *
 from telas.HistoricoDePartidas import *
+from telas.Saguao import *
 from telas.BuscaSaguao import *
 from telas.Login import *
 from telas.Cadastro import *
@@ -16,6 +17,7 @@ class ControladorJogo:
     def __init__(self, janela):
         self.janela = janela
         self.usuario = None
+        self.id_saguao = -1
         self.estado_do_jogo = estados["menu_inicial"]
 
     def iniciar_jogo(self):
@@ -44,7 +46,11 @@ class ControladorJogo:
 
             elif self.estado_do_jogo == estados["buscar_sala"]:
                 busca_saguao = BuscaSaguao(self.janela, self.usuario)
-                self.estado_do_jogo = busca_saguao.loop()
+                self.estado_do_jogo, self.id_saguao = busca_saguao.loop()
+
+            elif self.estado_do_jogo == estados["em_saguao"]:
+                saguao = Saguao(self.janela, self.usuario, self.id_saguao)
+                self.estado_do_jogo = saguao.loop()
 
             elif self.estado_do_jogo == estados["desconectar"]:
                 self.usuario = None

@@ -131,9 +131,10 @@ class BuscaSaguao:
                     pass
                 if botao_clicado == self.sair:
                     self.janela.input_pygame = False
-                    return estados["menu_logado"]
+                    return estados["menu_logado"], -1
                 if botao_clicado == self.criar_partida:
                     self.criaSaguao()
+                    return estados["em_saguao"], self.usuario.uid
 
             if saguao_foi_clicado and not mouse.is_button_pressed(1):
                 if saguao_clicado != -1:
@@ -217,3 +218,15 @@ class BuscaSaguao:
         db.collection("saguoes").\
             document(self.usuario.uid)\
             .set(dados)
+
+        dados_participante = {
+            "nome": self.usuario.display_name,
+            "id_usuario": self.usuario.uid,
+            "pronto": False
+        }
+
+        db.collection("saguoes") \
+            .document(self.usuario.uid) \
+            .collection("participantes")\
+            .document(self.usuario.uid)\
+            .set(dados_participante)
