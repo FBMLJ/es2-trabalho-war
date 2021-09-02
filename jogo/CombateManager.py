@@ -99,8 +99,8 @@ class CombateManager:
         #o territorio conquistado vai para a lista de territorios do atacante
         territorios_atacante.append(defensor)
         #apenas as tropas vitoriosas na batalha podem ocupar o territorio
-        atacante.perde_tropas(sobreviventes - 1)
-        defensor.recebe_tropas(sobreviventes - 1)
+        atacante.perde_tropas(sobreviventes)
+        defensor.recebe_tropas(sobreviventes)
         #o territorio conquistado sai da lista de territorios do defensor
         territorios_defensor.remove(defensor)
 
