@@ -9,8 +9,10 @@ from constant import estados
 
 class MenuInicial:
 
+    #inicializa a tela, instanciando seus elementos
     def __init__(self, janela: Window):
 
+        #instancia todos os botões e organiza suas posições de acordo com o layout da tela
         self.janela = janela
 
         self.fundo = GameImage("assets/imagem/tela_inicial/fundo.png")
@@ -43,7 +45,7 @@ class MenuInicial:
         botao_sair = Botao(sair_sprite_normal, sair_sprite_destacado, estados["sair"])
         self.botoes.append(botao_sair)
 
-        # loop que calcula a posição de cada botão baseado na posição do anterior
+        # loop que calcula a posição de cada botão baseado na posição do anterior a partir da metade da tela
         tamanho_acumulado = 0
         for index in range(len(self.botoes)):
             self.botoes[index].setposition(
@@ -54,19 +56,23 @@ class MenuInicial:
 
     def loop(self):
 
+        # limpa a janela para eliminar possíveis objetos residuais de outras telas
         self.janela.clear()
         mouse = Mouse()
         mouse_foi_clicado = False  # variavel que impede que o usuário clique várias vezes
-        botao_clicado = 0
+        botao_clicado = 0 # variável que armazena o código de um botão que foi clicado, para retorno
 
         while True:
 
+            # para cada botão na tela, atualiza o botão
             for botao in self.botoes:
                 clicou = botao.update()
+                # se o botão foi clicado, armazena o código do botão e bloqueia outros cliques
                 if clicou:
                     mouse_foi_clicado = True #bloqueia o botao de ser clicado
                     botao_clicado = botao.code
 
+            # se o botão já foi clicado em um frame anterior e já foi solto, retorna o código do botão
             if mouse_foi_clicado and not mouse.is_button_pressed(1):  # evitar que seja clicados diversas vezes
                 return botao_clicado
 
