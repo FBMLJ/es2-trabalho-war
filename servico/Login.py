@@ -30,7 +30,7 @@ def cadastro(email, nome_de_usuario, senha):
 
 def sign_in(email, senha):
     url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={}".format(API_KEY)
-    res = requests.post(url, {"email":email,"password":senha})
+    res = requests.post(url, {"email": email, "password": senha})
     res_json = json.loads(res.text)
     if res.status_code == 200:
         usuario = auth.get_user(res_json["localId"])
@@ -41,8 +41,23 @@ def sign_in(email, senha):
 
 def verificarUsuario(token):
     url = 'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key={}'.format(API_KEY)
-    res = requests.post(url,{"idToken": token})
+    res = requests.post(url, {"idToken": token})
     if res.status_code == 200:
         return True
     else:
         return False
+
+
+def verifica_campos_login(email: str, senha: str):
+
+    if email == "" or senha == "":
+        return False
+    return True
+
+
+def verifica_campos_de_cadastro(email: str, senha: str, nome_de_usuario: str):
+
+    if email == "" or senha == "" or nome_de_usuario == "" or len(nome_de_usuario) > 6 or len(senha) < 6:
+        return False
+
+    return True
