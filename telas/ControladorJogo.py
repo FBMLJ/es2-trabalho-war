@@ -15,15 +15,18 @@ from constant import estados
 
 class ControladorJogo:
 
-    # 
     def __init__(self, janela):
         self.janela = janela
+        # armazena o usuario retornado ao fazer login ou cadastro
         self.usuario = None
+        # armazena o id do saguão ingressado quando o usuário entrar em um saguão
         self.id_saguao = -1
+        # armazena qual o estado atual do jogo, começa no menu principal
         self.estado_do_jogo = estados["menu_inicial"]
 
     def iniciar_jogo(self):
 
+        # controla o fluxo de telas do jogo
         while True:
 
             if self.estado_do_jogo == estados["menu_inicial"]:
