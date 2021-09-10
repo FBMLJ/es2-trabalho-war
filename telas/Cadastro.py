@@ -1,16 +1,19 @@
+"""
+Classe responsavel pela interface do cadastro do jogo.
+"""
 from telas.JanelaPadrao import JanelaPadrao
 from PPlay.gameimage import GameImage
-from PPlay.sprite import *
 from componentes.botao import *
 from PPlay.mouse import Mouse
 from componentes.campoTexto import CampoTexto
 from componentes.campoSenha import CampoSenha
-import pygame
 from servico.Login import cadastro
 from constant import *
 
-"""botão provisorio preciso ser refeito com componente"""
+
 class Cadastro(JanelaPadrao):
+
+    #inicializa todos os componentes necessários ao cadastro
     def __init__(self, janela):
         super().__init__(janela)
         self.bg = GameImage(image_file="./assets/imagem/tela_inicial/fundo.png")
@@ -47,10 +50,11 @@ class Cadastro(JanelaPadrao):
         sprite_x = Sprite("assets/imagem/historico/icon_x.png")
         self.botao_x = Botao(sprite_x, sprite_x, 20)
         self.botao_x.setposition(self.janela.width- self.botao_x.width-15, 15)
-        
 
     def loop(self):
 
+        # variavel que indica que os inputs do jogo serão tratados através do pygame puro
+        # necessário para preenchimento de formulários
         self.janela.input_pygame = True
 
         clicou_cadastro = False
@@ -60,22 +64,27 @@ class Cadastro(JanelaPadrao):
 
             self.draw()
 
+            # se o usuário clicou para sair, retorna ao menu inicial
             saiu = self.botao_x.update()
             if saiu:
                 self.janela.input_pygame = False
                 return estados["menu_inicial"], None
 
+            # lógica que impede que o botão de cadastrar seja clicado várias vezes
             cadastrar = self.botao.update()
             if cadastrar:
                 clicou_cadastro = True
 
+            # se clicou no cadastrar e soltou o botão do mouse, tenta fazer o cadastro no sistema.
             if clicou_cadastro and not mouse.is_button_pressed(1):
                 if self.confirmaSenhaCampo.texto == self.senhaCampo.texto:
                     clicou_cadastro = False
                     sucesso, resultado = cadastro(self.loginCampo.texto, self.usernameCampo.texto, self.senhaCampo.texto)
+                    # se o cadastro falhar, printa o erro
                     if not sucesso:
                         print(resultado)
                     else:
+                        # caso contrário, envia para a tela de logado
                         self.janela.input_pygame = False
                         return estados["menu_logado"], resultado
             
@@ -92,7 +101,6 @@ class Cadastro(JanelaPadrao):
         self.confirmaSenhaCampo.draw()
         self.senhaCampo.draw()
         self.botao.render()
-        #pygame.draw.rect(self.janela.get_screen(), (200,15,51),self.botao)
 
     def evento(self, e):
         super().evento(e)

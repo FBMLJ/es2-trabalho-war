@@ -1,5 +1,5 @@
 """
-Classe responsavel por mostrar exibir e gerenciar o LogIn do jogo.
+Classe responsavel pela interface do LogIn do jogo.
 """
 from telas.JanelaPadrao import JanelaPadrao
 from PPlay.gameimage import GameImage

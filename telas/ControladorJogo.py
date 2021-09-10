@@ -15,6 +15,7 @@ from constant import estados
 
 class ControladorJogo:
 
+    # 
     def __init__(self, janela):
         self.janela = janela
         self.usuario = None
