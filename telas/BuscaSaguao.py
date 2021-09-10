@@ -1,15 +1,11 @@
-from PPlay.gameimage import *
-from PPlay.window import *
+"""
+Classe responsavel pela interface de buscar saguão e sua comunicação com o banco de dados
+"""
 from servico.firestore import db
 from constant import estados
 from firebase_admin import firestore
 from componentes.RetanguloTexto import *
 from datetime import *
-from PPlay.sprite import *
-import pygame
-from componentes.campoTexto import *
-from componentes.campoSenha import *
-from componentes.botao import *
 from componentes.SenhaSalaPopUp import *
 
 

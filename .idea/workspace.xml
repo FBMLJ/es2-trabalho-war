@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2450b4a6-aa34-4e0a-97df-e8909e458315" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/telas/ControladorJogo.py" beforeDir="false" afterPath="$PROJECT_DIR$/telas/ControladorJogo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/telas/BuscaSaguao.py" beforeDir="false" afterPath="$PROJECT_DIR$/telas/BuscaSaguao.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
