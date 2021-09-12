@@ -13,7 +13,7 @@ from constant import *
 
 class Cadastro(JanelaPadrao):
 
-    #inicializa todos os componentes necessários ao cadastro
+    # inicializa todos os componentes necessários ao cadastro
     def __init__(self, janela):
         super().__init__(janela)
         self.bg = GameImage(image_file="./assets/imagem/tela_inicial/fundo.png")

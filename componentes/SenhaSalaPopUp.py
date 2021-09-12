@@ -52,19 +52,27 @@ class SenhaPopUp:
             self.popup_box.y + 5
         )
 
-    #Atualiza os componentes do popup a cada frame
+    def loop(self):
+
+        mouse = Mouse()
+
+        while True:
+
+            self.trataEventos()
+
+    # Atualiza os componentes do popup a cada frame
     def update(self):
         self.trataEventos()
         update_botao = self.entrar_botao.update()
-        if(update_botao):
+        if update_botao:
             return self.entrar_botao.code
         update_fechar = self.fechar_botao.update()
-        if(update_fechar):
+        if update_fechar:
             return self.fechar_botao.code
-        #Codigo padrao de que nao houve eventos
+        # Codigo padrao de que nao houve eventos
         return 0
 
-    #Renderiza os objetos do popup
+    # Renderiza os objetos do popup
     def render(self):
         self.fundo.draw()
         self.popup_box.draw()
@@ -77,7 +85,3 @@ class SenhaPopUp:
             self.input.evento(evento)
             if evento.type == pygame.QUIT:
                 exit()
-
-    
-    
-        
