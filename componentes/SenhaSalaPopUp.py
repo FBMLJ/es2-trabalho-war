@@ -52,14 +52,6 @@ class SenhaPopUp:
             self.popup_box.y + 5
         )
 
-    def loop(self):
-
-        mouse = Mouse()
-
-        while True:
-
-            self.trataEventos()
-
     # Atualiza os componentes do popup a cada frame
     def update(self):
         self.trataEventos()

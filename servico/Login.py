@@ -51,13 +51,17 @@ def verificarUsuario(token):
 def verifica_campos_login(email: str, senha: str):
 
     if email == "" or senha == "":
-        return False
-    return True
+        return False, "email e senha são obrigatórios"
+    return True, ""
 
 
 def verifica_campos_de_cadastro(email: str, senha: str, nome_de_usuario: str):
 
-    if email == "" or senha == "" or nome_de_usuario == "" or len(nome_de_usuario) > 6 or len(senha) < 6:
-        return False
+    if email == "" or senha == "" or nome_de_usuario == "":
+        return False, "email, senha e nome de usuário obrigatórios"
+    elif len(nome_de_usuario) > 8:
+        return False, "nome de usuário deve possuir no máximo 8 caracteres"
+    elif len(senha) < 6:
+        return False, "senha deve possuir no mínimo 6 caracteres"
 
-    return True
+    return True, ""

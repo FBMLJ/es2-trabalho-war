@@ -7,6 +7,7 @@ from firebase_admin import firestore
 from componentes.RetanguloTexto import *
 from datetime import *
 from componentes.SenhaSalaPopUp import *
+from componentes.MensagemDeErro import *
 
 
 class BuscaSaguao:
@@ -94,6 +95,7 @@ class BuscaSaguao:
 
         # popup que será desenhado caso o usuário clique em uma sala com senha.
         self.popup = SenhaPopUp(janela)
+        self.mensagem_popup = MensagemDeErro(janela, "")
 
     # função que executa o fluxo da tela e controla o comportamento das interações com o usuário
     def loop(self):
@@ -112,114 +114,82 @@ class BuscaSaguao:
         # inicializa variáveis de controle da interação com o usuário
         botao_foi_clicado = False
         saguao_foi_clicado = False
-        popup_foi_clicado = False
         botao_clicado  = -1
         saguao_clicado = -1
-        popup_clicado = -1
         mouse = Mouse()
         self.janela.input_pygame = True  # necessário quando a tela possuir campos de preenchimento
         self.buscaSaguoes("")  # executa uma busca inicial para obter os saguões disponíveis
 
         while True:
 
-            # se o usuário ainda não clicou duas vezes em um saguão
-            if not self.in_popup:
+            # para cada botão armazenado veririca se o mesmo foi clicado
+            for botao in self.botoes:
+                clicou = botao.update()
+                if clicou:
+                    botao_foi_clicado = True  # bloqueia o botao de ser clicado
+                    botao_clicado = botao.code
 
-                # para cada botão armazenado veririca se o mesmo foi clicado
-                for botao in self.botoes:
-                    clicou = botao.update()
-                    if clicou:
-                        botao_foi_clicado = True  # bloqueia o botao de ser clicado
-                        botao_clicado = botao.code
+            # para cada saguão gerado pela busca, verifica se o mesmo foi clicado
+            for saguao in self.saguoes:
+                clicou = saguao.update()
+                if clicou:
+                    saguao_foi_clicado = True
+                    # esse if controla o duplo clique.
+                    # se um saguão for clicado apenas uma vez, reseta o clique.
+                    if not saguao_clicado == saguao.code:
+                        self.saguoes[saguao_clicado].selecionado = False
+                    # armazena qual saguão foi clicado
+                    saguao_clicado = saguao.code
 
-                # para cada saguão gerado pela busca, verifica se o mesmo foi clicado
-                for saguao in self.saguoes:
-                    clicou = saguao.update()
-                    if clicou:
-                        saguao_foi_clicado = True
-                        # esse if controla o duplo clique.
-                        # se um saguão for clicado apenas uma vez, reseta o clique.
-                        if not saguao_clicado == saguao.code:
-                            self.saguoes[saguao_clicado].selecionado = False
-                        # armazena qual saguão foi clicado
-                        saguao_clicado = saguao.code
+            # esse garante que um clique só será efetivado uma vez que o botão do mouse seja solto
+            if botao_foi_clicado and not mouse.is_button_pressed(1):
 
-                # esse garante que um clique só será efetivado uma vez que o botão do mouse seja solto
-                if botao_foi_clicado and not mouse.is_button_pressed(1):
+                # se algum botão foi clicado, reseta a variável de controle do clique
+                botao_foi_clicado = False
 
-                    # se algum botão foi clicado, reseta a variável de controle do clique
-                    botao_foi_clicado = False
+                if botao_clicado == self.busca_pelo_nome:
+                    # busca saguões no banco de dados de acordo com o nome informado pelo usuário
+                    self.buscaSaguoes(self.campo_busca_saguao.texto)
 
-                    if botao_clicado == self.busca_pelo_nome:
-                        # busca saguões no banco de dados de acordo com o nome informado pelo usuário
-                        self.buscaSaguoes(self.campo_busca_saguao.texto)
+                if botao_clicado == self.sair:
+                    # desativa a opção de input pelo pygame
+                    self.janela.input_pygame = False
+                    # retorna ao menu logado
+                    return estados["menu_logado"], -1
 
-                    if botao_clicado == self.sair:
-                        # desativa a opção de input pelo pygame
-                        self.janela.input_pygame = False
-                        # retorna ao menu logado
-                        return estados["menu_logado"], -1
-
-                    if botao_clicado == self.criar_partida:
-                        # cria a partida com as especificações desejadas
-                        campos_sao_validos, mensagem_de_erro = self.confere_campos_da_criacao(self.campo_nome_sala.texto,
+                if botao_clicado == self.criar_partida:
+                    # cria a partida com as especificações desejadas
+                    campos_sao_validos, mensagem_de_erro = self.confere_campos_da_criacao(self.campo_nome_sala.texto,
                                                                                           self.campo_senha_sala.texto)
-                        if campos_sao_validos:
-                            self.criaSaguao(self.campo_senha_sala.texto, self.campo_nome_sala.texto)
-                            return estados["em_saguao"], self.usuario.uid
+                    if campos_sao_validos:
+                        self.criaSaguao(self.campo_senha_sala.texto, self.campo_nome_sala.texto)
+                        return estados["em_saguao"], self.usuario.uid
+                    else:
+                        self.mensagem_popup.mensagem = mensagem_de_erro
+                        self.mostra_mensagem_de_erro(mouse)
+
+            if saguao_foi_clicado and not mouse.is_button_pressed(1):
+
+                saguao_foi_clicado = False
+                # verifica se o saguão clicado é válido
+                if saguao_clicado != -1:
+                    # se o saguão clicado já foi selecionado, então ocorreu um clique duplo
+                    if self.saguoes[saguao_clicado].selecionado:
+                        if self.consulta_saguoes[saguao_clicado].to_dict()["senha"] != "":
+                            # muda para o modo de popup, para pedir ao usuário a senha da saka
+                            self.in_popup = True
+                            self.mostra_popup_de_senha(saguao_clicado, mouse)
                         else:
-                            pass  # TODO fazer mostrar uma mensagem de erro
-
-                if saguao_foi_clicado and not mouse.is_button_pressed(1):
-
-                    saguao_foi_clicado = False
-                    # verifica se o saguão clicado é válido
-                    if saguao_clicado != -1:
-                        # se o saguão clicado já foi selecionado, então ocorreu um clique duplo
-                        if self.saguoes[saguao_clicado].selecionado:
-                            if self.consulta_saguoes[saguao_clicado].to_dict()["senha"] != "":
-                                # muda para o modo de popup, para pedir ao usuário a senha da saka
-                                self.in_popup = True
-                            else:
-                                self.entrar_no_saguao(saguao_clicado)
-                                return estados["em_saguao"], self.consulta_saguoes[saguao_clicado].to_dict()["anfitriao"]
-                            saguao_clicado = -1
-                        else:
-                            # se é a primeira vez que o saguão é selecionado
-                            # altera a variável que dá o feedback de seleção
-                            self.saguoes[saguao_clicado].selecionado = True
-
-                self.trataEvento()
-                self.render()
-
-            # se a janela está em modo popup, ou seja, está pedindo a senha da sala
-            else:
-
-                # atualiza o popup e verifica se algum botão do popup foi clicado
-                retorno_popup = self.popup.update()
-                if retorno_popup != 0:
-                    popup_clicado = retorno_popup
-                    popup_foi_clicado = True
-
-                if popup_foi_clicado and not mouse.is_button_pressed(1):
-                    popup_foi_clicado = False
-                    if popup_clicado == 2:  # se o botão de fechar o popup foi clicado, fecha e reseta o popup
-                        self.in_popup = False
-                        self.popup.input.texto = ""
-                        continue
-                    elif popup_clicado == 1:  # se o botão de entrar do popup foi clicado
-
-                        # verifica se a senha inserida na caixa é a correta
-                        if self.popup.input.texto == self.consulta_saguoes[saguao_clicado].to_dict()["senha"]:
-
-                            # se a senha for correta envia o usuário a sala desejada
                             self.entrar_no_saguao(saguao_clicado)
                             return estados["em_saguao"], self.consulta_saguoes[saguao_clicado].to_dict()["anfitriao"]
-                        else:
-                            #TODO implementar mensagem de erro para cada situação possível
-                            print(":(")
-                self.render()
-                self.popup.render()
+                        saguao_clicado = -1
+                    else:
+                        # se é a primeira vez que o saguão é selecionado
+                        # altera a variável que dá o feedback de seleção
+                        self.saguoes[saguao_clicado].selecionado = True
+
+            self.trataEvento()
+            self.render()
             self.janela.update()
 
     def render(self):
@@ -345,15 +315,60 @@ class BuscaSaguao:
         if nome == "":
             return False, "insira um nome para a sala"
         elif len(nome) >= 10:
-            return False, "o nome da sala deve possuir no máximo 10 caracteres"
+            return False, "nome muito grande (> 10)"
         elif len(senha) >= 8:
-            return False, "A senha da sala deve possuir no máximo 8 caracteres"
+            return False, "senha muito grande (> 8)"
         return True, ""
 
     # função que mostra o popup da senha caso seja necessário para entrar na sala
-    def mostra_popup_de_senha(self):
-        pass
+    def mostra_popup_de_senha(self, saguao_clicado, mouse):
+
+        botao_foi_clicado = False
+        botao_clicado = -1
+
+        while True:
+
+            # atualiza o popup e verifica se algum botão do popup foi clicado
+            retorno_popup = self.popup.update()
+            if retorno_popup != 0:
+                botao_clicado = retorno_popup
+                botao_foi_clicado = True
+
+            if botao_foi_clicado and not mouse.is_button_pressed(1):
+                botao_foi_clicado = False
+                if botao_clicado == 2:  # se o botão de fechar o popup foi clicado, fecha e reseta o popup
+                    self.popup.input.texto = ""
+                    return
+                elif botao_clicado == 1:  # se o botão de entrar do popup foi clicado
+                    # verifica se a senha inserida na caixa é a correta
+                    if self.popup.input.texto == self.consulta_saguoes[saguao_clicado].to_dict()["senha"]:
+                        # se a senha for correta envia o usuário a sala desejada
+                        self.entrar_no_saguao(saguao_clicado)
+                        return estados["em_saguao"], self.consulta_saguoes[saguao_clicado].to_dict()["anfitriao"]
+                    else:
+                        self.mensagem_popup.mensagem = "Senha incorreta"
+                        self.mostra_mensagem_de_erro(mouse)
+
+            self.render()
+            self.popup.render()
+            self.janela.update()
 
     # função que entra em um loop de mensagem de erro
-    def mostra_mensagem_de_erro(self):
-        pass
+    def mostra_mensagem_de_erro(self, mouse):
+
+        botao_foi_clicado = False
+        self.janela.input_pygame = False
+
+        while True:
+
+            retorno_mensagem_popup = self.mensagem_popup.update()
+            if retorno_mensagem_popup != 0:
+                botao_foi_clicado = True
+
+            if botao_foi_clicado and not mouse.is_button_pressed(1):
+                self.janela.input_pygame = True
+                return
+
+            self.render()
+            self.mensagem_popup.render()
+            self.janela.update()

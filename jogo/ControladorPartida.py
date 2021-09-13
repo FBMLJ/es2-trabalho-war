@@ -5,6 +5,7 @@ from jogo.ControladorMapa import ControladorMapa
 from componentes.hudTurno import hudTurno
 from constant import *
 
+
 class ControladorPartida:
     caminho_hud = "assets/imagem/hud/"
 
@@ -20,6 +21,7 @@ class ControladorPartida:
             self.controlador_mapa.selecionar_territorio(self.mouse)
             self.render()
             self.janela.update()
+            print(1/self.janela.delta_time())
 
     def render(self):
         self.controlador_mapa.render()
