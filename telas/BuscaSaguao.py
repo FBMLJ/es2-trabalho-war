@@ -162,9 +162,13 @@ class BuscaSaguao:
 
                     if botao_clicado == self.criar_partida:
                         # cria a partida com as especificações desejadas
-                        # TODO fazer verificação de campos: não pode ser vazio, limite de caracteres
-                        self.criaSaguao(self.campo_senha_sala.texto, self.campo_nome_sala.texto)
-                        return estados["em_saguao"], self.usuario.uid
+                        campos_sao_validos, mensagem_de_erro = self.confere_campos_da_criacao(self.campo_nome_sala.texto,
+                                                                                          self.campo_senha_sala.texto)
+                        if campos_sao_validos:
+                            self.criaSaguao(self.campo_senha_sala.texto, self.campo_nome_sala.texto)
+                            return estados["em_saguao"], self.usuario.uid
+                        else:
+                            pass  # TODO fazer mostrar uma mensagem de erro
 
                 if saguao_foi_clicado and not mouse.is_button_pressed(1):
 
@@ -173,9 +177,12 @@ class BuscaSaguao:
                     if saguao_clicado != -1:
                         # se o saguão clicado já foi selecionado, então ocorreu um clique duplo
                         if self.saguoes[saguao_clicado].selecionado:
-                            # TODO verificar se o campo senha é vazio e então não é necessário pedir a senha
-                            # muda para o modo de popup, para pedir ao usuário a senha da saka
-                            self.in_popup = True
+                            if self.consulta_saguoes[saguao_clicado].to_dict()["senha"] != "":
+                                # muda para o modo de popup, para pedir ao usuário a senha da saka
+                                self.in_popup = True
+                            else:
+                                self.entrar_no_saguao(saguao_clicado)
+                                return estados["em_saguao"], self.consulta_saguoes[saguao_clicado].to_dict()["anfitriao"]
                             saguao_clicado = -1
                         else:
                             # se é a primeira vez que o saguão é selecionado
@@ -203,7 +210,7 @@ class BuscaSaguao:
                     elif popup_clicado == 1:  # se o botão de entrar do popup foi clicado
 
                         # verifica se a senha inserida na caixa é a correta
-                        if self.popup.input.texto == self.consulta_saguoes[saguao_clicado].to_dict()["senha"] or self.consulta_saguoes[saguao_clicado].to_dict()["senha"] == "":
+                        if self.popup.input.texto == self.consulta_saguoes[saguao_clicado].to_dict()["senha"]:
 
                             # se a senha for correta envia o usuário a sala desejada
                             self.entrar_no_saguao(saguao_clicado)
@@ -295,7 +302,8 @@ class BuscaSaguao:
             "senha": senha,
             "data_criacao": datetime.now(),
             "numero_de_jogadores": 1,
-            "anfitriao": self.usuario.uid
+            "anfitriao": self.usuario.uid,
+            "criador": self.usuario.uid
         }
 
         # guarda o dicionário gerado no banco
@@ -318,7 +326,7 @@ class BuscaSaguao:
 
     # Caso o usuário deseje entrar em um saguão já existente, insere o usuário na lista de participantes do saguão.
     def entrar_no_saguao(self, saguao_clicado):
-        dados_participante = {
+        dados_participante = {  # TODO verificar se o saguão já está cheio, se estiver mostra uma mensagem de erro
             "nome": self.usuario.display_name,
             "id_usuario": self.usuario.uid,
             "pronto": False
@@ -329,3 +337,23 @@ class BuscaSaguao:
             .collection("participantes")\
             .document(self.usuario.uid)\
             .set(dados_participante)
+
+    # função que verifica se os campos de criação da sala estão corretos,
+    # Caso haja algum problema nos campos retorna falso e uma mensagem de erro
+    def confere_campos_da_criacao(self, nome: str, senha: str):
+
+        if nome == "":
+            return False, "insira um nome para a sala"
+        elif len(nome) >= 10:
+            return False, "o nome da sala deve possuir no máximo 10 caracteres"
+        elif len(senha) >= 8:
+            return False, "A senha da sala deve possuir no máximo 8 caracteres"
+        return True, ""
+
+    # função que mostra o popup da senha caso seja necessário para entrar na sala
+    def mostra_popup_de_senha(self):
+        pass
+
+    # função que entra em um loop de mensagem de erro
+    def mostra_mensagem_de_erro(self):
+        pass

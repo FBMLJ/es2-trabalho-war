@@ -1,3 +1,6 @@
+"""
+Classe responsavel pela interface dentro do saguão e sua comunicação com o banco de dados em tempo real
+"""
 from componentes.campoTexto import *
 from componentes.botao import *
 from componentes.RetanguloTexto import *
