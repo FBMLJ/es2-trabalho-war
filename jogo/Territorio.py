@@ -6,7 +6,7 @@ class Territorio:
     def __init__(self, codigo):
         self.id = codigo
         self.nome = dicionario_territorios[self.id]
-        self.continente_none = ""
+        self.continente_nome = ""
         self.img = GameImage(self.caminho_pasta_territorios + str(self.id) + ".png")
         self.img_select = GameImage(self.caminho_pasta_territorios + str(self.id)+"_select.png")
         self.selecionado = False

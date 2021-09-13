@@ -1,8 +1,10 @@
+from jogo.Player import Player
 from jogo.Card import Card
 
 class CardManager:
-    def __init__(self) -> None:
+    def __init__(self, cartas: list) -> None:
         self.bonus_de_troca = 4
+        self.cartas_no_monte = cartas
     
     '''
     Funcao que retorna o bonus de tropas por troca
@@ -51,3 +53,9 @@ class CardManager:
                 diferente_otimismo = False
 
         return iguais_otimismo or diferente_otimismo
+
+    '''
+    Funcao que tira uma carta do topo do monte e da para o jogador
+    '''
+    def recebe_uma_carta(self, jogador: Player) -> None:
+        jogador.cartas.append(self.cartas_no_monte.pop())
