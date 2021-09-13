@@ -27,7 +27,7 @@ class TroopsManager:
         jogador.tropas_pendentes += recebimento_padrao
         #Caso haja um continente conquistado por completo, recebe o bonus do continente
         for continente in continentes:
-            territorios_do_continente = (c for c in jogador.territorios if c.continente_nome == continente.nome)
+            territorios_do_continente = (t for t in jogador.territorios if t.continente_nome == continente.nome)
             if len(continente.territorios) == len(territorios_do_continente):
                 jogador.tropas_pendentes += continente.bonus
 
