@@ -11,6 +11,7 @@ from telas.MenuLogado import *
 from telas.MenuInicial import *
 from jogo.ControladorPartida import ControladorPartida
 from constant import estados
+from jogo.Player import *
 
 
 class ControladorJogo:
@@ -61,7 +62,10 @@ class ControladorJogo:
                 exit(0)
 
             elif self.estado_do_jogo == estados["partida_local"]:
-                controlador_partida = ControladorPartida(self.janela)
+                jogadores = []
+                for i in range(4):
+                    jogadores.append(Player())
+                controlador_partida = ControladorPartida(self.janela, jogadores)
                 self.estado_do_jogo = controlador_partida.loop()
 
             else:
