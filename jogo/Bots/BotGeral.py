@@ -1,3 +1,4 @@
+from jogo.Territorio import Territorio
 from random import shuffle
 
 class BotGeral:
@@ -100,5 +101,38 @@ class BotGeral:
                     self.ataques_a_fazer.append(ataque)
         return
 
+    '''
+    Funcao que desloca as tropas do bot
+    Para cada territorio do bot
+        Para cada vizinho deste territorio
+            Verifica se encontrou um vizinho que nao esta na lista de territorios do bot
+            Se nao encontrou, adiciona o territorio na lista de territorios sem vizinho inimigo
+    Para cada territorio sem pelo menos 1 vizinho inimigo
+        Embaralha a lista de vizinhos
+        Verifica se tem tropas o suficiente para deslocar
+        Desloca as tropas
+    '''
     def deslocar_tropas(self):
+        territorios_sem_vizinhos_inimigos = []
+        #Para cada territorio do bot
+        for territorio in self.territorios:
+            tem_vizinho_inimigo = False
+            #Para cada vizinho deste territorio
+            for viz_itr in territorio.vizinho:
+                #Verifica se encontrou um vizinho que nao esta na lista de territorios do bot
+                if viz_itr not in self.territorios:
+                    tem_vizinho_inimigo = True
+            #Se nao encontrou, adiciona o territorio na lista de territorios sem vizinho inimigo
+            if not tem_vizinho_inimigo:
+                territorios_sem_vizinhos_inimigos.append(territorio)
+        for ter_itr in territorios_sem_vizinhos_inimigos:
+            #Embaralha a lista de vizinhos
+            shuffle(ter_itr.vizinho)
+            #Verifica se tem tropas o suficiente para deslocar
+            tropas_a_deslocar = ter_itr.quantidade_tropas - ter_itr.tropas_deslocadas - 1
+            if(tropas_a_deslocar > 0):
+                #Desloca as tropas
+                ter_itr.vizinho[0].recebe_tropas(tropas_a_deslocar)
+                ter_itr.vizinho[0].tropas_deslocadas = tropas_a_deslocar
+                ter_itr.perde_tropas(tropas_a_deslocar)
         return
