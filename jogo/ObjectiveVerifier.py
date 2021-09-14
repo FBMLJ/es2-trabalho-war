@@ -1,6 +1,6 @@
 from jogo.Player import Player
 from jogo.Objetivo import Objetivo
-
+from constant import *
 
 class ObjectiveVerifier:
     def __init__(self) -> None:
@@ -40,7 +40,7 @@ class ObjectiveVerifier:
                     return jogador
             #Se um jogador tiver o objetivo de conquistar continentes especificos
             if len(jogador.objetivo.continentes_a_conquistar) != 0:
-                ganhou = self.verifica_conquista_continentes(jogador, territorios)
+                ganhou = self.verifica_conquista_continentes(jogador)
                 if ganhou:
                     return jogador
             #Se um jogador tiver o objetivo de conquistar X territorios com um minimo de Y tropas
@@ -82,9 +82,9 @@ class ObjectiveVerifier:
         #Depois Itera pelos continentes a serem conquistados
         for continente_a_verificar in jogador.objetivo.continentes_a_conquistar:
             #Depois busca os territorios do jogador que fazem parte daquele continente
-            territorios_do_continente = (t for t in jogador.territorios if t.continente_nome == continente_a_verificar.nome)
-            #Se o jogador tiver todos os territorios do coninente, entao e subtraido 1 un. da quantidade de continentes a conquistar
-            if len(territorios_do_continente) == len(continente_a_verificar.territorios):
+            #Se o jogador tiver todos os territorios do continente, entao e subtraido 1 un. da quantidade de continentes a conquistar
+            #territorios_do_continente = (t for t in jogador.territorios if t.continente_nome == continente_a_verificar.nome)
+            if jogador.conquistou_continente(continente_a_verificar):
                 continentes_conquistados_qtd -= 1
         #Se nao sobrou continentes a conquistar, retorna Verdade
         if continentes_conquistados_qtd == 0:
@@ -116,3 +116,75 @@ class ObjectiveVerifier:
         #Se nao, retorna Mentira
         else:
             return False
+
+    '''
+    Funcao que gera todos os objetivos possíveis do jogo 
+    e os armazena em uma lista para que possam ser distribuidos
+    '''
+    def gera_objetivos(self, controlador_mapa):
+
+        lista_de_objetivos = []
+
+        # adiciona todos os objetivos de destruir cores
+        for cor in cores:
+            objetivo_atual = Objetivo()
+            objetivo_atual.descricao = "Destruir a cor " + cor
+            objetivo_atual.cor_a_destruir = cor
+            lista_de_objetivos.append(objetivo_atual)
+
+        # adiciona o objetivo de conquistar Europa + américa do sul
+        objetivo_atual = Objetivo()
+        objetivo_atual.descricao = "Conquistar a Europa e a América do Sul"
+        objetivo_atual.continentes_a_conquistar.append(controlador_mapa.europa)
+        objetivo_atual.continentes_a_conquistar.append(controlador_mapa.america_do_sul)
+        lista_de_objetivos.append(objetivo_atual)
+
+        # adiciona o objetivo de conquistar Oceania + Ásia
+        objetivo_atual = Objetivo()
+        objetivo_atual.descricao = "Conquistar a Oceania e a Ásia"
+        objetivo_atual.continentes_a_conquistar.append(controlador_mapa.oceania)
+        objetivo_atual.continentes_a_conquistar.append(controlador_mapa.asia)
+        lista_de_objetivos.append(objetivo_atual)
+
+        # adiciona o objetivo de conquistar América do Norte e África
+        objetivo_atual = Objetivo()
+        objetivo_atual.descricao = "Conquistar a América do Norte e a África"
+        objetivo_atual.continentes_a_conquistar.append(controlador_mapa.america_do_norte)
+        objetivo_atual.continentes_a_conquistar.append(controlador_mapa.africa)
+        lista_de_objetivos.append(objetivo_atual)
+
+        # adiciona o objetivo de conquistar América do Norte e Oceania
+        objetivo_atual = Objetivo()
+        objetivo_atual.descricao = "Conquistar a América do Norte e a Oceania"
+        objetivo_atual.continentes_a_conquistar.append(controlador_mapa.america_do_norte)
+        objetivo_atual.continentes_a_conquistar.append(controlador_mapa.oceania)
+        lista_de_objetivos.append(objetivo_atual)
+
+        # adiciona o objetivo de conquistar Ásia e América do Sul
+        objetivo_atual = Objetivo()
+        objetivo_atual.descricao = "Conquistar a Ásia e a América do Sul"
+        objetivo_atual.continentes_a_conquistar.append(controlador_mapa.asia)
+        objetivo_atual.continentes_a_conquistar.append(controlador_mapa.america_do_sul)
+        lista_de_objetivos.append(objetivo_atual)
+
+        # adiciona o objetivo de conquistar Ásia e África
+        objetivo_atual = Objetivo()
+        objetivo_atual.descricao = "Conquistar a Ásia e a África"
+        objetivo_atual.continentes_a_conquistar.append(controlador_mapa.asia)
+        objetivo_atual.continentes_a_conquistar.append(controlador_mapa.africa)
+        lista_de_objetivos.append(objetivo_atual)
+
+        # adiciona o objetivo de conquistar 18 territórios com no mínimo duas tropas em cada
+        objetivo_atual = Objetivo()
+        objetivo_atual.descricao = "Conquistar 18 Territórios com no mínimo 2 tropas em cada"
+        objetivo_atual.territorios_a_conquistar_qtd = 18
+        objetivo_atual.tropas_em_cada_territorios = 2
+        lista_de_objetivos.append(objetivo_atual)
+
+        # adiciona o objetivo de conquistar 24 territórios
+        objetivo_atual = Objetivo()
+        objetivo_atual.descricao = "Conquistar 24 Territórios"
+        objetivo_atual.territorios_a_conquistar_qtd = 24
+        lista_de_objetivos.append(objetivo_atual)
+
+        return lista_de_objetivos

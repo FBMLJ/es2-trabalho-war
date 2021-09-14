@@ -2,8 +2,8 @@ from pygame import transform
 from PPlay.mouse import Mouse
 from PPlay.window import Window
 from PPlay.gameimage import GameImage
-from jogo.Territorio import *
-from jogo.Continente import *
+from jogo.Territorio import Territorio
+from jogo.Continente import Continente
 from constant import *
 
 class ControladorMapa:
@@ -14,6 +14,7 @@ class ControladorMapa:
     img_fundo = "fundo.jpg"
     img_colisao = "mouse_colisao.jpg"
     lista_territorios = [] #  Lista de todos os territorios do jogo
+    lista_continentes = []
     #Instancias da classe Continentes
     africa = None
     america_do_norte = None
@@ -22,27 +23,31 @@ class ControladorMapa:
     europa = None
     oceania = None
 
-    perct_mapa = 0.85 #  Variavel para diminuir o tamanho do mapa e continentes
-
     def __init__(self, janela:Window):
+        self.pode_desenhar = True
         self.colisao_mouse = GameImage(self.caminho_img_mapa+self.img_colisao)
         self.janela = janela
         self.fundo = GameImage(self.caminho_img_mapa+self.img_fundo)
         self.mapa = GameImage(self.caminho_img_mapa+self.img_mapa)
         self.inicia_territorios()
         self.inicia_continentes()
-        
+        self.primeira_vez = True
         #Redimensionando as imagens, eh necessario usar .image pois eh classe do Pygame
         self.fundo.image = transform.scale(self.fundo.image, (janela.width, janela.height))
-        self.mapa.image = transform.scale(self.mapa.image, (int(self.perct_mapa*LARGURA_PADRAO), int(self.perct_mapa*ALTURA_PADRAO)))
+        self.mapa.image = transform.scale(self.mapa.image, (int(PERCT_MAPA*LARGURA_PADRAO), int(PERCT_MAPA*ALTURA_PADRAO)))
         for territorio in self.lista_territorios:
-            territorio.img.image = transform.scale(territorio.img.image, (int(self.perct_mapa*LARGURA_PADRAO), int(self.perct_mapa*ALTURA_PADRAO)))
-            territorio.img_select.image = transform.scale(territorio.img_select.image, (int(self.perct_mapa*LARGURA_PADRAO), int(self.perct_mapa*ALTURA_PADRAO)))
+            territorio.muda_escala(int(PERCT_MAPA*LARGURA_PADRAO), int(PERCT_MAPA*ALTURA_PADRAO))
+            #territorio.img.image = transform.scale(territorio.img.image, (int(PERCT_MAPA*LARGURA_PADRAO), int(PERCT_MAPA*ALTURA_PADRAO)))
+            #territorio.img_select.image = transform.scale(territorio.img_select.image, (int(PERCT_MAPA*LARGURA_PADRAO), int(PERCT_MAPA*ALTURA_PADRAO)))
+
     def inicia_territorios(self):
         #Criando uma lista com todas as instancias de territorios
+        index = 0
         for id_territorio in dicionario_territorios:
             self.lista_territorios.append(Territorio(id_territorio))
-        
+            self.lista_territorios[index].carrega_posicao_texto()
+            index += 1
+
         #Criando lista de vizinhos de cada territorio
         arq = open(self.caminho_matriz_adjacencia,'r')
         linhas = arq.readlines()
@@ -54,6 +59,7 @@ class ControladorMapa:
             for j in range(len(matriz_adj[0])):
                 if matriz_adj[i][j] == '1':
                     self.lista_territorios[i].vizinho.append( self.lista_territorios[j] )
+        
 
     def inicia_continentes(self):
         #Listas de territorios por continentes para a criacao das instancias de continentes
@@ -86,25 +92,45 @@ class ControladorMapa:
         self.asia = Continente("Asia", territorios_asia, 7)
         self.europa = Continente("Europa", territorios_eu, 5)
         self.oceania = Continente("Oceania", territorios_oc, 2)
+        self.lista_continentes = [
+            self.africa, self.america_do_norte, self.america_do_sul,    
+            self.asia, self.europa, self.oceania
+            ]
     
-    def selecionar_territorio(self, mouse:Mouse):
+    def selecionar_territorio(self, mouse:Mouse) -> str:
         x,y = mouse.get_position()
         self.colisao_mouse.set_position(x,y)
         territorio_selecionado = None
         if mouse.is_button_pressed(1):
+            self.colisao_mouse.draw()
+            self.pode_desenhar = True
             for territorio in self.lista_territorios:
                 if self.colisao_mouse.collided_perfect(territorio.img):
                     territorio.selecionado = True
                     territorio_selecionado = territorio.nome
+                    #print("{}:({},{})".format(territorio.id, x, y))
                 elif territorio.selecionado: #  Caso o usuario tenha selecionado um novo territorio
                     territorio.selecionado = False
         return territorio_selecionado
 
     def render(self):
-        self.fundo.draw()
-        self.mapa.draw()
-        for territorio in self.lista_territorios:
-            territorio.img.draw()
-            if territorio.selecionado:
-                territorio.img_select.draw()
-        self.colisao_mouse.draw()
+        
+        if (self.pode_desenhar):
+            self.pode_desenhar = False
+        
+            self.fundo.draw()
+            self.mapa.draw()
+            for territorio in self.lista_territorios:
+                territorio.img.draw()
+            for territorio in self.lista_territorios:
+                if territorio.selecionado:
+                    territorio.img_select.draw()    
+                tamanho_texto = 18
+                cor_texto = (255,0,127)
+                self.janela.draw_text(str(territorio.quantidade_tropas),
+                    territorio.pos_texto_x, 
+                    territorio.pos_texto_y, 
+                    tamanho_texto, 
+                    cor_texto
+                    )
+        

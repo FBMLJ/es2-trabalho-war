@@ -1,18 +1,40 @@
 from jogo.Bots.BotGeral import BotGeral
 from jogo.Player import Player
 from jogo.Card import Card
+from constant import *
+
+'''
+Classe responsavel por gerenciar tudo relacionado ao uso de cartas
+'''
 
 class CardManager:
-    def __init__(self, cartas: list) -> None:
+    def __init__(self) -> None:
         self.bonus_de_troca = 4
-        self.cartas_no_monte = cartas
+        self.cartas_no_monte = 0
     
+    '''
+    Funcao que inicializa o baralho de cartas, exceto coringa, com base no dicionario em constant.py
+    '''
+    def inicia_cartas(self) -> list:
+        lista_de_cartas = []
+        # Coringas
+        lista_de_cartas.append(Card(None, "coringa_carta.png", None, True))
+        lista_de_cartas.append(Card(None, "coringa_carta.png", None, True))
+        for id_territorio in dicionario_territorios:
+            nome_territorio = dicionario_territorios[id_territorio]
+            imagem = nome_territorio + "_carta.png"
+            figura = dicionario_figura_territorio[id_territorio]
+            lista_de_cartas.append(Card(nome_territorio, imagem, figura, False))
+        #atualizo o tamanho do baralho
+        self.cartas_no_monte = len(lista_de_cartas)
+        return lista_de_cartas
     '''
     Funcao que retorna o bonus de tropas por troca
     Remove as cartas a serem trocadas da mao do jogador,
     Confere o bonus de tropa aos territorios conquistados
     Retorna o bonus de troca da rodada atual.
     '''
+
     def troca_cartas(self, mao_do_jogador: list, cartas_trocadas: list, territorios: list) -> int:
         # Remove as cartas a serem trocadas da mao do jogador
         for i in range(3):

@@ -1,3 +1,4 @@
+from PPlay.gameimage import GameImage
 from random import shuffle
 from jogo.Objetivo import Objetivo
 from jogo.ObjectiveVerifier import ObjectiveVerifier
@@ -10,12 +11,7 @@ class MatchStarter:
     Classe responsavel por iniciar o jogo
     Distribui cartas, territorios e objetivos
     '''
-    def __init__(self, jogadores: list) -> None:
-        #Tem que implementar em algum lugar
-        self.todos_os_objetivos = [
-            Objetivo()
-        ]
-
+    def __init__(self) -> None:
         self.verificador_objetivos = ObjectiveVerifier()
 
     '''
@@ -47,6 +43,10 @@ class MatchStarter:
         jogador_a_receber_territorio = 0
         for i in range(len(territorios)):
             jogadores[jogador_a_receber_territorio].territorios.append(territorios[i])
+            cor_atual = jogadores[jogador_a_receber_territorio].cor
+            territorios[i].set_cor_tropas(cor_atual)
+            territorios[i].quantidade_tropas = 1
+            #condicional para fazer o ciclo entre os jogadores
             if jogador_a_receber_territorio < num_de_jogadores - 1:
                 jogador_a_receber_territorio += 1
             else:
@@ -75,6 +75,20 @@ class MatchStarter:
                     objetivos_filtrados.remove(jogador.objetivo)
 
     '''
+    Funcao que sorteia um cores para os jogadores
+    primeiro embaralha os jogadores
+    depois passa uma cor para cada um
+    '''
+    def distribui_cores(self, jogadores):
+        self.embaralha_jogadores(jogadores)
+        indice = 0
+        for cor in cores:
+            if indice > len(jogadores) - 1:
+                break
+            jogadores[indice].cor = cor
+            indice += 1
+
+    '''
     Funcao que sorteia um objetivo para um jogador
     Primeiro embaralha a lista de objetivos
     Depois tira o primeiro objetivo para o jogador
@@ -82,4 +96,3 @@ class MatchStarter:
     def sorteia_objetivo(self, jogador: Player, objetivos: list) -> None:
         self.embaralha_objetivos(objetivos)
         jogador.objetivo = objetivos[0]
-        
