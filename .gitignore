@@ -81,3 +81,10 @@ jogo/__pycache__/Continente.cpython-39.pyc
 __pycache__/constant.cpython-39.pyc
 __pycache__/constant.cpython-38.pyc
 .idea/workspace.xml
+jogo/__pycache__/TroopsManager.cpython-39.pyc
+jogo/__pycache__/Player.cpython-39.pyc
+jogo/__pycache__/Objetivo.cpython-39.pyc
+jogo/__pycache__/ObjectiveVerifier.cpython-39.pyc
+jogo/__pycache__/MatchStarter.cpython-39.pyc
+jogo/__pycache__/CardManager.cpython-39.pyc
+jogo/__pycache__/Card.cpython-39.pyc

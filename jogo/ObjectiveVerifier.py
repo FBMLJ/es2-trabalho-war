@@ -40,7 +40,7 @@ class ObjectiveVerifier:
                     return jogador
             #Se um jogador tiver o objetivo de conquistar continentes especificos
             if len(jogador.objetivo.continentes_a_conquistar) != 0:
-                ganhou = self.verifica_conquista_continentes(jogador, territorios)
+                ganhou = self.verifica_conquista_continentes(jogador)
                 if ganhou:
                     return jogador
             #Se um jogador tiver o objetivo de conquistar X territorios com um minimo de Y tropas
@@ -82,9 +82,9 @@ class ObjectiveVerifier:
         #Depois Itera pelos continentes a serem conquistados
         for continente_a_verificar in jogador.objetivo.continentes_a_conquistar:
             #Depois busca os territorios do jogador que fazem parte daquele continente
-            territorios_do_continente = (t for t in jogador.territorios if t.continente_nome == continente_a_verificar.nome)
-            #Se o jogador tiver todos os territorios do coninente, entao e subtraido 1 un. da quantidade de continentes a conquistar
-            if len(territorios_do_continente) == len(continente_a_verificar.territorios):
+            #Se o jogador tiver todos os territorios do continente, entao e subtraido 1 un. da quantidade de continentes a conquistar
+            #territorios_do_continente = (t for t in jogador.territorios if t.continente_nome == continente_a_verificar.nome)
+            if jogador.conquistou_continente(continente_a_verificar):
                 continentes_conquistados_qtd -= 1
         #Se nao sobrou continentes a conquistar, retorna Verdade
         if continentes_conquistados_qtd == 0:

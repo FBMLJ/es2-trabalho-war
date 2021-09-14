@@ -10,6 +10,7 @@ from jogo.CardManager import CardManager
 from jogo.ObjectiveVerifier import ObjectiveVerifier
 from jogo.TroopsManager import TroopsManager
 from componentes.hudTurno import hudTurno
+from componentes.hudSelecionaTropas import HudSelecionaTropas
 from constant import *
 
 class ControladorPartida:
@@ -27,13 +28,9 @@ class ControladorPartida:
         self.iniciador_de_partida.distribui_cores(self.jogadores)
         self.iniciador_de_partida.distribui_territorios(self.gerenciador_mapa.lista_territorios, self.jogadores)
         self.iniciador_de_partida.distribui_objetivos(self.todos_os_objetivos, self.jogadores)
-
-        for i in jogadores:
-            print(i.objetivo.descricao)
-        for territorio in self.gerenciador_mapa.lista_territorios:
-            print(territorio.cor_tropas)
             
         self.hud_turno = hudTurno(janela)
+        self.hud_seleciona_quantidade = HudSelecionaTropas(janela)
         self.janela = janela
         self.mouse = Mouse()
         self.jogador_vencedor = None
@@ -52,27 +49,18 @@ class ControladorPartida:
                 '''
                 Etapa 1 do turno: Distribuicao de exercitos
                 '''
-                self.gerenciador_tropas.recebimento_rodada(jogador, self.gerenciador_mapa.lista_continentes)  #Calcula
-                etapa_1 = True
-                while etapa_1:
-                    nome_territorio_selecionado = self.gerenciador_mapa.selecionar_territorio(self.mouse)
+                self.distribuicao_exercitos(jogador)
                     
                 if(self.rodada > 1): #Na primeira rodada so ha distribuicao de exercitos
                     
                     '''
                     Etapa 2 do turno: Combate
                     '''
-                    etapa_2 = True
-                    while etapa_2:
-                        break
-                    
+                    self.combate(jogador)
                     '''
                     Etapa 3 do turno: Movimentacao de exercitos
                     '''
-                    etapa_3 = True
-                    while etapa_3:
-                        break
-                self.gerenciador_mapa.selecionar_territorio(self.mouse)
+                    self.movimentacao_exercitos(jogador)
                 self.render()
                 self.janela.update()
             
@@ -80,6 +68,7 @@ class ControladorPartida:
     def render(self):
         self.gerenciador_mapa.render()
         self.hud_turno.render()
+        self.hud_seleciona_quantidade.render()
 
     def inicia_cartas(self) -> None:
         for id_territorio in dicionario_territorios:
@@ -87,3 +76,17 @@ class ControladorPartida:
             imagem = nome_territorio + "_carta.png"
             figura = dicionario_figura_territorio[id_territorio]
             self.todas_as_cartas.append(Card(nome_territorio, imagem, figura, False))
+
+    def distribuicao_exercitos(self, jogador) -> None:
+        self.gerenciador_tropas.recebimento_rodada(jogador, self.gerenciador_mapa.lista_continentes)
+        while True:
+            nome_territorio_selecionado = self.gerenciador_mapa.selecionar_territorio(self.mouse)
+            self.render()
+            self.janela.update()
+            self.hud_seleciona_quantidade.update()
+    
+    def combate(self, jogador) -> None:
+        pass
+    
+    def movimentacao_exercitos(self, jogador) -> None:
+        pass

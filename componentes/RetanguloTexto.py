@@ -12,6 +12,7 @@ class RetanguloTexto:
 
         self.code = code
         self.moldura = moldura
+        self.centralizado = False
 
         self.x = 0
         self.y = 0
@@ -54,11 +55,18 @@ class RetanguloTexto:
         if self.moldura:
             pygame.draw.rect(self.janela.get_screen(), self.cor_atual, self.retangulo_fora, 4)
 
-        self.janela.draw_text(
-            # Essa parte pega somente as letras que irão ser exibidas na tela
-            self.texto,
-            self.x + 10, self.y + self.height / 4, size=self.tamanho_texto, font_name="FreeMono, Monospace"
-        )
+        if self.centralizado:
+            self.janela.draw_text(
+                # Essa parte pega somente as letras que irão ser exibidas na tela
+                self.texto,
+                self.x + self.width/2 - (len(self.texto) * self.tamanho_texto)/4, self.y + self.height/2 - self.tamanho_texto/2, size=self.tamanho_texto, font_name="FreeMono, Monospace"
+            )
+        else:
+            self.janela.draw_text(
+                # Essa parte pega somente as letras que irão ser exibidas na tela
+                self.texto,
+                self.x + 10, self.y + self.height /4, size=self.tamanho_texto, font_name="FreeMono, Monospace"
+            )
 
     def set_position(self, x, y):
         self.x = x

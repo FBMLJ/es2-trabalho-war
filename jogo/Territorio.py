@@ -1,3 +1,4 @@
+from pygame import transform
 from PPlay.gameimage import *
 from constant import *
 class Territorio:
@@ -14,6 +15,9 @@ class Territorio:
         self.quantidade_tropas = 0
         self.tropas_deslocadas = 0
         self.cor_tropas = None
+        #Variaveis para armazenar a posicao da quantidade de exercitos no territorio
+        self.pos_texto_x = None
+        self.pos_texto_y = None
 
     def __eq__(self, other):
         return self.nome == other.nome
@@ -36,4 +40,12 @@ class Territorio:
 
     def set_cor_tropas(self, cor):
         self.cor_tropas = cor
-        self.img = GameImage(self.caminho_pasta_territorios + dicionario_territorios[self.id] + "_" + cores[cor] + ".png")
+        self.img = GameImage(self.caminho_pasta_territorios + str(self.id) + "_" + cores_traducao[cor] + ".png")
+        self.muda_escala(int(PERCT_MAPA*LARGURA_PADRAO), int(PERCT_MAPA*ALTURA_PADRAO))
+    
+    def carrega_posicao_texto(self):
+        self.pos_texto_x, self.pos_texto_y = dicionario_territorios_pos_texto[self.id]
+    
+    def muda_escala(self, nova_largura, nova_altura):
+        self.img.image = transform.scale(self.img.image, (nova_largura, nova_altura))
+        self.img_select.image = transform.scale(self.img_select.image, (nova_largura, nova_altura))
