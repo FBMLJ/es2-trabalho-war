@@ -21,17 +21,19 @@ class ControladorMapa:
     asia = None
     europa = None
     oceania = None
-
+    
+    
     perct_mapa = 0.85 #  Variavel para diminuir o tamanho do mapa e continentes
 
     def __init__(self, janela:Window):
+        self.pode_desenhar = True
         self.colisao_mouse = GameImage(self.caminho_img_mapa+self.img_colisao)
         self.janela = janela
         self.fundo = GameImage(self.caminho_img_mapa+self.img_fundo)
         self.mapa = GameImage(self.caminho_img_mapa+self.img_mapa)
         self.inicia_territorios()
         self.inicia_continentes()
-        
+        self.primeira_vez = True
         #Redimensionando as imagens, eh necessario usar .image pois eh classe do Pygame
         self.fundo.image = transform.scale(self.fundo.image, (janela.width, janela.height))
         self.mapa.image = transform.scale(self.mapa.image, (int(self.perct_mapa*LARGURA_PADRAO), int(self.perct_mapa*ALTURA_PADRAO)))
@@ -92,6 +94,8 @@ class ControladorMapa:
         self.colisao_mouse.set_position(x,y)
         territorio_selecionado = None
         if mouse.is_button_pressed(1):
+            self.colisao_mouse.draw()
+            self.pode_desenhar = True
             for territorio in self.lista_territorios:
                 if self.colisao_mouse.collided_perfect(territorio.img):
                     territorio.selecionado = True
@@ -101,10 +105,14 @@ class ControladorMapa:
         return territorio_selecionado
 
     def render(self):
-        self.fundo.draw()
-        self.mapa.draw()
-        for territorio in self.lista_territorios:
-            territorio.img.draw()
-            if territorio.selecionado:
-                territorio.img_select.draw()
-        self.colisao_mouse.draw()
+        
+        if (self.pode_desenhar):
+            self.pode_desenhar = False
+        
+            self.fundo.draw()
+            self.mapa.draw()
+            for territorio in self.lista_territorios:
+                    territorio.img.draw()
+                    if territorio.selecionado:
+                        territorio.img_select.draw()
+        

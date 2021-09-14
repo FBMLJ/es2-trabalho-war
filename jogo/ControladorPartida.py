@@ -12,7 +12,7 @@ class ControladorPartida:
 
     def __init__(self, janela:Window):
         self.controlador_mapa = ControladorMapa(janela)
-        self.iniciador_de_partida = MatchStarter()
+        # self.iniciador_de_partida = MatchStarter()
         self.hud_turno = hudTurno(janela)
         self.janela = janela
         self.mouse = Mouse()
