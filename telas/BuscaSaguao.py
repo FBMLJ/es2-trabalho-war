@@ -178,10 +178,14 @@ class BuscaSaguao:
                         if self.consulta_saguoes[saguao_clicado].to_dict()["senha"] != "":
                             # muda para o modo de popup, para pedir ao usuário a senha da saka
                             self.in_popup = True
-                            self.mostra_popup_de_senha(saguao_clicado, mouse)
+                            sucesso = self.mostra_popup_de_senha(saguao_clicado, mouse)
+                            if sucesso:
+                                return estados["em_saguao"], self.consulta_saguoes[saguao_clicado].to_dict()[
+                                    "anfitriao"]
                         else:
-                            self.entrar_no_saguao(saguao_clicado)
-                            return estados["em_saguao"], self.consulta_saguoes[saguao_clicado].to_dict()["anfitriao"]
+                            sucesso = self.entrar_no_saguao(saguao_clicado)
+                            if sucesso:
+                                return estados["em_saguao"], self.consulta_saguoes[saguao_clicado].to_dict()["anfitriao"]
                         saguao_clicado = -1
                     else:
                         # se é a primeira vez que o saguão é selecionado
@@ -273,7 +277,6 @@ class BuscaSaguao:
             "data_criacao": datetime.now(),
             "numero_de_jogadores": 1,
             "anfitriao": self.usuario.uid,
-            "criador": self.usuario.uid
         }
 
         # guarda o dicionário gerado no banco
@@ -296,17 +299,36 @@ class BuscaSaguao:
 
     # Caso o usuário deseje entrar em um saguão já existente, insere o usuário na lista de participantes do saguão.
     def entrar_no_saguao(self, saguao_clicado):
-        dados_participante = {  # TODO verificar se o saguão já está cheio, se estiver mostra uma mensagem de erro
-            "nome": self.usuario.display_name,
-            "id_usuario": self.usuario.uid,
-            "pronto": False
-        }
 
-        db.collection("saguoes") \
-            .document(self.consulta_saguoes[saguao_clicado].to_dict()["anfitriao"]) \
-            .collection("participantes")\
-            .document(self.usuario.uid)\
-            .set(dados_participante)
+        mouse = Mouse()
+
+        sala_atualizada = db.collection("saguoes") \
+            .document(self.consulta_saguoes[saguao_clicado].to_dict()["anfitriao"]).get()
+
+        if sala_atualizada.to_dict()["numero_de_jogadores"] < 6:
+
+            novo_numero_de_jogadores = sala_atualizada.to_dict()["numero_de_jogadores"] + 1
+
+            db.collection("saguoes") \
+                .document(self.consulta_saguoes[saguao_clicado].to_dict()["anfitriao"])\
+                .update({"numero_de_jogadores": novo_numero_de_jogadores})
+
+            dados_participante = {
+                "nome": self.usuario.display_name,
+                "id_usuario": self.usuario.uid,
+                "pronto": False
+            }
+
+            db.collection("saguoes") \
+                .document(self.consulta_saguoes[saguao_clicado].to_dict()["anfitriao"]) \
+                .collection("participantes")\
+                .document(self.usuario.uid)\
+                .set(dados_participante)
+            return True
+        else:
+            self.mensagem_popup.mensagem = "Sala Lotada"
+            self.mostra_mensagem_de_erro(mouse)
+            return False
 
     # função que verifica se os campos de criação da sala estão corretos,
     # Caso haja algum problema nos campos retorna falso e uma mensagem de erro
@@ -338,13 +360,12 @@ class BuscaSaguao:
                 botao_foi_clicado = False
                 if botao_clicado == 2:  # se o botão de fechar o popup foi clicado, fecha e reseta o popup
                     self.popup.input.texto = ""
-                    return
+                    return False
                 elif botao_clicado == 1:  # se o botão de entrar do popup foi clicado
                     # verifica se a senha inserida na caixa é a correta
                     if self.popup.input.texto == self.consulta_saguoes[saguao_clicado].to_dict()["senha"]:
                         # se a senha for correta envia o usuário a sala desejada
-                        self.entrar_no_saguao(saguao_clicado)
-                        return estados["em_saguao"], self.consulta_saguoes[saguao_clicado].to_dict()["anfitriao"]
+                        return self.entrar_no_saguao(saguao_clicado)
                     else:
                         self.mensagem_popup.mensagem = "Senha incorreta"
                         self.mostra_mensagem_de_erro(mouse)

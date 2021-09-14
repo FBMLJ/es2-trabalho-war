@@ -52,6 +52,7 @@ class ControladorJogo:
             elif self.estado_do_jogo == estados["buscar_sala"]:
                 busca_saguao = BuscaSaguao(self.janela, self.usuario)
                 self.estado_do_jogo, self.id_saguao = busca_saguao.loop()
+                print("passei aqui")
 
             elif self.estado_do_jogo == estados["em_saguao"]:
                 saguao = Saguao(self.janela, self.usuario, self.id_saguao)
