@@ -1,3 +1,4 @@
+from jogo.Bots.BotGeral import BotGeral
 from jogo.Player import Player
 from jogo.Card import Card
 
@@ -59,3 +60,15 @@ class CardManager:
     '''
     def recebe_uma_carta(self, jogador: Player) -> None:
         jogador.cartas.append(self.cartas_no_monte.pop())
+
+    '''
+    Funcao que troca as cartas do bot
+    Chama a funcao trocar cartas para as cartas a serem trocadas
+    Adiciona o bonus de tropas as tropas pendentes do bot
+    '''
+    def trocar_cartas_do_bot(self, bot: BotGeral) -> None:
+        #Chama a funcao trocar cartas para as cartas a serem trocadas
+        bonus = self.troca_cartas(bot.cartas, bot.cartas_a_trocar, bot.territorios)
+        #Adiciona o bonus de tropas as tropas pendentes do bot
+        bot.tropas_pendentes += bonus
+        return

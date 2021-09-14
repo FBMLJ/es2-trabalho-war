@@ -1,3 +1,4 @@
+from jogo.Bots.BotGeral import BotGeral
 from jogo.Territorio import Territorio
 import random
 
@@ -82,11 +83,11 @@ class CombateManager:
     Nao pode ser menor do que 1
     '''
     def valida_qtd_tropas_atacantes(self, atacante: Territorio, tropas: int) -> bool:
-        if tropas < atacante.quantidade_tropas:
-            return False
         if tropas < 1:
             return False
-        return True
+        if tropas < atacante.quantidade_tropas:
+            return True
+        return False
 
     '''
     Funcao que opera a conquista de territorio
@@ -109,3 +110,24 @@ class CombateManager:
     '''
     def verifica_conquista(self, sobreviventes_ataque: int, defensor: Territorio) -> bool:
         return defensor.quantidade_tropas < 1 and sobreviventes_ataque > 0
+
+    '''
+    Funcao que itera pelos territorios para atacar do bot
+    Itera pela lista de ataques do bot
+    Verifica se o ataque pode acontecer
+    Busca pelo jogador dono do territorio defensor
+    Realiza o ataque
+    '''
+    def ataques_do_bot(self, bot: BotGeral, jogadores: list) -> None:
+        #Itera pela lista de ataques do bot
+        for i in range(bot.ataques_a_fazer):
+            #Verifica se o ataque pode acontecer
+            if self.pode_atacar(bot.ataques_a_fazer[i][0], bot.ataques_a_fazer[i][1]):
+                #Busca pelo jogador dono do territorio defensor
+                for jogador in jogadores:
+                    for territorio in jogador.territorios:
+                        if territorio.nome == bot.ataques_a_fazer[i][1].nome:
+                            defensor = jogador
+                #Realiza o ataque
+                self.atacar(bot.territorios, defensor.territorios, bot.ataques_a_fazer[i][0], bot.ataques_a_fazer[i][1])
+        return
