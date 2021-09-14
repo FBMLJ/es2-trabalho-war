@@ -15,12 +15,12 @@ estados = {
 }
 
 cores = {
-    "azul":"blue",
-    "amarelo":"yellow",
-    "branco":"white",
-    "preto":"black",
-    "verde":"green",
-    "vermelho":"red"
+    "azul": [25, 25, 112],
+    "amarelo": [255, 255, 0],
+    "branco": [240, 248, 255],
+    "preto": [0, 0, 0],
+    "verde": [0, 128, 0],
+    "vermelho": [255, 0, 0]
 }
 
 API_KEY = 'AIzaSyC-YLbsPI1jh9iTTn0oowvoJRx0i7mcVmY'
