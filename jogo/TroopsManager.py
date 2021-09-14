@@ -2,15 +2,6 @@ from jogo.Territorio import Territorio
 from jogo.Player import Player
 
 class TroopsManager:
-    
-    '''
-    Funcao que entrega o recebimento inicial de tropas
-    cada jogador tem 1 tropa em cada territorio que possui
-    '''
-    def recebimento_inicial(self, jogador: Player) -> None:
-        jogador.tropas_pendentes = 0
-        for territorio in jogador.territorios:
-            territorio.quantidade_tropas = 1
 
     '''
     Funcao que entrega o bonus de tropa por rodada

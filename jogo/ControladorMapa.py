@@ -14,6 +14,7 @@ class ControladorMapa:
     img_fundo = "fundo.jpg"
     img_colisao = "mouse_colisao.jpg"
     lista_territorios = [] #  Lista de todos os territorios do jogo
+    lista_continentes = []
     #Instancias da classe Continentes
     africa = None
     america_do_norte = None
@@ -89,8 +90,12 @@ class ControladorMapa:
         self.asia = Continente("Asia", territorios_asia, 7)
         self.europa = Continente("Europa", territorios_eu, 5)
         self.oceania = Continente("Oceania", territorios_oc, 2)
+        self.lista_continentes = [
+            self.africa, self.america_do_norte, self.america_do_sul,    
+            self.asia, self.europa, self.oceania
+            ]
     
-    def selecionar_territorio(self, mouse:Mouse):
+    def selecionar_territorio(self, mouse:Mouse) -> str:
         x,y = mouse.get_position()
         self.colisao_mouse.set_position(x,y)
         territorio_selecionado = None

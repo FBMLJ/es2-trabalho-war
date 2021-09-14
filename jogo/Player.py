@@ -6,3 +6,4 @@ class Player:
         self.objetivo = None
         self.pode_jogar = False
         self.cor = ""
+        self.bot = False

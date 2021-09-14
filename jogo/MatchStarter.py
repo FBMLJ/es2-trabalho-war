@@ -43,6 +43,7 @@ class MatchStarter:
         for i in range(len(territorios)):
             jogadores[jogador_a_receber_territorio].territorios.append(territorios[i])
             territorios[i].cor_tropas = jogadores[jogador_a_receber_territorio].cor
+            territorios[i].quantidade_tropas = 1
             if jogador_a_receber_territorio < num_de_jogadores - 1:
                 jogador_a_receber_territorio += 1
             else:
