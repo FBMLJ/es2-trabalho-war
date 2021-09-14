@@ -40,6 +40,7 @@ class ControladorMapa:
         for territorio in self.lista_territorios:
             territorio.img.image = transform.scale(territorio.img.image, (int(self.perct_mapa*LARGURA_PADRAO), int(self.perct_mapa*ALTURA_PADRAO)))
             territorio.img_select.image = transform.scale(territorio.img_select.image, (int(self.perct_mapa*LARGURA_PADRAO), int(self.perct_mapa*ALTURA_PADRAO)))
+            
     def inicia_territorios(self):
         #Criando uma lista com todas as instancias de territorios
         for id_territorio in dicionario_territorios:
