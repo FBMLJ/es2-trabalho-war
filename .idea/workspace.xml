@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2450b4a6-aa34-4e0a-97df-e8909e458315" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/es2-trabalho-war.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/es2-trabalho-war.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telas/BuscaSaguao.py" beforeDir="false" afterPath="$PROJECT_DIR$/telas/BuscaSaguao.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telas/Saguao.py" beforeDir="false" afterPath="$PROJECT_DIR$/telas/Saguao.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,9 +32,11 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/teste" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyIntegratedToolsModulesConfigurable" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python tests.Unittests for test_ObjectiveVerifier.TestObjectiveVerifier">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="es2-trabalho-war" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -56,8 +58,23 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Unittests for test_ObjectiveVerifier.TestObjectiveVerifier" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="es2-trabalho-war" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/teste" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_ObjectiveVerifier.TestObjectiveVerifier&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Unittests for test_ObjectiveVerifier.TestObjectiveVerifier" />
         <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
@@ -75,31 +92,5 @@
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="418" y="185" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1628729540418">
-      <screen x="0" y="27" width="1920" height="1001" />
-    </state>
-    <state x="418" y="185" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1920.1001@0.27.1920.1001" timestamp="1628729540418" />
-    <state x="743" y="285" width="424" height="491" key="FileChooserDialogImpl" timestamp="1628779888834">
-      <screen x="0" y="27" width="1920" height="1001" />
-    </state>
-    <state x="743" y="285" width="424" height="491" key="FileChooserDialogImpl/0.27.1920.1001@0.27.1920.1001" timestamp="1628779888834" />
-    <state width="1897" height="258" key="GridCell.Tab.0.bottom" timestamp="1628865865733">
-      <screen x="0" y="27" width="1920" height="1001" />
-    </state>
-    <state width="1897" height="258" key="GridCell.Tab.0.bottom/0.27.1920.1001@0.27.1920.1001" timestamp="1628865865733" />
-    <state width="1897" height="258" key="GridCell.Tab.0.center" timestamp="1628865865732">
-      <screen x="0" y="27" width="1920" height="1001" />
-    </state>
-    <state width="1897" height="258" key="GridCell.Tab.0.center/0.27.1920.1001@0.27.1920.1001" timestamp="1628865865732" />
-    <state width="1897" height="258" key="GridCell.Tab.0.left" timestamp="1628865865732">
-      <screen x="0" y="27" width="1920" height="1001" />
-    </state>
-    <state width="1897" height="258" key="GridCell.Tab.0.left/0.27.1920.1001@0.27.1920.1001" timestamp="1628865865732" />
-    <state width="1897" height="258" key="GridCell.Tab.0.right" timestamp="1628865865733">
-      <screen x="0" y="27" width="1920" height="1001" />
-    </state>
-    <state width="1897" height="258" key="GridCell.Tab.0.right/0.27.1920.1001@0.27.1920.1001" timestamp="1628865865733" />
   </component>
 </project>
