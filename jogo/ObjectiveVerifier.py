@@ -12,11 +12,11 @@ class ObjectiveVerifier:
     Depois adiciona os objetivos que nao envolvem destruir um jogador de cor faltante
     '''
     def filtrar(self, objetivos: list, jogadores: list) -> list:
-        #Primeiro pega as cores dos jogadores na partida
+        # Primeiro pega as cores dos jogadores na partida
         cores_dos_jogadores = []
         for jog in jogadores:
             cores_dos_jogadores.append(jog.cor)
-        #Depois adiciona os objetivos que nao envolvem destruir um jogador de cor faltante
+        # Depois adiciona os objetivos que nao envolvem destruir um jogador de cor faltante
         objetivos_filtrados = []
         for obj in objetivos:
             if obj.cor_a_destruir in cores_dos_jogadores:
@@ -30,25 +30,25 @@ class ObjectiveVerifier:
     Se um jogador tiver o objetivo de conquistar X territorios com um minimo de Y tropas
     Se ninguem tiver ganhado, retorna Nulo
     '''
-    def verifica_objetivos(self, jogadores: list, territorios: list) -> Player:
+    def verifica_objetivos(self, jogadores: list) -> Player:
         ganhou = False
         for jogador in jogadores:
-            #Se um jogador tiver o objetivo de destruir alguma cor
+            # Se um jogador tiver o objetivo de destruir alguma cor
             if jogador.objetivo.cor_a_destruir != "":
                 ganhou = self.verificar_destruiu_cor(jogador, jogadores)
                 if ganhou:
                     return jogador
-            #Se um jogador tiver o objetivo de conquistar continentes especificos
+            # Se um jogador tiver o objetivo de conquistar continentes especificos
             if len(jogador.objetivo.continentes_a_conquistar) != 0:
                 ganhou = self.verifica_conquista_continentes(jogador)
                 if ganhou:
                     return jogador
-            #Se um jogador tiver o objetivo de conquistar X territorios com um minimo de Y tropas
+            # Se um jogador tiver o objetivo de conquistar X territorios com um minimo de Y tropas
             if jogador.objetivo.territorios_a_conquistar_qtd > 0:
                 ganhou = self.verifica_territorios_com_tropas(jogador)
                 if ganhou:
                     return jogador
-        #Se ninguem tiver ganhado, retorna Nulo
+        # Se ninguem tiver ganhado, retorna Nulo
         return None
 
     '''
@@ -58,11 +58,11 @@ class ObjectiveVerifier:
     Se este jogador tiver 0 territoros, conta que ele foi destruido
     '''
     def verificar_destruiu_cor(self, jogador: Player, jogadores: list) -> bool:
-        #Considera, a principio, que o objetivo nao foi atingido
+        # Considera, a principio, que o objetivo nao foi atingido
         destruiu_pessimista = False
-        #Itera pela lista de jogadores da partida
+        # Itera pela lista de jogadores da partida
         for jog_itr in jogadores:
-            #Se este jogador tiver 0 territoros e ele for da cor a ser destruida
+            # Se este jogador tiver 0 territoros e ele for da cor a ser destruida
             if len(jog_itr.territorios) == 0 and jog_itr.cor == jogador.objetivo.cor_a_destruir:
                 destruiu_pessimista = True
         return destruiu_pessimista
@@ -77,19 +77,17 @@ class ObjectiveVerifier:
     Se sobrou, retorna Mentira
     '''
     def verifica_conquista_continentes(self, jogador: Player) -> bool:
-        #Primeiro conta quantos continentes devem ser conquistados
+        # Primeiro conta quantos continentes devem ser conquistados
         continentes_conquistados_qtd = len(jogador.objetivo.continentes_a_conquistar)
-        #Depois Itera pelos continentes a serem conquistados
+        # Depois Itera pelos continentes a serem conquistados
         for continente_a_verificar in jogador.objetivo.continentes_a_conquistar:
-            #Depois busca os territorios do jogador que fazem parte daquele continente
-            #Se o jogador tiver todos os territorios do continente, entao e subtraido 1 un. da quantidade de continentes a conquistar
-            #territorios_do_continente = (t for t in jogador.territorios if t.continente_nome == continente_a_verificar.nome)
+            # Se o jogador tiver todos os territorios do continente, entao e subtraido 1 un. da quantidade de continentes a conquistar
             if jogador.conquistou_continente(continente_a_verificar):
                 continentes_conquistados_qtd -= 1
-        #Se nao sobrou continentes a conquistar, retorna Verdade
+        # Se nao sobrou continentes a conquistar, retorna Verdade
         if continentes_conquistados_qtd == 0:
             return True
-        #Se sobrou, retorna Mentira
+        # Se sobrou, retorna Mentira
         else:
             return False
 
@@ -101,19 +99,19 @@ class ObjectiveVerifier:
     Se nao, retorna Mentira
     '''
     def verifica_territorios_com_tropas(self, jogador: Player) -> bool:
-        #Primeiro verifica se o jogador tem o minimo de territorios necessario, se nao tiver retorna Mentira
+        # Primeiro verifica se o jogador tem o minimo de territorios necessario, se nao tiver retorna Mentira
         territorios_conquistados_qtd = len(jogador.territorios)
         if territorios_conquistados_qtd < jogador.objetivo.territorios_a_conquistar_qtd:
             return False
-        #Depois verifica quantos territorios tem o minimo de tropas necessarias
+        # Depois verifica quantos territorios tem o minimo de tropas necessarias
         qts_territorios_tem_as_tropas_minimas = 0
         for territorio_itr in jogador.territorios:
             if territorio_itr.quantidade_tropas >= jogador.objetivo.tropas_em_cada_territorios:
                 qts_territorios_tem_as_tropas_minimas += 1
-        #Se tiver territorios o suficiente com o minimo de tropas necessarias, retorna Verdade
+        # Se tiver territorios o suficiente com o minimo de tropas necessarias, retorna Verdade
         if qts_territorios_tem_as_tropas_minimas >= jogador.objetivo.territorios_a_conquistar_qtd:
             return True
-        #Se nao, retorna Mentira
+        # Se nao, retorna Mentira
         else:
             return False
 

@@ -5,6 +5,7 @@ from jogo.Objetivo import Objetivo
 from jogo.ObjectiveVerifier import ObjectiveVerifier
 from jogo.Player import Player
 from jogo.Continente import Continente
+import os
 
 from constant import *
 
@@ -15,7 +16,7 @@ class MatchStarter:
     '''
     def __init__(self) -> None:
 
-        self.caminho_matriz_adjacencia = "jogo/matrizAdjacencia.txt"
+        self.caminho_matriz_adjacencia = "matrizAdjacencia.txt"
 
         self.verificador_objetivos = ObjectiveVerifier()
 
@@ -47,7 +48,7 @@ class MatchStarter:
             index += 1
 
         #Criando lista de vizinhos de cada territorio
-        arq = open(self.caminho_matriz_adjacencia,'r')
+        arq = open(os.path.dirname(os.path.abspath(__file__))+"/"+self.caminho_matriz_adjacencia,'r')
         linhas = arq.readlines()
         arq.close()
         matriz_adj = []
@@ -73,16 +74,22 @@ class MatchStarter:
         #Separando territorios por continentes, de acordo com seu id
         for i in range(len(lista_territorios)):
             if i+1 < 6:
+                lista_territorios[i].continente_nome = "Africa"
                 territorios_africa.append(lista_territorios[i])
             if i+1 > 6 and i+1 <= 15:
+                lista_territorios[i].continente_nome = "America do Norte"
                 territorios_an.append(lista_territorios[i])
             if i+1 > 16 and i+1 <= 19:
+                lista_territorios[i].continente_nome = "America do Sul"
                 territorios_as.append(lista_territorios[i])
             if i+1 > 19 and i+1 <=31:
+                lista_territorios[i].continente_nome = "Asia"
                 territorios_asia.append(lista_territorios[i])
             if i+1 > 31 and i+1 <= 38:
+                lista_territorios[i].continente_nome = "Europa"
                 territorios_eu.append(lista_territorios[i])
             if i+1 > 38 and i+1 <= 42:
+                lista_territorios[i].continente_nome = "Oceania"
                 territorios_oc.append(lista_territorios[i])
 
         #Criando os continentes

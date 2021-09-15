@@ -1,6 +1,7 @@
 from pygame import transform
 from PPlay.gameimage import *
 from constant import *
+
 class Territorio:
     caminho_pasta_territorios = "assets/imagem/mapa/territorios/"
 
@@ -8,8 +9,9 @@ class Territorio:
         self.id = codigo
         self.nome = dicionario_territorios[self.id]
         self.continente_nome = ""
-        self.img = GameImage(self.caminho_pasta_territorios + str(self.id) + ".png")
-        self.img_select = GameImage(self.caminho_pasta_territorios + str(self.id)+"_select.png")
+        self.img = None
+        self.img_select = None
+        self.selecionado = False
         self.vizinho = []
         self.quantidade_tropas = 0
         self.tropas_deslocadas = 0
@@ -49,8 +51,8 @@ class Territorio:
         self.img.image = transform.scale(self.img.image, (nova_largura, nova_altura))
         self.img_select.image = transform.scale(self.img_select.image, (nova_largura, nova_altura))
     
-    def realca_vizinhos(self):
-        pass
-    
-    def desvanece_vizinhos(self):
-        pass
+    def carrega_imagem(self):
+        caminho_img = self.caminho_pasta_territorios + str(self.id) + ".png"
+        caminho_img_select = self.caminho_pasta_territorios + str(self.id)+"_select.png"
+        self.img = GameImage(caminho_img)
+        self.img_select = GameImage(caminho_img_select)

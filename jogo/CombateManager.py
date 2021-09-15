@@ -1,8 +1,11 @@
 from jogo.Bots.BotGeral import BotGeral
 from jogo.Territorio import Territorio
-import random
+from jogo.DiceRoller import DiceRoller
 
 class CombateManager:
+
+    def __init__(self, rolador_de_dados=DiceRoller()):
+        self.rolador_de_dados = rolador_de_dados
 
     '''
     A funcao que realiza os ataques de um territoro a outro.
@@ -15,10 +18,10 @@ class CombateManager:
     '''
     def atacar(self, territorios_atacante: list, territorios_defensor: list,
     atacante: Territorio, defensor: Territorio, tropas_de_ataque = -1) -> int:
-        #quantos dados cada jogador vai usar
-        if tropas_de_ataque != -1: #Se o jogador especificou quantas tropas que usar no ataque
+        # Quantos dados cada jogador vai usar
+        if tropas_de_ataque != -1: # Se o jogador especificou quantas tropas que usar no ataque
             dados_atacantes = tropas_de_ataque
-        else: #Se nao especificou quantas tropas usar
+        else: # Se nao especificou quantas tropas usar
             if atacante.quantidade_tropas > 3:
                 dados_atacantes = 3
             else:
@@ -27,15 +30,15 @@ class CombateManager:
             dados_defensores = 3
         else:
             dados_defensores = defensor.quantidade_tropas
-        #rola os dados para cada jogador
+        # Rola os dados para cada jogador
         rolagens_ataque = []
         rolagens_defesa = []
 
         dados_a_rolar = min(dados_atacantes, dados_defensores)
         for _ in range(dados_a_rolar):
-            rolagens_ataque.append(self.rolar_dados())
-            rolagens_defesa.append(self.rolar_dados())
-        #compara os dados em ordem decrescente
+            rolagens_ataque.append(self.rolador_de_dados.rolar_dados_atacante())
+            rolagens_defesa.append(self.rolador_de_dados.rolar_dados_defensor())
+        # Compara os dados em ordem decrescente
         vitorias_ataque = 0
         vitorias_defesa = 0
         rolagens_ataque.sort(reverse=True)
@@ -46,24 +49,18 @@ class CombateManager:
             else:
                 vitorias_defesa += 1
 
-        #subtrai as tropas derrotadas
+        # Subtrai as tropas derrotadas
         atacante.perde_tropas(vitorias_defesa)
         defensor.perde_tropas(vitorias_ataque)
 
         sobreviventes = vitorias_ataque
 
-        #Verifica se houve conquista
+        # Verifica se houve conquista
         if self.verifica_conquista(sobreviventes, defensor):
             self.conquista(territorios_atacante, territorios_defensor, atacante, defensor, sobreviventes)
 
-        #retorna as tropas sobreviventes do ataque
+        # Retorna as tropas sobreviventes do ataque
         return sobreviventes
-
-    '''
-    Funcao que rola um dado de 6 faces
-    '''
-    def rolar_dados(self) -> int:
-        return random.randint(1, 6)
 
     '''
     Funcao que checa se o atacante pode atacar o defensor
@@ -97,12 +94,12 @@ class CombateManager:
     '''
     def conquista(self, territorios_atacante: list, territorios_defensor: list,
     atacante: Territorio, defensor: Territorio, sobreviventes: int) -> None:
-        #o territorio conquistado vai para a lista de territorios do atacante
+        # O territorio conquistado vai para a lista de territorios do atacante
         territorios_atacante.append(defensor)
-        #apenas as tropas vitoriosas na batalha podem ocupar o territorio
+        # Apenas as tropas vitoriosas na batalha podem ocupar o territorio
         atacante.perde_tropas(sobreviventes)
         defensor.recebe_tropas(sobreviventes)
-        #o territorio conquistado sai da lista de territorios do defensor
+        # O territorio conquistado sai da lista de territorios do defensor
         territorios_defensor.remove(defensor)
 
     '''

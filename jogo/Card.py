@@ -1,5 +1,6 @@
 class Card:
     verso_img = "carta_verso.png"
+
     def __init__(self, territorio: str, frente: str, fig: str, coringa: bool) -> None:
         self.territorio_nome = territorio
         self.frente_img = frente
