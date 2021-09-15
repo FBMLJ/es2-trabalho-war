@@ -19,23 +19,11 @@ class TestObjectiveVerifier(TestCase):
         jogador_tres = Player()
         jogador_tres.cor = "branco"
         jogadores = [jogador_um, jogador_dois, jogador_tres]
-        ''''
-        objetivo_um = Objetivo()
-        objetivo_um.cor_a_destruir = "azul"
-        objetivo_dois = Objetivo()
-        objetivo_dois.cor_a_destruir = "amarelo"
-        objetivo_tres = Objetivo()
-        objetivo_tres.cor_a_destruir = "branco"
-        objetivo_quatro = Objetivo()
-        objetivo_quatro.cor_a_destruir = "preto"
-        objetivo_cinco = Objetivo()
-        objetivo_cinco.cor_a_destruir = "verde"
-        objetivo_seis = Objetivo()
-        objetivo_seis.cor_a_destruir = "vermelho"
-        objetivo_sete = Objetivo()
-        objetivo_sete.cor_a_destruir = ""
-        objetivos = [objetivo_um, objetivo_dois, objetivo_tres, objetivo_quatro, objetivo_cinco, objetivo_seis, objetivo_sete]
-        '''
+
+        lista_territorios = match_starter.inicia_territorios()
+        lista_continentes = match_starter.inicia_continentes(lista_territorios)
+        objetivos = objective_verifier.gera_objetivos(lista_continentes)
+        
         #Act
         objetivos_filtrados = objective_verifier.filtrar(objetivos, jogadores)
 
@@ -47,29 +35,33 @@ class TestObjectiveVerifier(TestCase):
         cores_faltantes_nao_estao_presentes = ("preto" not in cores_filtradas) and ("verde" not in cores_filtradas) and ("vermelho" not in cores_filtradas)
         self.assertTrue(cores_faltantes_nao_estao_presentes)
 
-    def test_verifica_objetivos(self):
-        #Arrange
-        #Act
-        #Assert
-        self.assertTrue(True)
-
     def test_verificar_destruiu_cor(self):
         #Arrange
         objective_verifier = ObjectiveVerifier()
+        match_starter = MatchStarter()
 
-        objetivo_ganhador = Objetivo()
-        objetivo_ganhador.cor_a_destruir = "azul"
+        lista_territorios = match_starter.inicia_territorios()
+        lista_continentes = match_starter.inicia_continentes(lista_territorios)
+        objetivos = objective_verifier.gera_objetivos(lista_continentes)
+
         jogador_ganhador = Player()
         jogador_ganhador.cor = "verde"
-        jogador_ganhador.objetivo = objetivo_ganhador
-        jogador_ganhador.territorios = [1, 2, 3, 4]
-
-        objetivo_perdedor = Objetivo()
-        objetivo_perdedor.cor_a_destruir = "verde"
         jogador_perdedor = Player()
         jogador_perdedor.cor = "azul"
+
+        nao_achou_objetivo_de_destruir_cor = True
+        posicao_na_lista = 0
+        while nao_achou_objetivo_de_destruir_cor:
+            if objetivos[posicao_na_lista].cor_a_destruir == jogador_perdedor.cor:
+                nao_achou_objetivo_de_destruir_cor = False
+                objetivo = objetivos[posicao_na_lista]
+            posicao_na_lista += 1
+
+        jogador_ganhador.objetivo = objetivo
+        for i in range(10):
+            jogador_ganhador.territorios.append(lista_territorios[i])
         jogador_perdedor.territorios = []
-        jogador_perdedor.objetivo = objetivo_perdedor
+
         jogadores = [jogador_ganhador, jogador_perdedor]
 
         #Act
@@ -79,25 +71,58 @@ class TestObjectiveVerifier(TestCase):
         self.assertTrue(ganhou)
 
     def test_verifica_conquista_continentes(self):
-        #Arrange
+        # Arrange
         objective_verifier = ObjectiveVerifier()
+        match_starter = MatchStarter()
 
-        territorio_um = Territorio()
-        territorio_dois = Territorio()
-        territorio_tres = Territorio()
-        territorio_quatro = Territorio()
-        territorio_cinco = Territorio()
+        lista_territorios = match_starter.inicia_territorios()
+        lista_continentes = match_starter.inicia_continentes(lista_territorios)
+        objetivos = objective_verifier.gera_objetivos(lista_continentes)
 
-        continente_um = Continente()
-        continente_dois = Continente()
-        objetivo = Objetivo()
-        objetivo.continentes_a_conquistar = [continente_um, continente_dois]
-        jogador = Player()
+        nao_achou_objetivo_de_conquistar_continente = True
+        posicao_na_lista = 0
+        while nao_achou_objetivo_de_conquistar_continente:
+            if len(objetivos[posicao_na_lista].continentes_a_conquistar) != 0:
+                nao_achou_objetivo_de_conquistar_continente = False
+                objetivo = objetivos[posicao_na_lista]
+            posicao_na_lista += 1
 
-        #Act
+        jogador_ganhador = Player()
+        jogador_ganhador.objetivo = objetivo
+        for continente in objetivo.continentes_a_conquistar:
+            jogador_ganhador.territorios.extend(continente.territorios)
 
-        #Assert
-        self.fail()
+        # Act
+        ganhou = objective_verifier.verifica_conquista_continentes(jogador_ganhador)
+
+        # Assert
+        self.assertTrue(ganhou)
 
     def test_verifica_territorios_com_tropas(self):
-        self.fail()
+        # Arrange
+        objective_verifier = ObjectiveVerifier()
+        match_starter = MatchStarter()
+
+        lista_territorios = match_starter.inicia_territorios()
+        lista_continentes = match_starter.inicia_continentes(lista_territorios)
+        objetivos = objective_verifier.gera_objetivos(lista_continentes)
+
+        nao_achou_objetivo_de_conquistar_territorios = True
+        posicao_na_lista = 0
+        while nao_achou_objetivo_de_conquistar_territorios:
+            if objetivos[posicao_na_lista].territorios_a_conquistar_qtd > 0:
+                nao_achou_objetivo_de_conquistar_territorios = False
+                objetivo = objetivos[posicao_na_lista]
+            posicao_na_lista += 1
+
+        jogador_ganhador = Player()
+        jogador_ganhador.objetivo = objetivo
+        for i in range(objetivo.territorios_a_conquistar_qtd):
+            lista_territorios[i].recebe_tropas(objetivo.tropas_em_cada_territorios)
+            jogador_ganhador.territorios.append(lista_territorios[i])
+
+        # Act
+        ganhou = objective_verifier.verifica_territorios_com_tropas(jogador_ganhador)
+
+        # Assert
+        self.assertTrue(ganhou)

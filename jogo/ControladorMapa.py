@@ -83,6 +83,11 @@ class ControladorMapa:
                     cor_texto
                     )
     
+    def carrega_imagens_dos_territorios(self):
+
+        for territorio in self.lista_territorios:
+            territorio.carrega_imagem()
+
     def set_lista_continentes(self, lista_continentes):
 
         for continente in lista_continentes:

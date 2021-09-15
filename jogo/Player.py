@@ -13,9 +13,11 @@ class Player:
 
     def conquistou_continente(self, continente:Continente) -> bool:
         territorios_do_continente = []
+        # Busca os territorios do jogador que fazem parte daquele continente
         for territorio in self.territorios:
             if territorio.continente_nome == continente.nome:
                 territorios_do_continente.append(territorio)
+        # Se o jogador tiver todos os territorios do continente
         if len(territorios_do_continente) == len(continente.territorios):
             return True
         return False
