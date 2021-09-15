@@ -21,6 +21,7 @@ class ControladorPartida:
         self.gerenciador_mapa = ControladorMapa(janela)
         self.gerenciador_mapa.lista_territorios = self.iniciador_de_partida.inicia_territorios()
         self.gerenciador_mapa.set_lista_continentes(self.iniciador_de_partida.inicia_continentes(self.gerenciador_mapa.lista_territorios))
+        self.gerenciador_mapa.carrega_imagens_dos_territorios()
         self.gerenciador_cartas = CardManager()
         self.gerenciador_objetivos = ObjectiveVerifier()
         self.gerenciador_tropas = TroopsManager()
