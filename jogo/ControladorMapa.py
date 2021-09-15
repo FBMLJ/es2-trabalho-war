@@ -27,6 +27,7 @@ class ControladorMapa:
                                   #  a segunda posicao armazenara o territorio desensor na etapa 2 ou o territorio que recebera tropa
                                   #  movida de outro territorio na etapa 3
 
+
     def __init__(self, janela: Window):
         self.pode_desenhar = True
         self.colisao_mouse = GameImage(self.caminho_img_mapa+self.img_colisao)
@@ -45,27 +46,53 @@ class ControladorMapa:
             #territorio.img_select.image = transform.scale(territorio.img_select.image, (int(PERCT_MAPA*LARGURA_PADRAO), int(PERCT_MAPA*ALTURA_PADRAO)))
         
     
-    def selecionar_territorio(self, mouse:Mouse, jogador:Player,etapa:int) -> None:
+    def selecionar_territorio(self, mouse:Mouse, jogador:Player) -> None: 
         x,y = mouse.get_position()
         self.colisao_mouse.set_position(x,y)
         if mouse.is_button_pressed(1):
             self.colisao_mouse.draw()
             self.pode_desenhar = True
-            for territorio in self.lista_territorios:
+            for territorio in jogador.territorios:
                 if self.colisao_mouse.collided_perfect(territorio.img):
-                    if(etapa == 1 and territorio.cor_tropas == jogador.cor):
-                        if len(self.territorios_selecionados) == 1:
-                            self.territorios_selecionados[0] = territorio
-                        elif len(self.territorios_selecionados) == 0:
-                            self.territorios_selecionados.append(territorio)
-                    if(etapa == 2):
-                        if len(self.territorios_selecionados) == 0 and territorio.cor_tropas == jogador.cor:
-                            self.territorios_selecionados.append(territorio) #  nenhum territorio foi selecionado, logo, esse sera o atacante
-                        elif len(self.territorios_selecionados) == 1:
-                            pass
-                    #print("{}:({},{})".format(territorio.id, x, y))
+                    if len(self.territorios_selecionados) >= 1:
+                        self.limpa_territorios_selecionados()
+                        territorio.selecionado = True
+                        self.territorios_selecionados.append(territorio)
+                    elif len(self.territorios_selecionados) == 0:
+                        territorio.selecionado = True
+                        self.territorios_selecionados.append(territorio)
+                    #print("{} {}:({},{})".format(territorio.nome, territorio.id, x, y))
+                    #print("{} {} com {} vizinhos".format(territorio.nome, territorio.id, len(territorio.vizinho)))
 
-    def render(self):
+    def selecionar_vizinho(self, mouse:Mouse, jogador:Player, etapa:int): #  argumento 'etapa' indica em que etapa o turno esta
+        x,y = mouse.get_position()
+        self.colisao_mouse.set_position(x,y)
+        if mouse.is_button_pressed(1) and len(self.territorios_selecionados) >= 1:
+            self.colisao_mouse.draw()
+            self.pode_desenhar = True
+            for territorio in self.lista_territorios:
+                if (
+                    self.colisao_mouse.collided_perfect(territorio.img) and 
+                    territorio != self.territorios_selecionados[0] and
+                    territorio.eh_vizinho(self.territorios_selecionados[0])
+                   ):
+                    print("{}:({},{})".format(territorio.id, x, y))
+                    #print("{} {} com {} vizinhos".format(territorio.nome, territorio.id, len(territorio.vizinho)))
+                    if( 
+                        (etapa == 2 and territorio.cor_tropas != self.territorios_selecionados[0].cor_tropas) or 
+                        (etapa == 3 and territorio.cor_tropas == self.territorios_selecionados[0].cor_tropas)
+                      ):
+                        if len(self.territorios_selecionados) == 1:
+                            territorio.selecionado = True
+                            self.territorios_selecionados.append(territorio)
+                        elif len(self.territorios_selecionados) >= 2:
+                            self.territorios_selecionados[1].selecionado = False
+                            territorio.selecionado = True
+                            self.territorios_selecionados[1] = territorio
+                        #print("primario {} {}, secundario {} {}".format(self.territorios_selecionados[0].nome, self.territorios_selecionados[0].id, territorio.nome, territorio.id))
+                        break #  Para nao percorrer toda a lista de territorios
+                        
+    def render(self, etapa):
         
         if (self.pode_desenhar):
             self.pode_desenhar = False
@@ -76,8 +103,17 @@ class ControladorMapa:
                 territorio.img.draw()
             for territorio in self.lista_territorios:
                 for territorio_selecionado in self.territorios_selecionados:
-                    if territorio_selecionado.nome == territorio.nome:
+                    if (
+                            territorio.eh_vizinho(self.territorios_selecionados[0]) and
+                            ( 
+                                (etapa == 2 and territorio.cor_tropas != self.territorios_selecionados[0].cor_tropas) or
+                                (etapa == 3 and territorio.cor_tropas == self.territorios_selecionados[0].cor_tropas)
+                            )
+                        ):
+                        territorio.img_highlight.draw()
+                    if territorio_selecionado == territorio:
                         territorio.img_select.draw()
+                    
                 tamanho_texto = 18
                 cor_texto = (255,0,127)
                 self.janela.draw_text(str(territorio.quantidade_tropas),
@@ -110,3 +146,8 @@ class ControladorMapa:
                 self.oceania = continente
         
         self.lista_continentes = lista_continentes
+    
+    def limpa_territorios_selecionados(self):
+        for territorio in self.territorios_selecionados:
+            territorio.selecionado = False
+        self.territorios_selecionados = []

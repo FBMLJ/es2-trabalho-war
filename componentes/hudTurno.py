@@ -20,7 +20,7 @@ class hudTurno:
         distribuir_destacado = GameImage(caminho_hud+"botao_distribuir.png")
         self.icone_distribuir = Icone(distribuir_normal, distribuir_destacado)
         self.icone_distribuir.set_position(dist_acc, self.barra.y + offset_y )
-        self.icone_distribuir.is_normal = False #  Atribuicao para mostrar no relatorio
+        #self.icone_distribuir.is_normal = False #  Atribuicao para mostrar no relatorio
         dist_acc += self.icone_distribuir.width + offset
 
         combate_normal = GameImage(caminho_hud+"botao_combate_block.png")
