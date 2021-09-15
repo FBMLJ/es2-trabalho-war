@@ -22,6 +22,10 @@ class ControladorMapa:
     asia = None
     europa = None
     oceania = None
+    territorios_selecionados = [] #  primeira posicao armazenara o territorio na etapa 1, atacante na etapa 2, ou territorio que tera
+                                  #  sua tropa movida na etapa 3
+                                  #  a segunda posicao armazenara o territorio desensor na etapa 2 ou o territorio que recebera tropa
+                                  #  movida de outro territorio na etapa 3
 
     def __init__(self, janela:Window):
         self.pode_desenhar = True
@@ -97,7 +101,7 @@ class ControladorMapa:
             self.asia, self.europa, self.oceania
             ]
     
-    def selecionar_territorio(self, mouse:Mouse) -> str:
+    def selecionar_territorio(self, mouse:Mouse, etapa:int) -> str:
         x,y = mouse.get_position()
         self.colisao_mouse.set_position(x,y)
         territorio_selecionado = None
@@ -112,6 +116,7 @@ class ControladorMapa:
                 elif territorio.selecionado: #  Caso o usuario tenha selecionado um novo territorio
                     territorio.selecionado = False
         return territorio_selecionado
+    
 
     def render(self):
         
@@ -123,8 +128,9 @@ class ControladorMapa:
             for territorio in self.lista_territorios:
                 territorio.img.draw()
             for territorio in self.lista_territorios:
-                if territorio.selecionado:
-                    territorio.img_select.draw()    
+                for territorio_selecionado in self.territorios_selecionados:
+                    if territorio_selecionado.nome == territorio.nome:
+                        territorio.img_select.draw()
                 tamanho_texto = 18
                 cor_texto = (255,0,127)
                 self.janela.draw_text(str(territorio.quantidade_tropas),
