@@ -4,11 +4,13 @@ from jogo.Player import Player
 from jogo.Objetivo import Objetivo
 from jogo.Continente import Continente
 from jogo.Territorio import Territorio
+from jogo.MatchStarter import MatchStarter
 
 class TestObjectiveVerifier(TestCase):
     def test_filtrar(self):
         #Arrange
         objective_verifier = ObjectiveVerifier()
+        match_starter = MatchStarter()
 
         jogador_um = Player()
         jogador_um.cor = "azul"
@@ -17,7 +19,7 @@ class TestObjectiveVerifier(TestCase):
         jogador_tres = Player()
         jogador_tres.cor = "branco"
         jogadores = [jogador_um, jogador_dois, jogador_tres]
-
+        ''''
         objetivo_um = Objetivo()
         objetivo_um.cor_a_destruir = "azul"
         objetivo_dois = Objetivo()
@@ -33,7 +35,7 @@ class TestObjectiveVerifier(TestCase):
         objetivo_sete = Objetivo()
         objetivo_sete.cor_a_destruir = ""
         objetivos = [objetivo_um, objetivo_dois, objetivo_tres, objetivo_quatro, objetivo_cinco, objetivo_seis, objetivo_sete]
-
+        '''
         #Act
         objetivos_filtrados = objective_verifier.filtrar(objetivos, jogadores)
 
