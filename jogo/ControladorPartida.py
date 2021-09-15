@@ -17,13 +17,15 @@ class ControladorPartida:
     caminho_hud = "assets/imagem/hud/"
 
     def __init__(self, janela:Window, jogadores: list):
+        self.iniciador_de_partida = MatchStarter()
         self.gerenciador_mapa = ControladorMapa(janela)
+        self.gerenciador_mapa.lista_territorios = self.iniciador_de_partida.inicia_territorios()
+        self.gerenciador_mapa.set_lista_continentes(self.iniciador_de_partida.inicia_continentes(self.gerenciador_mapa.lista_territorios))
         self.gerenciador_cartas = CardManager()
         self.gerenciador_objetivos = ObjectiveVerifier()
         self.gerenciador_tropas = TroopsManager()
         self.jogadores = jogadores
-        self.todos_os_objetivos = self.gerenciador_objetivos.gera_objetivos(self.gerenciador_mapa)
-        self.iniciador_de_partida = MatchStarter()
+        self.todos_os_objetivos = self.gerenciador_objetivos.gera_objetivos(self.gerenciador_mapa)        
 
         self.iniciador_de_partida.distribui_cores(self.jogadores)
         self.iniciador_de_partida.distribui_territorios(self.gerenciador_mapa.lista_territorios, self.jogadores)

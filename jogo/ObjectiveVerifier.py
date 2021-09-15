@@ -19,7 +19,7 @@ class ObjectiveVerifier:
         #Depois adiciona os objetivos que nao envolvem destruir um jogador de cor faltante
         objetivos_filtrados = []
         for obj in objetivos:
-            if obj.cor_a_destruir not in cores_dos_jogadores:
+            if obj.cor_a_destruir in cores_dos_jogadores:
                 objetivos_filtrados.append(obj)
         return objetivos_filtrados
 
