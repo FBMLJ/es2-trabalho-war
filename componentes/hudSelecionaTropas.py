@@ -71,7 +71,7 @@ class HudSelecionaTropas:
                 self.botao_clicado = 0
                 return True #  Somente retorna TRUE quando o ok for clicado
             
-            print("quantidade: {}".format(self.quantidade))
+            #print("quantidade: {}".format(self.quantidade))
 
             self.caixa_quantidade.texto = str(self.quantidade)
             self.botao_clicado = 0

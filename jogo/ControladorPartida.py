@@ -12,6 +12,7 @@ from jogo.ObjectiveVerifier import ObjectiveVerifier
 from jogo.TroopsManager import TroopsManager
 from componentes.hudTurno import hudTurno
 from componentes.hudSelecionaTropas import HudSelecionaTropas
+from componentes.hudCombate import HudCombate
 from constant import *
 
 class ControladorPartida:
@@ -35,6 +36,7 @@ class ControladorPartida:
             
         self.hud_turno = hudTurno(janela)
         self.hud_seleciona_quantidade = HudSelecionaTropas(janela)
+        self.hud_combate = HudCombate(janela)
         self.janela = janela
         self.mouse = Mouse()
         self.jogador_vencedor = None
@@ -80,6 +82,8 @@ class ControladorPartida:
         self.hud_turno.render()
         if len(self.gerenciador_mapa.territorios_selecionados) > 0 and self.etapa_turno == 1:
             self.hud_seleciona_quantidade.render() #  A hud so eh exibida se houver territorio selecionado na etapa de distribuicao
+        if(self.etapa_turno == 2):
+            self.hud_combate.render()
 
     def inicia_cartas(self) -> None:
         for id_territorio in dicionario_territorios:
@@ -126,7 +130,20 @@ class ControladorPartida:
         while etapa_em_andamento:
             
             self.gerenciador_mapa.selecionar_territorio(self.mouse, jogador)
+            if(len(self.gerenciador_mapa.territorios_selecionados)>=1):
+                self.hud_combate.atualiza_atacante(self.gerenciador_mapa.territorios_selecionados[0].nome)
+            
             self.gerenciador_mapa.selecionar_vizinho(self.mouse, jogador, self.etapa_turno)
+            if(len(self.gerenciador_mapa.territorios_selecionados)==2):
+                self.hud_combate.atualiza_defensor(self.gerenciador_mapa.territorios_selecionados[1].nome)
+            
+            codigo_hud_combate = self.hud_combate.update()
+            if codigo_hud_combate == 1:
+                pass
+            elif codigo_hud_combate == 2:
+                self.gerenciador_mapa.limpa_territorios_selecionados()
+                self.hud_combate.atualiza_atacante("")
+                self.hud_combate.atualiza_defensor("")
 
             # Condicionais para terminar a etapa
             if self.hud_turno.finalizar.update():

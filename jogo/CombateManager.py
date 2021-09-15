@@ -17,7 +17,7 @@ class CombateManager:
     Retorna as tropas sobreviventes do ataque
     '''
     def atacar(self, territorios_atacante: list, territorios_defensor: list,
-    atacante: Territorio, defensor: Territorio, tropas_de_ataque = -1) -> int:
+    atacante: Territorio, defensor: Territorio, tropas_de_ataque = -1):
         # Quantos dados cada jogador vai usar
         if tropas_de_ataque != -1: # Se o jogador especificou quantas tropas que usar no ataque
             dados_atacantes = tropas_de_ataque
@@ -60,7 +60,7 @@ class CombateManager:
             self.conquista(territorios_atacante, territorios_defensor, atacante, defensor, sobreviventes)
 
         # Retorna as tropas sobreviventes do ataque
-        return sobreviventes
+        #return sobreviventes #  retorno redundante, a funcao de conquista ja trata as tropas
 
     '''
     Funcao que checa se o atacante pode atacar o defensor
