@@ -65,7 +65,7 @@ class CombateManager:
     '''
     Funcao que checa se o atacante pode atacar o defensor
     Verifica se o atacante tem mais de dois exercitos
-    Verifica de os territorios fazem fronteira
+    Verifica se os territorios fazem fronteira
     '''
     def pode_atacar(self, atacante: Territorio, defensor: Territorio) -> bool:
         #Verifica se o atacante tem mais de dois exercitos

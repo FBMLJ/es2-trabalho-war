@@ -46,7 +46,7 @@ class ControladorMapa:
             #territorio.img_select.image = transform.scale(territorio.img_select.image, (int(PERCT_MAPA*LARGURA_PADRAO), int(PERCT_MAPA*ALTURA_PADRAO)))
         
     
-    def selecionar_territorio(self, mouse:Mouse, jogador:Player) -> None: 
+    def selecionar_territorio(self, mouse:Mouse, jogador:Player, etapa:int) -> None: 
         x,y = mouse.get_position()
         self.colisao_mouse.set_position(x,y)
         if mouse.is_button_pressed(1):
@@ -54,6 +54,9 @@ class ControladorMapa:
             self.pode_desenhar = True
             for territorio in jogador.territorios:
                 if self.colisao_mouse.collided_perfect(territorio.img):
+                    #  durante a etapa de combate, nao posso selecionar um territorio atacante com um exercito
+                    if(etapa == 2 and territorio.quantidade_tropas <= 1):
+                        break
                     if len(self.territorios_selecionados) >= 1:
                         self.limpa_territorios_selecionados()
                         territorio.selecionado = True
