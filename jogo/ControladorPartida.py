@@ -25,7 +25,7 @@ class ControladorPartida:
         self.gerenciador_objetivos = ObjectiveVerifier()
         self.gerenciador_tropas = TroopsManager()
         self.jogadores = jogadores
-        self.todos_os_objetivos = self.gerenciador_objetivos.gera_objetivos(self.gerenciador_mapa)        
+        self.todos_os_objetivos = self.gerenciador_objetivos.gera_objetivos(self.gerenciador_mapa.lista_continentes)        
 
         self.iniciador_de_partida.distribui_cores(self.jogadores)
         self.iniciador_de_partida.distribui_territorios(self.gerenciador_mapa.lista_territorios, self.jogadores)
