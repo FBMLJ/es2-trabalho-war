@@ -28,7 +28,7 @@ class TroopsManager:
     Checa se os territorios do deslocamento sao do mesmo jogador
     '''
     def pode_movimentar(self, territorios: list, territorio_inicial: Territorio, territorio_destino: Territorio, tropas_a_deslocar: int) -> bool:
-        esta_na_fronteira = territorio_inicial.esta_na_fronteira(territorio_destino)
+        esta_na_fronteira = territorio_inicial.eh_vizinho(territorio_destino)
         tem_tropas_pra_movimentar = self.verifica_tropas_a_movimentar(territorio_inicial, tropas_a_deslocar)
         sao_do_mesmo_jogador = self.verifica_se_territorios_sao_do_mesmo_jogador(territorios, territorio_inicial, territorio_destino)
         return esta_na_fronteira and tem_tropas_pra_movimentar and sao_do_mesmo_jogador

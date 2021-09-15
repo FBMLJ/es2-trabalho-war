@@ -52,12 +52,17 @@ class ControladorMapa:
             self.colisao_mouse.draw()
             self.pode_desenhar = True
             for territorio in self.lista_territorios:
-                if self.colisao_mouse.collided_perfect(territorio.img) and territorio.cor_tropas == jogador.cor:
-                    if(etapa == 1):
+                if self.colisao_mouse.collided_perfect(territorio.img):
+                    if(etapa == 1 and territorio.cor_tropas == jogador.cor):
                         if len(self.territorios_selecionados) == 1:
                             self.territorios_selecionados[0] = territorio
                         elif len(self.territorios_selecionados) == 0:
                             self.territorios_selecionados.append(territorio)
+                    if(etapa == 2):
+                        if len(self.territorios_selecionados) == 0 and territorio.cor_tropas == jogador.cor:
+                            self.territorios_selecionados.append(territorio) #  nenhum territorio foi selecionado, logo, esse sera o atacante
+                        elif len(self.territorios_selecionados) == 1:
+                            pass
                     #print("{}:({},{})".format(territorio.id, x, y))
 
     def render(self):

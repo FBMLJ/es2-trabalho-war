@@ -75,7 +75,7 @@ class CombateManager:
         if atacante.quantidade_tropas < 2:
             return False
         #Verifica de os territorios fazem fronteira
-        return atacante.esta_na_fronteira(defensor)
+        return atacante.eh_vizinho(defensor)
     
     '''
     Funcao para validar quantidade de tropas atacantes escolhida pelo jogador

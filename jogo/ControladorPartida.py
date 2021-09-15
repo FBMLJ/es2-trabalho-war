@@ -59,11 +59,13 @@ class ControladorPartida:
                     '''
                     Etapa 2 do turno: Combate
                     '''
-                    self.combate(jogador)
+                    finalizar_turno = self.combate(jogador)
                     '''
                     Etapa 3 do turno: Movimentacao de exercitos
                     '''
-                    self.movimentacao_exercitos(jogador)
+                    if not finalizar_turno:
+                        self.movimentacao_exercitos(jogador)
+
                 self.render()
                 self.janela.update()
             self.rodada += 1
@@ -106,8 +108,10 @@ class ControladorPartida:
             self.janela.update()
         self.gerenciador_mapa.territorios_selecionados = []
     
-    def combate(self, jogador) -> None:
+    def combate(self, jogador) -> bool:
+        #chamar selecionar_territorio para escolher o atacante
+        #realcar os vizinhos do territorio atacante
         pass
     
-    def movimentacao_exercitos(self, jogador) -> None:
+    def movimentacao_exercitos(self, jogador) -> bool:
         pass

@@ -28,7 +28,7 @@ class Territorio:
     def recebe_tropas(self, tropas_a_receber: int) -> None:
         self.quantidade_tropas += tropas_a_receber
 
-    def esta_na_fronteira(self, territorio_compr) -> bool:
+    def eh_vizinho(self, territorio_compr) -> bool:
         if territorio_compr in self.vizinho:
             return True
         else:
@@ -48,3 +48,9 @@ class Territorio:
     def muda_escala(self, nova_largura, nova_altura):
         self.img.image = transform.scale(self.img.image, (nova_largura, nova_altura))
         self.img_select.image = transform.scale(self.img_select.image, (nova_largura, nova_altura))
+    
+    def realca_vizinhos(self):
+        pass
+    
+    def desvanece_vizinhos(self):
+        pass
