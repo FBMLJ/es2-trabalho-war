@@ -21,8 +21,8 @@ class ControladorMapa:
     asia = None
     europa = None
     oceania = None
-    territorios_selecionados = [] #  primeira posicao armazenara o territorio na etapa 1, atacante na etapa 2, ou territorio que tera
-                                  #  sua tropa movida na etapa 3
+    territorios_selecionados = [] #  primeira posicao armazenara o territorio que recebera tropa na etapa 1,
+                                  #  atacante na etapa 2, ou territorio que tera sua tropa movida na etapa 3
                                   #  a segunda posicao armazenara o territorio desensor na etapa 2 ou o territorio que recebera tropa
                                   #  movida de outro territorio na etapa 3
 
@@ -53,11 +53,8 @@ class ControladorMapa:
             self.pode_desenhar = True
             for territorio in self.lista_territorios:
                 if self.colisao_mouse.collided_perfect(territorio.img):
-                    territorio.selecionado = True
                     territorio_selecionado = territorio.nome
                     #print("{}:({},{})".format(territorio.id, x, y))
-                elif territorio.selecionado: #  Caso o usuario tenha selecionado um novo territorio
-                    territorio.selecionado = False
         return territorio_selecionado
     
 
