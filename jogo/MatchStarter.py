@@ -1,8 +1,10 @@
 from PPlay.gameimage import GameImage
 from random import shuffle
+from jogo.Territorio import Territorio
 from jogo.Objetivo import Objetivo
 from jogo.ObjectiveVerifier import ObjectiveVerifier
 from jogo.Player import Player
+from jogo.Continente import Continente
 
 from constant import *
 
@@ -12,6 +14,9 @@ class MatchStarter:
     Distribui cartas, territorios e objetivos
     '''
     def __init__(self) -> None:
+
+        self.caminho_matriz_adjacencia = "jogo/matrizAdjacencia.txt"
+
         self.verificador_objetivos = ObjectiveVerifier()
 
     '''
@@ -28,6 +33,70 @@ class MatchStarter:
 
     def embaralha_jogadores(self, jogadores: list) -> None:
         shuffle(jogadores)
+
+
+    def inicia_territorios(self) -> list:
+
+        lista_territorios = []
+
+        #Criando uma lista com todas as instancias de territorios
+        index = 0
+        for id_territorio in dicionario_territorios:
+            lista_territorios.append(Territorio(id_territorio))
+            lista_territorios[index].carrega_posicao_texto()
+            index += 1
+
+        #Criando lista de vizinhos de cada territorio
+        arq = open(self.caminho_matriz_adjacencia,'r')
+        linhas = arq.readlines()
+        arq.close()
+        matriz_adj = []
+        for linha in linhas:
+            matriz_adj.append(linha.strip('\n').split('\t'))
+        for i in range(len(matriz_adj)):
+            for j in range(len(matriz_adj[0])):
+                if matriz_adj[i][j] == '1':
+                    lista_territorios[i].vizinho.append(lista_territorios[j])
+        
+        return lista_territorios
+
+    def inicia_continentes(self, lista_territorios):
+
+        #Listas de territorios por continentes para a criacao das instancias de continentes
+        territorios_africa = []
+        territorios_an = []
+        territorios_as = []
+        territorios_asia = []
+        territorios_eu = []
+        territorios_oc = []
+
+        #Separando territorios por continentes, de acordo com seu id
+        for i in range(len(lista_territorios)):
+            if i+1 < 6:
+                territorios_africa.append(lista_territorios[i])
+            if i+1 > 6 and i+1 <= 15:
+                territorios_an.append(lista_territorios[i])
+            if i+1 > 16 and i+1 <= 19:
+                territorios_as.append(lista_territorios[i])
+            if i+1 > 19 and i+1 <=31:
+                territorios_asia.append(lista_territorios[i])
+            if i+1 > 31 and i+1 <= 38:
+                territorios_eu.append(lista_territorios[i])
+            if i+1 > 38 and i+1 <= 42:
+                territorios_oc.append(lista_territorios[i])
+
+        #Criando os continentes
+        africa = Continente("Africa", territorios_africa, 3)
+        america_do_norte = Continente("America do Norte", territorios_an, 5)
+        america_do_sul = Continente("America do Sul", territorios_as, 2)
+        asia = Continente("Asia", territorios_asia, 7)
+        europa = Continente("Europa", territorios_eu, 5)
+        oceania = Continente("Oceania", territorios_oc, 2)
+        lista_continentes = [
+            africa, america_do_norte, america_do_sul,    
+            asia, europa, oceania
+            ]
+        return lista_continentes
 
     '''
     Funcao para distribuir territorios para cada jogador

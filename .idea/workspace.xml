@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="2450b4a6-aa34-4e0a-97df-e8909e458315" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constant.py" beforeDir="false" afterPath="$PROJECT_DIR$/constant.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jogo/ControladorPartida.py" beforeDir="false" afterPath="$PROJECT_DIR$/jogo/ControladorPartida.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jogo/MatchStarter.py" beforeDir="false" afterPath="$PROJECT_DIR$/jogo/MatchStarter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jogo/Objetivo.py" beforeDir="false" afterPath="$PROJECT_DIR$/jogo/Objetivo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telas/ControladorJogo.py" beforeDir="false" afterPath="$PROJECT_DIR$/telas/ControladorJogo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jogo/ControladorMapa.py" beforeDir="false" afterPath="$PROJECT_DIR$/jogo/ControladorMapa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jogo/ObjectiveVerifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/jogo/ObjectiveVerifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teste/test_ObjectiveVerifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/teste/test_ObjectiveVerifier.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,9 +34,10 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/teste" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyIntegratedToolsModulesConfigurable" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python tests.Unittests for test_ObjectiveVerifier.TestObjectiveVerifier.test_verificar_destruiu_cor">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="es2-trabalho-war" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -60,8 +59,53 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Unittests for test_ObjectiveVerifier.TestObjectiveVerifier" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="es2-trabalho-war" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/teste" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_ObjectiveVerifier.TestObjectiveVerifier&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for test_ObjectiveVerifier.TestObjectiveVerifier.test_filtrar" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="es2-trabalho-war" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/teste" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_ObjectiveVerifier.TestObjectiveVerifier.test_filtrar&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for test_ObjectiveVerifier.TestObjectiveVerifier.test_verificar_destruiu_cor" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="es2-trabalho-war" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/teste" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_ObjectiveVerifier.TestObjectiveVerifier.test_verificar_destruiu_cor&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Unittests for test_ObjectiveVerifier.TestObjectiveVerifier.test_verificar_destruiu_cor" />
+        <item itemvalue="Python tests.Unittests for test_ObjectiveVerifier.TestObjectiveVerifier.test_filtrar" />
+        <item itemvalue="Python tests.Unittests for test_ObjectiveVerifier.TestObjectiveVerifier" />
         <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
@@ -75,39 +119,30 @@
       <option name="presentableId" value="Default" />
       <updated>1628773485372</updated>
     </task>
+    <task id="LOCAL-00001" summary="Resolvidos conflitos">
+      <created>1631662538715</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1631662538715</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="418" y="185" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1628729540418">
-      <screen x="0" y="27" width="1920" height="1001" />
-    </state>
-    <state x="418" y="185" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1920.1001@0.27.1920.1001" timestamp="1628729540418" />
-    <state x="743" y="285" width="424" height="491" key="FileChooserDialogImpl" timestamp="1628779888834">
-      <screen x="0" y="27" width="1920" height="1001" />
-    </state>
-    <state x="743" y="285" width="424" height="491" key="FileChooserDialogImpl/0.27.1920.1001@0.27.1920.1001" timestamp="1628779888834" />
-    <state width="1897" height="258" key="GridCell.Tab.0.bottom" timestamp="1631637173123">
-      <screen x="0" y="27" width="1920" height="1001" />
-    </state>
-    <state width="1897" height="258" key="GridCell.Tab.0.bottom/0.27.1920.1001@0.27.1920.1001" timestamp="1631637173123" />
-    <state width="1897" height="258" key="GridCell.Tab.0.center" timestamp="1631637173122">
-      <screen x="0" y="27" width="1920" height="1001" />
-    </state>
-    <state width="1897" height="258" key="GridCell.Tab.0.center/0.27.1920.1001@0.27.1920.1001" timestamp="1631637173122" />
-    <state width="1897" height="258" key="GridCell.Tab.0.left" timestamp="1631637173122">
-      <screen x="0" y="27" width="1920" height="1001" />
-    </state>
-    <state width="1897" height="258" key="GridCell.Tab.0.left/0.27.1920.1001@0.27.1920.1001" timestamp="1631637173122" />
-    <state width="1897" height="258" key="GridCell.Tab.0.right" timestamp="1631637173123">
-      <screen x="0" y="27" width="1920" height="1001" />
-    </state>
-    <state width="1897" height="258" key="GridCell.Tab.0.right/0.27.1920.1001@0.27.1920.1001" timestamp="1631637173122" />
-    <state x="651" y="266" width="618" height="522" key="find.popup" timestamp="1631632877134">
-      <screen x="0" y="27" width="1920" height="1001" />
-    </state>
-    <state x="651" y="266" width="618" height="522" key="find.popup/0.27.1920.1001@0.27.1920.1001" timestamp="1631632877134" />
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Resolvidos conflitos" />
+    <option name="LAST_COMMIT_MESSAGE" value="Resolvidos conflitos" />
   </component>
 </project>
