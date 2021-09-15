@@ -1,3 +1,4 @@
+from jogo.Territorio import Territorio
 from PPlay.window import Window
 from PPlay.gameimage import GameImage
 from PPlay.mouse import Mouse
@@ -65,12 +66,13 @@ class ControladorPartida:
                     self.movimentacao_exercitos(jogador)
                 self.render()
                 self.janela.update()
-            
+            self.rodada += 1
 
     def render(self):
         self.gerenciador_mapa.render()
         self.hud_turno.render()
-        self.hud_seleciona_quantidade.render()
+        if len(self.gerenciador_mapa.territorios_selecionados) > 0:
+            self.hud_seleciona_quantidade.render() #  A hud so eh exibida se houver territorio selecionado
 
     def inicia_cartas(self) -> None:
         for id_territorio in dicionario_territorios:
@@ -79,13 +81,30 @@ class ControladorPartida:
             figura = dicionario_figura_territorio[id_territorio]
             self.todas_as_cartas.append(Card(nome_territorio, imagem, figura, False))
 
-    def distribuicao_exercitos(self, jogador) -> None:
+    def distribuicao_exercitos(self, jogador:Player) -> None:
         self.gerenciador_tropas.recebimento_rodada(jogador, self.gerenciador_mapa.lista_continentes)
-        while True:
-            nome_territorio_selecionado = self.gerenciador_mapa.selecionar_territorio(self.mouse)
+        self.hud_seleciona_quantidade.maximo = jogador.tropas_pendentes #  Quantidade de tropas a ser distribuida
+        self.gerenciador_mapa.territorios_selecionados = []
+        etapa_concluida = False
+        while not etapa_concluida:
+            self.gerenciador_mapa.selecionar_territorio(self.mouse, jogador, etapa=1)
+            clicou_ok = self.hud_seleciona_quantidade.update(self.mouse)
+            if clicou_ok: #  Apos clicar no OK, termina de distribuir tropas para o territorio selecionado
+                tropas_distribuidas = self.hud_seleciona_quantidade.quantidade
+                self.gerenciador_mapa.territorios_selecionados[0].quantidade_tropas += tropas_distribuidas
+                jogador.tropas_pendentes -= tropas_distribuidas
+                self.hud_seleciona_quantidade.maximo = jogador.tropas_pendentes
+                self.hud_seleciona_quantidade.quantidade = 0
+                self.hud_seleciona_quantidade.caixa_quantidade.texto = "0"
+                self.gerenciador_mapa.pode_desenhar = True 
+                self.gerenciador_mapa.territorios_selecionados = []
+
+            if jogador.tropas_pendentes == 0:
+                etapa_concluida = True
+            
             self.render()
             self.janela.update()
-            self.hud_seleciona_quantidade.update()
+        self.gerenciador_mapa.territorios_selecionados = []
     
     def combate(self, jogador) -> None:
         pass

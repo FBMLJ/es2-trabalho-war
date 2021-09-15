@@ -1,3 +1,4 @@
+from jogo.Player import Player
 from pygame import transform
 from PPlay.mouse import Mouse
 from PPlay.window import Window
@@ -44,19 +45,20 @@ class ControladorMapa:
             #territorio.img_select.image = transform.scale(territorio.img_select.image, (int(PERCT_MAPA*LARGURA_PADRAO), int(PERCT_MAPA*ALTURA_PADRAO)))
         
     
-    def selecionar_territorio(self, mouse:Mouse, etapa:int) -> str:
+    def selecionar_territorio(self, mouse:Mouse, jogador:Player,etapa:int) -> None:
         x,y = mouse.get_position()
         self.colisao_mouse.set_position(x,y)
-        territorio_selecionado = None
         if mouse.is_button_pressed(1):
             self.colisao_mouse.draw()
             self.pode_desenhar = True
             for territorio in self.lista_territorios:
-                if self.colisao_mouse.collided_perfect(territorio.img):
-                    territorio_selecionado = territorio.nome
+                if self.colisao_mouse.collided_perfect(territorio.img) and territorio.cor_tropas == jogador.cor:
+                    if(etapa == 1):
+                        if len(self.territorios_selecionados) == 1:
+                            self.territorios_selecionados[0] = territorio
+                        elif len(self.territorios_selecionados) == 0:
+                            self.territorios_selecionados.append(territorio)
                     #print("{}:({},{})".format(territorio.id, x, y))
-        return territorio_selecionado
-    
 
     def render(self):
         
