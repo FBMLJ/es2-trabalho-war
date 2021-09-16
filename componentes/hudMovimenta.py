@@ -10,6 +10,7 @@ class HudMovimenta:
         self.caminho_assets = "assets/imagem/hud/"
 
         self.janela = janela
+        self.nao_desenha = False
 
         self.box = GameImage(self.caminho_assets + "hud_combate.png")
         self.box.set_position(int(self.box.width/3.5), janela.height - self.box.height)
@@ -65,6 +66,8 @@ class HudMovimenta:
         return codigo_retorno
 
     def render(self):
+        if self.nao_desenha:
+            return
         self.box.draw()
         if(self.etapa_movimenta==0):
             self.terr_inicial_texto.draw()
@@ -85,9 +88,10 @@ class HudMovimenta:
     def set_etapa_movimenta(self, etapa:int):
         if self.etapa_movimenta != etapa:
             self.etapa_movimenta = etapa
-            self.inicializa_etapa_movimenta()
+        self.inicializa_etapa_movimenta()
 
     def inicializa_etapa_movimenta(self):
+        self.nao_desenha = False
         if self.etapa_movimenta == 0:
             self.inicializa_etapa_movimenta_0()
         if self.etapa_movimenta == 1:
@@ -193,5 +197,7 @@ class HudMovimenta:
 
         self.quantidade_texto = None
         self.caixa_quantidade = None
-        
+
         self.botoes.clear()
+
+        self.nao_desenha = True

@@ -257,12 +257,11 @@ class ControladorPartida:
                                                                                     territorio_destino,
                                                                                     tropas_movidas
                                                                                 )
-                    #print("movimentacao foi tentada")
-                    if movimento_sucesso:
-                        #print("movimento com sucesso")
-                        self.gerenciador_mapa.pode_desenhar = True
-                        self.gerenciador_mapa.limpa_territorios_selecionados()
-                        self.hud_movimenta.set_etapa_movimenta(0)
+                    self.gerenciador_mapa.pode_desenhar = True
+                    self.gerenciador_mapa.limpa_territorios_selecionados()    
+                    self.hud_movimenta.set_etapa_movimenta(0)
+                    codigo_hud_movimenta = 0
+
 
             # Condicionais para terminar a etapa de movimentacao
             if self.hud_turno.finalizar.update() or self.hud_turno.pular.update():

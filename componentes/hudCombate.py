@@ -10,6 +10,7 @@ class HudCombate:
         self.caminho_assets = "assets/imagem/hud/"
 
         self.janela = janela
+        self.nao_desenha = False
 
         self.box = GameImage(self.caminho_assets + "hud_combate.png")
         self.box.set_position(int(self.box.width/3.5), janela.height - self.box.height)
@@ -65,6 +66,8 @@ class HudCombate:
         return codigo_retorno
 
     def render(self):
+        if self.nao_desenha:
+            return
         self.box.draw()
         if(self.etapa_combate==0):
             self.atacante_texto.draw()
@@ -86,9 +89,10 @@ class HudCombate:
     def set_etapa_combate(self, etapa:int):
         if self.etapa_combate != etapa:
             self.etapa_combate = etapa
-            self.inicializa_etapa_combate()
+        self.inicializa_etapa_combate()
 
     def inicializa_etapa_combate(self):
+        self.nao_desenha = False
         if self.etapa_combate == 0:
             self.inicializa_etapa_combate_0()
         if self.etapa_combate == 1:
@@ -195,3 +199,5 @@ class HudCombate:
 
         self.atacantes_texto = None
         self.caixa_quantidade_atacantes = None
+
+        self.nao_desenha = True
