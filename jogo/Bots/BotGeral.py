@@ -1,14 +1,19 @@
 from jogo.Territorio import Territorio
-from random import shuffle
+from jogo.Player import Player
+from random import randint, shuffle
 
-class BotGeral:
+class BotGeral(Player):
     def __init__(self) -> None:
+        super().__init__()
+        '''
         self.territorios = []
         self.cartas = []
         self.tropas_pendentes = 0
         self.objetivo = None
         self.pode_jogar = False
         self.cor = ""
+        '''
+        self.bot = True
         #Listas para resetar no fim do turno
         self.cartas_a_trocar = []
         self.ataques_a_fazer = [] #[0]atacante, [1]defensor
@@ -71,7 +76,20 @@ class BotGeral:
             if i >= len(self.territorios):
                 i = 0
         return
-
+    
+    #Distribui aleatoriamente tropas entre os territorios
+    def distribui_tropas_v2(self) -> None:
+        shuffle(self.territorios)
+        #Quantidade total de tropas a serem distribuidas
+        tropas_a_distribuir = self.tropas_pendentes
+        
+        i = 0
+        while tropas_a_distribuir > 0:
+            tropas_enviadas = randint(1,tropas_a_distribuir)
+            tropas_a_distribuir -= tropas_enviadas
+            self.territorios[i].recebe_tropas(tropas_enviadas)
+            i += 1
+        return
     '''
     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     O CombateManager deve iterar pela lista de ataques_a_fazer e chamar sua funcao

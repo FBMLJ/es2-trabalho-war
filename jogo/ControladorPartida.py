@@ -110,7 +110,7 @@ class ControladorPartida:
         while not etapa_concluida:
             self.gerenciador_mapa.selecionar_territorio(self.mouse, jogador, self.etapa_turno)
             clicou_ok = self.hud_seleciona_quantidade.update(self.mouse)
-            if clicou_ok: #  Apos clicar no OK, termina de distribuir tropas para o territorio selecionado
+            if clicou_ok: #  Apos clicar no OK da hud, termina de distribuir tropas para o territorio selecionado
                 tropas_distribuidas = self.hud_seleciona_quantidade.quantidade
                 self.gerenciador_mapa.territorios_selecionados[0].quantidade_tropas += tropas_distribuidas
                 jogador.tropas_pendentes -= tropas_distribuidas
@@ -120,14 +120,14 @@ class ControladorPartida:
                 self.gerenciador_mapa.pode_desenhar = True 
                 self.gerenciador_mapa.limpa_territorios_selecionados()
 
-            if jogador.tropas_pendentes == 0:
+            if jogador.tropas_pendentes == 0: #  A etapa termina automaticamente assim que o jogador distribui todas as tropas
                 etapa_concluida = True
             
             self.render()
             self.janela.update()
         
-        self.gerenciador_mapa.limpa_territorios_selecionados()
-        self.hud_turno.icone_distribuir.is_normal = True
+        self.gerenciador_mapa.limpa_territorios_selecionados() #  Limpa os territorios selecionados antes de ir para a proxima etapa
+        self.hud_turno.icone_distribuir.is_normal = True #  Fazendo o icone da etapa de distribuicao voltar ao normal
 
     def combate(self, jogador) -> bool:
         self.hud_turno.escreve_indicador_turno(jogador.cor, "combate")
@@ -149,13 +149,15 @@ class ControladorPartida:
                     self.hud_combate.atualiza_defensor(self.gerenciador_mapa.territorios_selecionados[1].nome)
             
                 codigo_hud_combate = self.hud_combate.update(self.mouse)
-                if codigo_hud_combate == 1: #  Passo para a proxima parte do combate
+                #  Passo para a proxima parte do combate
+                if codigo_hud_combate == 1: #  Codigo do botao OK da hud de combate
                     self.hud_combate.set_etapa_combate(codigo_hud_combate)
                     tropa_maxima = self.gerenciador_mapa.territorios_selecionados[0].quantidade_tropas -1
                     self.hud_combate.quantidade_maxima = tropa_maxima
                     self.hud_combate.quantidade_atual = tropa_maxima
                     self.hud_combate.caixa_quantidade_atacantes.texto = str(tropa_maxima)
-                elif codigo_hud_combate == 2: #  Cancelo as selecoes feitas
+                #  Cancelo as selecoes feitas
+                elif codigo_hud_combate == 2: #  Codigo do botao X da hud de combate
                     self.gerenciador_mapa.limpa_territorios_selecionados()
                     self.gerenciador_mapa.pode_desenhar = True
                     self.hud_combate.atualiza_atacante("")
@@ -167,11 +169,9 @@ class ControladorPartida:
 
                 codigo_hud_combate = self.hud_combate.update(self.mouse)
                 if codigo_hud_combate == 3 and len(self.gerenciador_mapa.territorios_selecionados) == 2: #  Botao OK da segunda parte da hud foi clicada
-                    #jogador_defensor = None
                     for j in self.jogadores:
                         #  Procurando o jogador defensor com base no territorio defensor selecionado
                         if j.possui_territorio(self.gerenciador_mapa.territorios_selecionados[1]):
-                            #jogador_defensor = j
                             territorio_atacante = self.gerenciador_mapa.territorios_selecionados[0]
                             territorio_defensor = self.gerenciador_mapa.territorios_selecionados[1]
                             tropas_atacantes = self.hud_combate.quantidade_atual

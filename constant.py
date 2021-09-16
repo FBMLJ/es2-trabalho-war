@@ -1,7 +1,7 @@
 LARGURA_PADRAO = 1366
 ALTURA_PADRAO = 768
 # TEST, PRODUCTION, DEVELOPMENT
-AMBIENTE = "TEST"
+AMBIENTE = "DEVELOPMENT"
 
 PERCT_MAPA = 0.85 #  Variavel para diminuir o tamanho do mapa e continentes em relacao a janela
 
