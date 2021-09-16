@@ -43,18 +43,18 @@ class CombateManager:
             #print(f"Olha a rolagem nº{i} do atacante({atacante.nome}): {rolagem_atacante}")
             #print(f"Olha a rolagem nº{i} do defensor({defensor.nome}): {rolagem_defensor}")
         # Compara os dados em ordem decrescente
-        print("\n")
+        #print("\n")
         vitorias_ataque = 0
         vitorias_defesa = 0
         rolagens_ataque.sort(reverse=True)
         rolagens_defesa.sort(reverse=True)
-        print(f"Olha as rolagens de ataque: {rolagens_ataque}\nOlha as rolagens de defesa: {rolagens_defesa}")
+        #print(f"Olha as rolagens de ataque: {rolagens_ataque}\nOlha as rolagens de defesa: {rolagens_defesa}")
         for i in range(dados_a_rolar):
             if rolagens_ataque[i] > rolagens_defesa[i]:
                 vitorias_ataque += 1
             else:
                 vitorias_defesa += 1
-        print("vitorias ataque {}\nvitorias defesa {}".format(vitorias_ataque, vitorias_defesa))
+        #print("vitorias ataque {}\nvitorias defesa {}".format(vitorias_ataque, vitorias_defesa))
         
         # Subtrai as tropas derrotadas
         atacante.perde_tropas(vitorias_defesa)

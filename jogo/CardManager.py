@@ -19,11 +19,11 @@ class CardManager:
     def inicia_cartas(self) -> list:
         lista_de_cartas = []
         # Coringas
-        lista_de_cartas.append(Card(None, "coringa_carta.png", None, True))
-        lista_de_cartas.append(Card(None, "coringa_carta.png", None, True))
+        lista_de_cartas.append(Card(None, "coringa_card.png", None, True))
+        lista_de_cartas.append(Card(None, "coringa_card.png", None, True))
         for id_territorio in dicionario_territorios:
             nome_territorio = dicionario_territorios[id_territorio]
-            imagem = nome_territorio + "_carta.png"
+            imagem = id_territorio + "_card.png"
             figura = dicionario_figura_territorio[id_territorio]
             lista_de_cartas.append(Card(nome_territorio, imagem, figura, False))
         if AMBIENTE != "TEST":
