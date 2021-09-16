@@ -54,7 +54,6 @@ class ControladorPartida:
         #game loop
         while self.jogador_vencedor == None:  #Condicional para checar se algum objetivo foi alcancado
             for jogador in self.jogadores:
-                self.jogador_vencedor = self.gerenciador_objetivos.verifica_objetivos(self.jogadores)
                 if self.jogador_vencedor:
                     break
                 '''
@@ -62,7 +61,7 @@ class ControladorPartida:
                 '''
                 self.etapa_turno = 1
                 self.distribuicao_exercitos(jogador)
-                    
+                self.jogador_vencedor = self.gerenciador_objetivos.verifica_objetivos(self.jogadores)
                 if(self.rodada > 1): #Na primeira rodada so ha distribuicao de exercitos
                     
                     '''
@@ -70,6 +69,7 @@ class ControladorPartida:
                     '''
                     self.etapa_turno = 2
                     finalizar_turno = self.combate(jogador)
+                    self.jogador_vencedor = self.gerenciador_objetivos.verifica_objetivos(self.jogadores)
                     '''
                     Etapa 3 do turno: Movimentacao de exercitos
                     '''
@@ -77,10 +77,14 @@ class ControladorPartida:
                     if not finalizar_turno:
                         print("entrei na etapa de movimentacao")
                         self.movimentacao_exercitos(jogador)
+                        self.jogador_vencedor = self.gerenciador_objetivos.verifica_objetivos(self.jogadores)
 
                 self.render()
                 self.janela.update()
             self.rodada += 1
+        print("Jogador {} venceu o jogo!".format(self.jogador_vencedor.cor))
+        if(self.jogador_vencedor.bot):
+            print("Voce perdeu para um bot!")
 
     def render(self):
         self.gerenciador_mapa.render(self.etapa_turno)

@@ -12,6 +12,13 @@ class MenuJogadores:
         self.janela = janela
         self.nao_desenha = False
 
+        self.fundo = GameImage("assets/imagem/tela_inicial/fundo.png")
+        self.logo = GameImage("assets/imagem/tela_inicial/war.png")
+        self.logo.set_position(
+            self.janela.width/2-self.logo.width/2,
+            self.janela.height/4-self.logo.height/2
+        )
+
         self.box = GameImage(caminho_assets + "barra_hud_jogadores.png")
         self.box.set_position(
             int(self.janela.width/2) - int(self.box.width/2),
@@ -150,6 +157,8 @@ class MenuJogadores:
         self.caixa_bots.texto = str(self.qnt_bots)
 
     def render(self):
+        self.fundo.draw()
+        self.logo.draw()
         self.box.draw()
         self.jogadores_texto.draw()
         self.bots_texto.draw()
