@@ -4,7 +4,7 @@ from PPlay.sprite import Sprite
 from PPlay.mouse import Mouse
 from jogo.Player import Player
 
-class hudTroca:
+class HudCartas:
     def __init__(self):
         caminho_hud = "assets/imagem/hud/"
         #179 x 279
