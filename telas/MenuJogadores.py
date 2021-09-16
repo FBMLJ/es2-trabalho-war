@@ -19,7 +19,7 @@ class MenuJogadores:
         )
 
         self.quantidade_maxima = 6
-        self.qnt_jogadores = 0
+        self.qnt_jogadores = 1
         self.qnt_bots = 0
         self.botao_clicado = 0
         self.botao_foi_clicado = False
@@ -116,8 +116,8 @@ class MenuJogadores:
                             self.qnt_bots -= 1
 
                 elif self.botao_clicado == 2: #  Botao MENOS jogador
-                    if self.qnt_jogadores > 0:
-                        self.quantidade -= 1
+                    if self.qnt_jogadores > 1:
+                        self.qnt_jogadores -= 1
                         
                 elif self.botao_clicado == 3: #  Botao MAIS bot
                     if self.qnt_bots < self.quantidade_maxima:
