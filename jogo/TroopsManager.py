@@ -53,10 +53,11 @@ class TroopsManager:
     Marca deslocamento de tropas no territorio destino
     Retira tropas do territorio inicial
     '''
-    def movimenta_tropas(self, territorios: list, territorio_inicial: Territorio, territorio_destino: Territorio, tropas_a_deslocar: int) -> None:
+    def movimenta_tropas(self, territorios: list, territorio_inicial: Territorio, territorio_destino: Territorio, tropas_a_deslocar: int) -> bool:
         if self.pode_movimentar(territorios, territorio_inicial, territorio_destino, tropas_a_deslocar):
             territorio_destino.recebe_tropas(tropas_a_deslocar)
             territorio_destino.tropas_deslocadas = tropas_a_deslocar
             territorio_inicial.perde_tropas(tropas_a_deslocar)
+            return True
         else:
-            return
+            return False

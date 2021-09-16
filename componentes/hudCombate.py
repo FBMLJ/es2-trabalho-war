@@ -184,3 +184,14 @@ class HudCombate:
                                 self.caixa_quantidade_atacantes.y
                                 )
         self.botoes.append(botao_menos)
+
+    def limpa_hud(self):
+        self.botoes.clear()
+
+        self.atacante_texto = None
+        self.defensor_texto = None
+        self.caixa_atacante = None
+        self.caixa_defensor = None
+
+        self.atacantes_texto = None
+        self.caixa_quantidade_atacantes = None

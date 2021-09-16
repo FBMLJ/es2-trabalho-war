@@ -14,6 +14,7 @@ from jogo.CombateManager import CombateManager
 from componentes.hudTurno import hudTurno
 from componentes.hudSelecionaTropas import HudSelecionaTropas
 from componentes.hudCombate import HudCombate
+from componentes.hudMovimenta import HudMovimenta
 from constant import *
 
 class ControladorPartida:
@@ -39,6 +40,7 @@ class ControladorPartida:
         self.hud_turno = hudTurno(janela)
         self.hud_seleciona_quantidade = HudSelecionaTropas(janela)
         self.hud_combate = HudCombate(janela)
+        self.hud_movimenta = HudMovimenta(janela)
         self.janela = janela
         self.mouse = Mouse()
         self.jogador_vencedor = None
@@ -87,6 +89,8 @@ class ControladorPartida:
             self.hud_seleciona_quantidade.render() #  A hud so eh exibida se houver territorio selecionado na etapa de distribuicao
         if(self.etapa_turno == 2):
             self.hud_combate.render()
+        if(self.etapa_turno == 3):
+            self.hud_movimenta.render()
 
     def inicia_cartas(self) -> None:
         for id_territorio in dicionario_territorios:
@@ -136,7 +140,7 @@ class ControladorPartida:
             #  Primeira parte da etapa de combate: selecao do territorio atacante e defensor
             if self.hud_combate.etapa_combate == 0:
                 #  Escolhendo o territorio atacante
-                self.gerenciador_mapa.selecionar_territorio(self.mouse, jogador, self.etapa_turno)
+                self.gerenciador_mapa.selecionar_inicial(self.mouse, jogador, self.etapa_turno)
                 if(len(self.gerenciador_mapa.territorios_selecionados)>=1):
                     self.hud_combate.atualiza_atacante(self.gerenciador_mapa.territorios_selecionados[0].nome)
                 #  Escolhando o territorio defensor
@@ -198,14 +202,72 @@ class ControladorPartida:
             self.render()
             self.janela.update()
 
-        self.gerenciador_mapa.territorios_selecionados = []
+        self.gerenciador_mapa.limpa_territorios_selecionados()
         self.hud_turno.icone_combate.is_normal = True
+        self.hud_combate.limpa_hud()
         return pulou_turno
 
     def movimentacao_exercitos(self, jogador) -> None:
-        self.hud_turno.escreve_indicador_turno(jogador.cor, "movimentacao de exercitos")
-        etapa_andamento = True
-        while etapa_andamento:
-            pass
+        self.hud_turno.escreve_indicador_turno(jogador.cor, "movimento de tropas")
         self.hud_turno.icone_movimento.is_normal = False
+        etapa_em_andamento = True
+        
+        self.hud_movimenta.set_etapa_movimenta(0)
+        
+        while etapa_em_andamento:
+            
+            #  Primeira parte da etapa de combate: selecao do territorio atacante e defensor
+            if self.hud_movimenta.etapa_movimenta == 0:
+                #  Escolhendo o territorio inicial que tera sua tropa movida
+                self.gerenciador_mapa.selecionar_inicial(self.mouse, jogador, self.etapa_turno)
+                if(len(self.gerenciador_mapa.territorios_selecionados)>=1):
+                    self.hud_movimenta.atualiza_inicial(self.gerenciador_mapa.territorios_selecionados[0].nome)
+                #  Escolhando o territorio de destino que recebera as tropas movidas
+                self.gerenciador_mapa.selecionar_vizinho(self.mouse, jogador, self.etapa_turno)
+                if(len(self.gerenciador_mapa.territorios_selecionados)==2):
+                    self.hud_movimenta.atualiza_destino(self.gerenciador_mapa.territorios_selecionados[1].nome)
+            
+                codigo_hud_movimenta = self.hud_movimenta.update(self.mouse)
+                if codigo_hud_movimenta == 1: #  Passo para a proxima parte do combate
+                    self.hud_movimenta.set_etapa_movimenta(codigo_hud_movimenta)
+                    tropa_maxima = self.gerenciador_mapa.territorios_selecionados[0].quantidade_tropas -1
+                    self.hud_movimenta.quantidade_maxima = tropa_maxima
+                    self.hud_movimenta.quantidade_atual = tropa_maxima
+                    self.hud_movimenta.caixa_quantidade.texto = str(tropa_maxima)
+                elif codigo_hud_movimenta == 2: #  Cancelo as selecoes feitas
+                    self.gerenciador_mapa.limpa_territorios_selecionados()
+                    self.gerenciador_mapa.pode_desenhar = True
+                    self.hud_movimenta.atualiza_inicial("")
+                    self.hud_movimenta.atualiza_destino("")
+                    codigo_hud_movimenta = 0
+
+            #Segunda parte da etapa de movimentacao: selecao da quantidade de tropas movidas
+            if self.hud_movimenta.etapa_movimenta == 1:
+
+                codigo_hud_movimenta = self.hud_movimenta.update(self.mouse)
+                movimento_sucesso = False
+                if codigo_hud_movimenta == 3 and len(self.gerenciador_mapa.territorios_selecionados) == 2: #  Botao OK da segunda parte da hud foi clicada
+                    territorio_inicial = self.gerenciador_mapa.territorios_selecionados[0]
+                    territorio_destino = self.gerenciador_mapa.territorios_selecionados[1]
+                    tropas_movidas = self.hud_movimenta.quantidade_atual
+                    movimento_sucesso = self.gerenciador_tropas.movimenta_tropas(
+                                                                                    jogador.territorios,
+                                                                                    territorio_inicial,
+                                                                                    territorio_destino,
+                                                                                    tropas_movidas
+                                                                                )
+                    if movimento_sucesso:
+                        self.gerenciador_mapa.pode_desenhar = True
+                        self.gerenciador_mapa.limpa_territorios_selecionados()
+                        self.hud_movimenta.set_etapa_movimenta(0)
+
+            # Condicionais para terminar a etapa de movimentacao
+            if self.hud_turno.finalizar.update() or self.hud_turno.pular.update():
+                etapa_em_andamento = False
+
+            self.render()
+            self.janela.update()
+
+        self.gerenciador_mapa.limpa_territorios_selecionados()
         self.hud_turno.icone_movimento.is_normal = True
+        self.hud_movimenta.limpa_hud()

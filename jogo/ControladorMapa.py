@@ -49,25 +49,36 @@ class ControladorMapa:
     def selecionar_territorio(self, mouse:Mouse, jogador:Player, etapa:int) -> None: 
         x,y = mouse.get_position()
         self.colisao_mouse.set_position(x,y)
+        if etapa > 1:
+            return
         if mouse.is_button_pressed(1):
             self.colisao_mouse.draw()
             self.pode_desenhar = True
             for territorio in jogador.territorios:
-                #print("territorio {} eh do jogador {}".format(territorio.nome, jogador.cor))
                 if self.colisao_mouse.collided_perfect(territorio.img):
-                    #print("houve colisao!")
                     #  durante a etapa de combate, nao posso selecionar um territorio atacante com um exercito
                     if(etapa == 2 and territorio.quantidade_tropas <= 1):
-                        #print("Quantidade de tropas {} insuficiente para combate".format(territorio.quantidade_tropas))
                         break
-                    if len(self.territorios_selecionados) >= 1:
+                    if len(self.territorios_selecionados) == 1:
                         self.limpa_territorios_selecionados()
                     territorio.selecionado = True
                     self.territorios_selecionados.append(territorio)
-                    #print("territorio {} selecionado".format(territorio.nome))
-                    #print("{} {}:({},{})".format(territorio.nome, territorio.id, x, y))
-                    #print("{} {} com {} vizinhos".format(territorio.nome, territorio.id, len(territorio.vizinho)))
                     break
+
+    def selecionar_inicial(self, mouse:Mouse, jogador:Player, etapa:int):
+        x,y = mouse.get_position()
+        self.colisao_mouse.set_position(x,y)
+        if etapa < 2:
+            return
+        if mouse.is_button_pressed(1):
+            self.colisao_mouse.draw()
+            self.pode_desenhar = True
+            for territorio in jogador.territorios:
+                if self.colisao_mouse.collided_perfect(territorio.img):
+                    #  durante a etapa de combate, nao posso selecionar um territorio atacante com um exercito
+                    if (etapa == 2 and territorio.quantidade_tropas <= 1) or len(self.territorios_selecionados) > 0:
+                        break
+                    self.territorios_selecionados.append(territorio)
 
     def selecionar_vizinho(self, mouse:Mouse, jogador:Player, etapa:int): #  argumento 'etapa' indica em que etapa o turno esta
         x,y = mouse.get_position()
@@ -81,8 +92,7 @@ class ControladorMapa:
                     territorio != self.territorios_selecionados[0] and
                     territorio.eh_vizinho(self.territorios_selecionados[0])
                    ):
-                    #print("{}:({},{})".format(territorio.id, x, y))
-                    #print("{} {} com {} vizinhos".format(territorio.nome, territorio.id, len(territorio.vizinho)))
+
                     if( 
                         (etapa == 2 and territorio.cor_tropas != self.territorios_selecionados[0].cor_tropas) or 
                         (etapa == 3 and territorio.cor_tropas == self.territorios_selecionados[0].cor_tropas)
