@@ -4,11 +4,15 @@ from PPlay.sprite import Sprite
 from PPlay.window import Window
 from componentes.icone import Icone
 from componentes.botao import Botao
+from componentes.RetanguloTexto import RetanguloTexto
 
 class hudTurno:
 
     def __init__(self, janela:Window):
         caminho_hud = "assets/imagem/hud/"
+
+        self.nome_etapa = ""
+        self.cor_jogador = ""
 
         self.barra = GameImage(caminho_hud+"barra_hud.png")
         self.barra.set_position(janela.width/2 - self.barra.width/2, janela.height - self.barra.height)
@@ -58,6 +62,12 @@ class hudTurno:
         pos_x = self.pular.x + self.pular.width/2 - self.pular_texto.width/2
         self.pular_texto.set_position(pos_x, self.barra.y + offset_y)
 
+        self.indicador_turno = RetanguloTexto(janela, "", 1, int(1.2*self.barra.width), int(self.barra.height/3))
+        #self.indicador_turno.centralizado = True
+        self.indicador_turno.set_position(
+                                            self.barra.x + int(self.barra.width/2) - int(self.indicador_turno.width/2),
+                                            self.barra.y - self.indicador_turno.height
+                                          )
     def render(self):
         self.barra.draw()
         self.icone_distribuir.render()
@@ -67,3 +77,7 @@ class hudTurno:
         self.pular.render()
         self.finalizar_texto.draw()
         self.pular_texto.draw()
+        self.indicador_turno.render()
+    
+    def escreve_indicador_turno(self, cor_jogador:str, etapa:str):
+        self.indicador_turno.texto = "O jogador "+cor_jogador+" esta na etapa de "+etapa
