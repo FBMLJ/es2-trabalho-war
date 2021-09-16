@@ -11,7 +11,8 @@ class hudTroca:
         self.mostrar_cartas = False
         self.cartas_selecionados = []
 
-        self.hud_trocas = GameImage("") # Fundo para a exibicao das cartas
+        self.hud_trocas = GameImage(caminho_hud + "barra_hud_card.png") #  Fundo para a exibicao das cartas
+                                                                        #  Cabem 5 cartas com espacamento de 50 pixels
 
         self.botao_mostrar_menu = Botao(
             Sprite(caminho_hud + "botao_deck.png"), 
@@ -22,12 +23,24 @@ class hudTroca:
         self.botoes = []
 
         botao_realizar_troca = Botao(Sprite(""), Sprite(""), 2)
+        botao_realizar_troca.setposition(
+            self.hud_trocas.x + int(0.25*self.hud_trocas.width) - int(botao_realizar_troca.width/2),
+            self.hud_trocas.y + self.hud_trocas.height
+        )
         self.botoes.append(botao_realizar_troca)
 
         botao_cancelar_troca = Botao(Sprite(""), Sprite(""), 3)
+        botao_cancelar_troca.setposition(
+            self.hud_trocas.x + int(0.5*self.hud_trocas.width) - int(botao_cancelar_troca.width/2),
+            self.hud_trocas.y + self.hud_trocas.height
+        )
         self.botoes.append(botao_cancelar_troca)
         
         botao_voltar_menu = Botao(Sprite(""), Sprite(""), 4)
+        botao_voltar_menu.setposition(
+            self.hud_trocas.x + int(0.75*self.hud_trocas.width) - int(botao_voltar_menu.width/2),
+            self.hud_trocas.y + self.hud_trocas.height
+        )
         self.botoes.append(botao_voltar_menu)
 
     def update(self, mouse:Mouse):
