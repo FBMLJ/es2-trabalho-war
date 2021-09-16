@@ -30,7 +30,7 @@ class MenuJogadores:
             self.box.y + int(0.1*self.box.height)
         )
         
-        self.caixa_jogadores = RetanguloTexto(self.janela, "0", 1, int(self.jogadores_texto.width/2), self.jogadores_texto.height, moldura=True)
+        self.caixa_jogadores = RetanguloTexto(self.janela, str(self.qnt_jogadores), 1, int(self.jogadores_texto.width/2), self.jogadores_texto.height, moldura=True)
         self.caixa_jogadores.set_position(
             self.jogadores_texto.x + int(self.jogadores_texto.width/2) - int(self.caixa_jogadores.width/2),
             self.jogadores_texto.y + int(1.1*self.jogadores_texto.height)
@@ -42,7 +42,7 @@ class MenuJogadores:
             self.box.y + int(self.box.height/2) - int(self.bots_texto.height/2)
         )
 
-        self.caixa_bots = RetanguloTexto(self.janela, "0", 1, self.caixa_jogadores.width, self.caixa_jogadores.height, moldura=True)
+        self.caixa_bots = RetanguloTexto(self.janela, str(self.qnt_bots), 1, self.caixa_jogadores.width, self.caixa_jogadores.height, moldura=True)
         self.caixa_bots.set_position(
             self.bots_texto.x + int(self.bots_texto.width/2) - int(self.caixa_bots.width/2),
             self.bots_texto.y + int(1.1*self.bots_texto.height)
