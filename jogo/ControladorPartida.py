@@ -45,7 +45,7 @@ class ControladorPartida:
         self.mouse = Mouse()
         self.jogador_vencedor = None
         self.baralho = []
-        self.etapa_turno = 0
+        self.etapa_turno = 0 #  Indica se esta na estapa de distribuicao de tropas, combate ou movimentacao
         self.rodada = 1
 
     def loop(self):
