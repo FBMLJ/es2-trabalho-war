@@ -31,6 +31,7 @@ class TroopsManager:
         esta_na_fronteira = territorio_inicial.eh_vizinho(territorio_destino)
         tem_tropas_pra_movimentar = self.verifica_tropas_a_movimentar(territorio_inicial, tropas_a_deslocar)
         sao_do_mesmo_jogador = self.verifica_se_territorios_sao_do_mesmo_jogador(territorios, territorio_inicial, territorio_destino)
+        print("esta_na_fronteira {}\ntem_tropas_pra_movimentar {}\nsao_do_mesmo_jogador {}".format(esta_na_fronteira, tem_tropas_pra_movimentar, sao_do_mesmo_jogador))
         return esta_na_fronteira and tem_tropas_pra_movimentar and sao_do_mesmo_jogador
 
     '''

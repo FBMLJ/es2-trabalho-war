@@ -247,6 +247,7 @@ class ControladorPartida:
                 codigo_hud_movimenta = self.hud_movimenta.update(self.mouse)
                 movimento_sucesso = False
                 if codigo_hud_movimenta == 3 and len(self.gerenciador_mapa.territorios_selecionados) == 2: #  Botao OK da segunda parte da hud foi clicada
+                    #print("movimentacao inciada")
                     territorio_inicial = self.gerenciador_mapa.territorios_selecionados[0]
                     territorio_destino = self.gerenciador_mapa.territorios_selecionados[1]
                     tropas_movidas = self.hud_movimenta.quantidade_atual
@@ -256,7 +257,9 @@ class ControladorPartida:
                                                                                     territorio_destino,
                                                                                     tropas_movidas
                                                                                 )
+                    #print("movimentacao foi tentada")
                     if movimento_sucesso:
+                        #print("movimento com sucesso")
                         self.gerenciador_mapa.pode_desenhar = True
                         self.gerenciador_mapa.limpa_territorios_selecionados()
                         self.hud_movimenta.set_etapa_movimenta(0)
