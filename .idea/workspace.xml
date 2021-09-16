@@ -6,8 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="2450b4a6-aa34-4e0a-97df-e8909e458315" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jogo/CombateManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/jogo/CombateManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constant.py" beforeDir="false" afterPath="$PROJECT_DIR$/constant.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jogo/CardManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/jogo/CardManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jogo/TroopsManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/jogo/TroopsManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teste/test_CardManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/teste/test_CardManager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/teste/test_CombateManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/teste/test_CombateManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teste/test_ObjectiveVerifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/teste/test_ObjectiveVerifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teste/test_TroopsManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/teste/test_TroopsManager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,8 +41,8 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/teste" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyIntegratedToolsModulesConfigurable" />
   </component>
-  <component name="RunManager" selected="Python tests.Unittests for test_CombateManager.TestCombateManager">
-    <configuration name="Unittests for test_CombateManager.TestCombateManager" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python tests.Unittests for test_CardManager.TestCardManager">
+    <configuration name="Unittests for test_CardManager.TestCardManager" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="es2-trabalho-war" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -47,11 +52,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_CombateManager.TestCombateManager&quot;" />
+      <option name="_new_target" value="&quot;test_CardManager.TestCardManager&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for test_CombateManager.TestCombateManager.test_atacar_ataque_ganha_sem_conquista" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for test_CardManager.TestCardManager.test_pode_trocar_coringa" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="es2-trabalho-war" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -61,11 +66,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_CombateManager.TestCombateManager.test_atacar_ataque_ganha_sem_conquista&quot;" />
+      <option name="_new_target" value="&quot;test_CardManager.TestCardManager.test_pode_trocar_coringa&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for test_CombateManager.TestCombateManager.test_atacar_com_conquista" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for test_CardManager.TestCardManager.test_pode_trocar_diferentes" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="es2-trabalho-war" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -75,11 +80,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_CombateManager.TestCombateManager.test_atacar_com_conquista&quot;" />
+      <option name="_new_target" value="&quot;test_CardManager.TestCardManager.test_pode_trocar_diferentes&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for test_CombateManager.TestCombateManager.test_atacar_defesa_ganha" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for test_CardManager.TestCardManager.test_pode_trocar_falha" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="es2-trabalho-war" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -89,11 +94,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_CombateManager.TestCombateManager.test_atacar_defesa_ganha&quot;" />
+      <option name="_new_target" value="&quot;test_CardManager.TestCardManager.test_pode_trocar_falha&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for test_CombateManager.TestCombateManager.test_pode_atacar_tem_tropas_suficientes_e_faz_fronteira" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for test_CardManager.TestCardManager.test_recebe_uma_carta" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="es2-trabalho-war" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -103,17 +108,17 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_CombateManager.TestCombateManager.test_pode_atacar_tem_tropas_suficientes_e_faz_fronteira&quot;" />
+      <option name="_new_target" value="&quot;test_CardManager.TestCardManager.test_recebe_uma_carta&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Unittests for test_CombateManager.TestCombateManager" />
-        <item itemvalue="Python tests.Unittests for test_CombateManager.TestCombateManager.test_atacar_ataque_ganha_sem_conquista" />
-        <item itemvalue="Python tests.Unittests for test_CombateManager.TestCombateManager.test_atacar_defesa_ganha" />
-        <item itemvalue="Python tests.Unittests for test_CombateManager.TestCombateManager.test_atacar_com_conquista" />
-        <item itemvalue="Python tests.Unittests for test_CombateManager.TestCombateManager.test_pode_atacar_tem_tropas_suficientes_e_faz_fronteira" />
+        <item itemvalue="Python tests.Unittests for test_CardManager.TestCardManager" />
+        <item itemvalue="Python tests.Unittests for test_CardManager.TestCardManager.test_recebe_uma_carta" />
+        <item itemvalue="Python tests.Unittests for test_CardManager.TestCardManager.test_pode_trocar_falha" />
+        <item itemvalue="Python tests.Unittests for test_CardManager.TestCardManager.test_pode_trocar_coringa" />
+        <item itemvalue="Python tests.Unittests for test_CardManager.TestCardManager.test_pode_trocar_diferentes" />
       </list>
     </recent_temporary>
   </component>
@@ -151,26 +156,5 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Resolvidos conflitos" />
     <option name="LAST_COMMIT_MESSAGE" value="Resolvidos conflitos" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/jogo/CombateManager.py</url>
-          <line>52</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/jogo/CombateManager.py</url>
-          <line>53</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/jogo/CombateManager.py</url>
-          <line>59</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

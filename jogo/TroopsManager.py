@@ -10,13 +10,13 @@ class TroopsManager:
     Caso haja um continente conquistado por completo, recebe o bonus do continente
     '''
     def recebimento_rodada(self, jogador: Player, continentes: list) -> None:
-        #Recebimento padrao eh a parte inteira da metade de territorios possuidos
+        # Recebimento padrao eh a parte inteira da metade de territorios possuidos
         recebimento_padrao = int(len(jogador.territorios)/2)
-        #Mas nao pode ser menor do que 3
+        # Mas nao pode ser menor do que 3
         if recebimento_padrao < 4:
             recebimento_padrao = 3
         jogador.tropas_pendentes += recebimento_padrao
-        #Caso haja um continente conquistado por completo, recebe o bonus do continente
+        # Caso haja um continente conquistado por completo, recebe o bonus do continente
         for continente in continentes:
             if jogador.conquistou_continente(continente):
                 jogador.tropas_pendentes += continente.bonus
@@ -39,7 +39,7 @@ class TroopsManager:
     Considera que tropas deslocadas no mesmo turno para o territorio inicial nao podem ser deslocadas de novo
     '''
     def verifica_tropas_a_movimentar(self, territorio_inicial: Territorio, tropas_a_deslocar: int) -> bool:
-        return territorio_inicial.quantidade_tropas  - tropas_a_deslocar - territorio_inicial.tropas_deslocadas > 1
+        return tropas_a_deslocar <= territorio_inicial.quantidade_tropas - territorio_inicial.tropas_deslocadas
 
     '''
     Funcao que verifica se os territorios do deslocamento sao do mesmo jogador

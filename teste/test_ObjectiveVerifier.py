@@ -8,7 +8,7 @@ from jogo.MatchStarter import MatchStarter
 
 class TestObjectiveVerifier(TestCase):
     def test_filtrar(self):
-        #Arrange
+        # Arrange
         objective_verifier = ObjectiveVerifier()
         match_starter = MatchStarter()
 
@@ -24,10 +24,10 @@ class TestObjectiveVerifier(TestCase):
         lista_continentes = match_starter.inicia_continentes(lista_territorios)
         objetivos = objective_verifier.gera_objetivos(lista_continentes)
         
-        #Act
+        # Act
         objetivos_filtrados = objective_verifier.filtrar(objetivos, jogadores)
 
-        #Assert
+        # Assert
         cores_filtradas = []
         for objetivo in objetivos_filtrados:
             if objetivo.cor_a_destruir != "":

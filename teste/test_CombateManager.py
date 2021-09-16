@@ -246,6 +246,3 @@ class TestCombateManager(TestCase):
 
         # Assert
         self.assertFalse(conquistou)
-
-    def test_ataques_do_bot(self):
-        self.assertTrue(True)
