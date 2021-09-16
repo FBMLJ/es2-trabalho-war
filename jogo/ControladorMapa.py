@@ -53,16 +53,21 @@ class ControladorMapa:
             self.colisao_mouse.draw()
             self.pode_desenhar = True
             for territorio in jogador.territorios:
+                #print("territorio {} eh do jogador {}".format(territorio.nome, jogador.cor))
                 if self.colisao_mouse.collided_perfect(territorio.img):
+                    #print("houve colisao!")
                     #  durante a etapa de combate, nao posso selecionar um territorio atacante com um exercito
                     if(etapa == 2 and territorio.quantidade_tropas <= 1):
+                        #print("Quantidade de tropas {} insuficiente para combate".format(territorio.quantidade_tropas))
                         break
                     if len(self.territorios_selecionados) >= 1:
                         self.limpa_territorios_selecionados()
                     territorio.selecionado = True
                     self.territorios_selecionados.append(territorio)
+                    #print("territorio {} selecionado".format(territorio.nome))
                     #print("{} {}:({},{})".format(territorio.nome, territorio.id, x, y))
                     #print("{} {} com {} vizinhos".format(territorio.nome, territorio.id, len(territorio.vizinho)))
+                    break
 
     def selecionar_vizinho(self, mouse:Mouse, jogador:Player, etapa:int): #  argumento 'etapa' indica em que etapa o turno esta
         x,y = mouse.get_position()
@@ -85,7 +90,7 @@ class ControladorMapa:
                         if len(self.territorios_selecionados) == 1:
                             territorio.selecionado = True
                             self.territorios_selecionados.append(territorio)
-                        elif len(self.territorios_selecionados) >= 2:
+                        elif len(self.territorios_selecionados) == 2:
                             self.territorios_selecionados[1].selecionado = False
                             territorio.selecionado = True
                             self.territorios_selecionados[1] = territorio

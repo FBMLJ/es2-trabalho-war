@@ -47,17 +47,18 @@ class HudCombate:
                 self.botao_clicado = botao.code
         
         codigo_retorno = 0
-        if self.etapa_combate == 0:
-            codigo_retorno = self.botao_clicado #  0: nada foi clicado, 1: pode ocorrer combate, 2: cancela as selecoes
-        if self.etapa_combate == 1 and self.botao_foi_clicado and not mouse.is_button_pressed(1):
+        if self.botao_foi_clicado and not mouse.is_button_pressed(1):
             self.botao_foi_clicado = False
-            if self.botao_clicado == 4: #  Botao MAIS
-                if(self.quantidade_atual < self.quantidade_maxima):
-                    self.quantidade_atual += 1
-            if self.botao_clicado == 5: #  Botao MENOS
-                if(self.quantidade_atual > 0):
-                    self.quantidade_atual -= 1
-            self.caixa_quantidade_atacantes.texto = str(self.quantidade_atual)
+            if self.etapa_combate == 0:
+                codigo_retorno = self.botao_clicado #  0: nada foi clicado, 1: pode ocorrer combate, 2: cancela as selecoes
+            if self.etapa_combate == 1:
+                if self.botao_clicado == 4: #  Botao MAIS
+                    if(self.quantidade_atual < self.quantidade_maxima):
+                        self.quantidade_atual += 1
+                if self.botao_clicado == 5: #  Botao MENOS
+                    if(self.quantidade_atual > 0):
+                        self.quantidade_atual -= 1
+                self.caixa_quantidade_atacantes.texto = str(self.quantidade_atual)
             codigo_retorno = self.botao_clicado
             self.botao_clicado = 0
         
@@ -114,14 +115,14 @@ class HudCombate:
 
         botao_ok = Botao(Sprite(self.caminho_assets + "botao_ok.png"), Sprite(self.caminho_assets + "botao_ok_select.png"), 1)
         botao_ok.setposition(
-                                self.atacante_texto.x + self.atacante_texto.width - botao_ok.width,
+                                self.atacante_texto.x,
                                 self.box.y + self.box.height - botao_ok.height - 5
                             )
         self.botoes.append(botao_ok)
 
         botao_cancela = Botao(Sprite(self.caminho_assets + "botao_cancela.png"), Sprite(self.caminho_assets + "botao_cancela_select.png"), 2)
         botao_cancela.setposition(
-                                self.defensor_texto.x,
+                                self.defensor_texto.x + self.defensor_texto.width - botao_cancela.width,
                                 self.box.y + self.box.height - botao_cancela.height - 5
                             )
 
