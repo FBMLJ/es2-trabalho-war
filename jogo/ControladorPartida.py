@@ -101,11 +101,18 @@ class ControladorPartida:
 
     def distribuicao_exercitos(self, jogador:Player) -> None:
         self.hud_turno.escreve_indicador_turno(jogador.cor, "distribuicao de exercitos")
-        self.hud_turno.icone_distribuir.is_normal = False #  Destacando o icone da etapa de distribuicao de tropas
 
         self.gerenciador_tropas.recebimento_rodada(jogador, self.gerenciador_mapa.lista_continentes)
+        if jogador.bot:
+            jogador.distribuir_tropas()
+            self.render()
+            self.janela.update()
+            return
+        
+        self.hud_turno.icone_distribuir.is_normal = False #  Destacando o icone da etapa de distribuicao de tropas
         self.hud_seleciona_quantidade.maximo = jogador.tropas_pendentes #  Quantidade de tropas a ser distribuida
         self.gerenciador_mapa.territorios_selecionados = []
+        
         etapa_concluida = False
         while not etapa_concluida:
             self.gerenciador_mapa.selecionar_territorio(self.mouse, jogador, self.etapa_turno)
@@ -135,8 +142,17 @@ class ControladorPartida:
         etapa_em_andamento = True
         pulou_turno = False #  Para indicar caso o jogador nao vai fazer nada na etapa 2 e 3 do turno
         self.hud_combate.set_etapa_combate(0)
-        while etapa_em_andamento:
+
+        if jogador.bot:
             
+            jogador.escolhe_atacar()
+            self.gerenciador_combate.ataques_do_bot(jogador, self.jogadores)
+            self.render()
+            self.janela.update()
+            return pulou_turno
+
+        while etapa_em_andamento:
+
             #  Primeira parte da etapa de combate: selecao do territorio atacante e defensor
             if self.hud_combate.etapa_combate == 0:
                 #  Escolhendo o territorio atacante
@@ -214,6 +230,12 @@ class ControladorPartida:
         
         self.hud_movimenta.set_etapa_movimenta(0)
         
+        if jogador.bot:
+            jogador.deslocar_tropas()
+            self.render()
+            self.janela.update()
+            return
+
         while etapa_em_andamento:
             
             #  Primeira parte da etapa de combate: selecao do territorio atacante e defensor

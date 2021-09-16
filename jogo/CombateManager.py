@@ -126,7 +126,7 @@ class CombateManager:
     '''
     def ataques_do_bot(self, bot: BotGeral, jogadores: list) -> None:
         #Itera pela lista de ataques do bot
-        for i in range(bot.ataques_a_fazer):
+        for i in range(len(bot.ataques_a_fazer)):
             #Verifica se o ataque pode acontecer
             if self.pode_atacar(bot.ataques_a_fazer[i][0], bot.ataques_a_fazer[i][1]):
                 #Busca pelo jogador dono do territorio defensor
