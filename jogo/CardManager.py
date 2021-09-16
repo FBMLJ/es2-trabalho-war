@@ -2,6 +2,7 @@ from jogo.Bots.BotGeral import BotGeral
 from jogo.Player import Player
 from jogo.Card import Card
 from constant import *
+from random import shuffle
 
 '''
 Classe responsavel por gerenciar tudo relacionado ao uso de cartas
@@ -10,7 +11,7 @@ Classe responsavel por gerenciar tudo relacionado ao uso de cartas
 class CardManager:
     def __init__(self) -> None:
         self.bonus_de_troca = 4
-        self.cartas_no_monte = 0
+        self.cartas_no_monte = []
     
     '''
     Funcao que inicializa o baralho de cartas, exceto coringa, com base no dicionario em constant.py
@@ -25,16 +26,18 @@ class CardManager:
             imagem = nome_territorio + "_carta.png"
             figura = dicionario_figura_territorio[id_territorio]
             lista_de_cartas.append(Card(nome_territorio, imagem, figura, False))
-        #atualizo o tamanho do baralho
-        self.cartas_no_monte = len(lista_de_cartas)
+        if AMBIENTE != "TEST":
+            shuffle(lista_de_cartas)
+        # Atualizo o baralho
+        self.cartas_no_monte = lista_de_cartas
         return lista_de_cartas
+
     '''
     Funcao que retorna o bonus de tropas por troca
     Remove as cartas a serem trocadas da mao do jogador,
     Confere o bonus de tropa aos territorios conquistados
     Retorna o bonus de troca da rodada atual.
     '''
-
     def troca_cartas(self, mao_do_jogador: list, cartas_trocadas: list, territorios: list) -> int:
         # Remove as cartas a serem trocadas da mao do jogador
         for i in range(3):
@@ -62,20 +65,23 @@ class CardManager:
 
     '''
     Funcao que retorna se a lista de cartas esta apta para troca ou nao
-    Algoritmo otimista
-    Considera a principio que todas as cartas sao iguais, e busca a diferente
-    Considera a principio que todas as cartas sao diferentes, e busca uma igual
+    Se a quantidade de cartas a trocar for diferente de 3, proibe a troca
+    Se existir um coringa, as cartas estao aptas para troca
+    Se todas as cartas tiverem figuras iguais, permite a troca
+    Se todas as cartas tiverem figuras diferentes, permite a troca
+    Em todos os outros casos, proibe a troca
     '''
     def pode_trocar(self, cartas: list) -> bool:
-        iguais_otimismo = True
-        diferente_otimismo = True
-        for i in range(2):
-            if cartas[i].figura != cartas[i+1].figura and not (cartas[i].coringa or cartas[i+1].coringa):
-                iguais_otimismo = False
-            if cartas[i].figura == cartas[i+1].figura and not (cartas[i].coringa or cartas[i+1].coringa):
-                diferente_otimismo = False
-
-        return iguais_otimismo or diferente_otimismo
+        if len(cartas) != 3:
+            return False
+        for carta in cartas:
+            if carta.coringa:
+                return True
+        if cartas[0].figura == cartas[1].figura == cartas[2].figura:
+            return True
+        if cartas[0].figura != cartas[1].figura != cartas[2].figura and cartas[0].figura != cartas[2].figura:
+            return True
+        return False
 
     '''
     Funcao que tira uma carta do topo do monte e da para o jogador
