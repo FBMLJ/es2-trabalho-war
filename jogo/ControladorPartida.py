@@ -127,6 +127,7 @@ class ControladorPartida:
         self.hud_turno.icone_combate.is_normal = False
         etapa_em_andamento = True
         pulou_turno = False #  Para indicar caso o jogador nao vai fazer nada na etapa 2 e 3 do turno
+        self.hud_combate.etapa_combate = 0
         while etapa_em_andamento:
             
             #  Primeira parte da etapa de combate: selecao do territorio atacante e defensor
@@ -140,12 +141,13 @@ class ControladorPartida:
                 if(len(self.gerenciador_mapa.territorios_selecionados)==2):
                     self.hud_combate.atualiza_defensor(self.gerenciador_mapa.territorios_selecionados[1].nome)
             
-                codigo_hud_combate = self.hud_combate.update()
+                codigo_hud_combate = self.hud_combate.update(self.mouse)
                 if codigo_hud_combate == 1: #  Passo para a proxima parte do combate
                     self.hud_combate.etapa_combate = 1
                     tropa_maxima = self.gerenciador_mapa.territorios_selecionados[0].quantidade_tropas -1
                     self.hud_combate.quantidade_maxima = tropa_maxima
                     self.hud_combate.quantidade_atual = tropa_maxima
+                    self.hud_combate.caixa_quantidade_atacantes.texto = str(tropa_maxima)
                 elif codigo_hud_combate == 2: #  Cancelo as selecoes feitas
                     self.gerenciador_mapa.limpa_territorios_selecionados()
                     self.hud_combate.atualiza_atacante("")
@@ -154,16 +156,18 @@ class ControladorPartida:
             #Segunda parte da etapa de combate: selecao da quantidade de tropas atacantes
             if self.hud_combate.etapa_combate == 1:
 
-                codigo_hud_combate = self.hud_combate.update()
+                codigo_hud_combate = self.hud_combate.update(self.mouse)
                 if codigo_hud_combate == 1: #  Botao OK da segunda parte da hud foi clicada
                     jogador_defensor = None
                     for j in self.jogadores:
                         #  Procurando o jogador defensor com base no territorio defensor selecionado
-                        if j.cor == self.gerenciador_mapa.territorios_selecionados[1].cor_tropas:
+                        if j.possui_territorio(self.gerenciador_mapa.territorios_selecionados[1]):
                             jogador_defensor = j
                             territorio_atacante = self.gerenciador_mapa.territorios_selecionados[0]
                             territorio_defensor = self.gerenciador_mapa.territorios_selecionados[1]
                             tropas_atacantes = self.hud_combate.quantidade_atual
+                            print("Controlador mapa - atacante {} defensor {}".format(territorio_atacante.nome,territorio_defensor.nome))
+                            print("hud - atacante {} defensor {}".format(self.hud_combate.caixa_atacante.texto, self.hud_combate.caixa_defensor.texto))
                             self.gerenciador_combate.atacar(
                                                                 jogador.territorios, 
                                                                 jogador_defensor.territorios,
@@ -171,6 +175,7 @@ class ControladorPartida:
                                                                 territorio_defensor,
                                                                 tropas_atacantes
                                                             )
+                            self.hud_combate.etapa_combate = 0
 
             # Condicionais para terminar a etapa de combate
             if self.hud_turno.finalizar.update():

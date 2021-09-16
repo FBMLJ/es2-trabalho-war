@@ -59,11 +59,8 @@ class ControladorMapa:
                         break
                     if len(self.territorios_selecionados) >= 1:
                         self.limpa_territorios_selecionados()
-                        territorio.selecionado = True
-                        self.territorios_selecionados.append(territorio)
-                    elif len(self.territorios_selecionados) == 0:
-                        territorio.selecionado = True
-                        self.territorios_selecionados.append(territorio)
+                    territorio.selecionado = True
+                    self.territorios_selecionados.append(territorio)
                     #print("{} {}:({},{})".format(territorio.nome, territorio.id, x, y))
                     #print("{} {} com {} vizinhos".format(territorio.nome, territorio.id, len(territorio.vizinho)))
 
@@ -79,7 +76,7 @@ class ControladorMapa:
                     territorio != self.territorios_selecionados[0] and
                     territorio.eh_vizinho(self.territorios_selecionados[0])
                    ):
-                    print("{}:({},{})".format(territorio.id, x, y))
+                    #print("{}:({},{})".format(territorio.id, x, y))
                     #print("{} {} com {} vizinhos".format(territorio.nome, territorio.id, len(territorio.vizinho)))
                     if( 
                         (etapa == 2 and territorio.cor_tropas != self.territorios_selecionados[0].cor_tropas) or 

@@ -21,3 +21,9 @@ class Player:
         if len(territorios_do_continente) == len(continente.territorios):
             return True
         return False
+
+    def possui_territorio(self, possivel_territorio:Territorio) -> bool:
+        for territorio in self.territorios:
+            if possivel_territorio == territorio:
+                return True
+        return False

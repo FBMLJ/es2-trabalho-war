@@ -106,23 +106,28 @@ class HudCombate:
 
         self.botoes_etapa.append(botoes_etapa_2)
 
-    def update(self):
+    def update(self, mouse:Mouse):
+
         for botao in self.botoes_etapa[self.etapa_combate]:
             retorno = botao.update()
             if retorno:
                 self.botao_foi_clicado = True
                 self.botao_clicado = botao.code
         
-        if self.etapa_combate == 1:
+        codigo_retorno = 0
+        if self.etapa_combate == 0:
+            codigo_retorno = self.botao_clicado #  0: nada foi clicado, 1: pode ocorrer combate, 2: cancela as selecoes
+        if self.etapa_combate == 1 and self.botao_foi_clicado and not mouse.is_button_pressed(1):
+            self.botao_foi_clicado = False
             if self.botao_clicado == 2: #  Botao MAIS
                 if(self.quantidade_atual < self.quantidade_maxima):
                     self.quantidade_atual += 1
             if self.botao_clicado == 3: #  Botao MENOS
                 if(self.quantidade_atual > 0):
                     self.quantidade_atual -= 1
-
-        codigo_retorno = self.botao_clicado #  0: nada foi clicado, 1: pode ocorrer combate, 2: cancela as selecoes
-        self.botao_clicado = 0
+            self.caixa_quantidade_atacantes.texto = str(self.quantidade_atual)
+            codigo_retorno = self.botao_clicado
+            self.botao_clicado = 0
         
         return codigo_retorno
 
