@@ -14,23 +14,23 @@ class CardManager:
         self.cartas_no_monte = []
     
     '''
-    Funcao que inicializa o baralho de cartas, exceto coringa, com base no dicionario em constant.py
+    Funcao que inicializa o baralho de cartas, com base no dicionario em constant.py
     '''
-    def inicia_cartas(self) -> list:
+    def inicia_cartas(self):
         lista_de_cartas = []
         # Coringas
-        lista_de_cartas.append(Card(None, "coringa_card.png", None, True))
-        lista_de_cartas.append(Card(None, "coringa_card.png", None, True))
+        lista_de_cartas.append(Card(None, "coringa.png", None, True))
+        lista_de_cartas.append(Card(None, "coringa.png", None, True))
         for id_territorio in dicionario_territorios:
             nome_territorio = dicionario_territorios[id_territorio]
-            imagem = id_territorio + "_card.png"
+            imagem = str(id_territorio) + "_card.png"
             figura = dicionario_figura_territorio[id_territorio]
             lista_de_cartas.append(Card(nome_territorio, imagem, figura, False))
         if AMBIENTE != "TEST":
             shuffle(lista_de_cartas)
         # Atualizo o baralho
         self.cartas_no_monte = lista_de_cartas
-        return lista_de_cartas
+        #return lista_de_cartas
 
     '''
     Funcao que retorna o bonus de tropas por troca

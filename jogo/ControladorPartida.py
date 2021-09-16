@@ -11,6 +11,7 @@ from jogo.CardManager import CardManager
 from jogo.ObjectiveVerifier import ObjectiveVerifier
 from jogo.TroopsManager import TroopsManager
 from jogo.CombateManager import CombateManager
+from jogo.ControladorCartas import ControladorCartas
 from componentes.hudTurno import hudTurno
 from componentes.hudSelecionaTropas import HudSelecionaTropas
 from componentes.hudCombate import HudCombate
@@ -26,7 +27,9 @@ class ControladorPartida:
         self.gerenciador_mapa.lista_territorios = self.iniciador_de_partida.inicia_territorios()
         self.gerenciador_mapa.set_lista_continentes(self.iniciador_de_partida.inicia_continentes(self.gerenciador_mapa.lista_territorios))
         self.gerenciador_mapa.carrega_imagens_dos_territorios()
-        self.gerenciador_cartas = CardManager()
+        self.gerenciador_cartas = ControladorCartas()
+        self.baralho = CardManager()
+        self.baralho.inicia_cartas()
         self.gerenciador_objetivos = ObjectiveVerifier()
         self.gerenciador_tropas = TroopsManager()
         self.gerenciador_combate = CombateManager()
@@ -44,7 +47,7 @@ class ControladorPartida:
         self.janela = janela
         self.mouse = Mouse()
         self.jogador_vencedor = None
-        self.baralho = []
+
         self.etapa_turno = 0 #  Indica se esta na estapa de distribuicao de tropas, combate ou movimentacao
         self.rodada = 1
 
@@ -120,6 +123,8 @@ class ControladorPartida:
         etapa_concluida = False
         while not etapa_concluida:
             self.gerenciador_mapa.selecionar_territorio(self.mouse, jogador, self.etapa_turno)
+            
+            clicou_cartas = self.gerenciador_cartas.update(self.mouse)
             clicou_ok = self.hud_seleciona_quantidade.update(self.mouse)
             if clicou_ok: #  Apos clicar no OK da hud, termina de distribuir tropas para o territorio selecionado
                 tropas_distribuidas = self.hud_seleciona_quantidade.quantidade
@@ -131,10 +136,13 @@ class ControladorPartida:
                 self.gerenciador_mapa.pode_desenhar = True 
                 self.gerenciador_mapa.limpa_territorios_selecionados()
 
+
+
             if jogador.tropas_pendentes == 0: #  A etapa termina automaticamente assim que o jogador distribui todas as tropas
                 etapa_concluida = True
             
             self.render()
+            self.gerenciador_cartas.render(jogador)
             self.janela.update()
         
         self.gerenciador_mapa.limpa_territorios_selecionados() #  Limpa os territorios selecionados antes de ir para a proxima etapa
