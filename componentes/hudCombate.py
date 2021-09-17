@@ -30,7 +30,8 @@ class HudCombate:
         self.defensor_texto = None
         self.caixa_atacante = None
         self.caixa_defensor = None
-
+        self.posicao_caixa_atacante = []
+        self.posicao_caixa_defensor = []
         self.atacantes_texto = None
         self.caixa_quantidade_atacantes = None
 
@@ -72,8 +73,20 @@ class HudCombate:
         if(self.etapa_combate==0):
             self.atacante_texto.draw()
             self.defensor_texto.draw()
-            self.caixa_atacante.render()
-            self.caixa_defensor.render()
+            #self.caixa_atacante.render()
+            #self.caixa_defensor.render()
+            self.janela.draw_text(
+                self.territorio_atacante,
+                self.posicao_caixa_atacante[0],
+                self.posicao_caixa_atacante[1],
+                bold=True
+            )
+            self.janela.draw_text(
+                self.territorio_defensor,
+                self.posicao_caixa_defensor[0],
+                self.posicao_caixa_defensor[1],
+                bold=True
+            )
         elif(self.etapa_combate==1):
             self.atacantes_texto.draw()
             self.caixa_quantidade_atacantes.render()
@@ -81,9 +94,11 @@ class HudCombate:
             botao.render()
 
     def atualiza_atacante(self, atacante:str):
+        self.territorio_atacante = atacante
         self.caixa_atacante.texto = atacante
     
     def atualiza_defensor(self, defensor:str):
+        self.territorio_defensor = defensor
         self.caixa_defensor.texto = defensor
     
     def set_etapa_combate(self, etapa:int):
@@ -107,14 +122,14 @@ class HudCombate:
 
         self.atacante_texto = GameImage(self.caminho_assets + "atacante.png")
         self.atacante_texto.set_position(
-                                            self.box.x + int(0.3*self.atacante_texto.width),
-                                            self.box.y + int(0.3*self.atacante_texto.height)
+                                            self.box.x + int(0.25*self.box.width) - int(self.atacante_texto.width/2),
+                                            self.box.y + int(0.1*self.box.height)
                                         )
 
         self.defensor_texto = GameImage(self.caminho_assets + "defensor.png")
         self.defensor_texto.set_position(
-                                            self.box.x + self.box.width - (self.defensor_texto.width + int(0.3*self.defensor_texto.width)),
-                                            self.box.y + int(0.3*self.defensor_texto.height)
+                                            self.box.x + int(0.75*self.box.width) - int(self.defensor_texto.width/2),
+                                            self.box.y + int(0.1*self.box.height)
                                         )
 
         botao_ok = Botao(Sprite(self.caminho_assets + "botao_ok.png"), Sprite(self.caminho_assets + "botao_ok_select.png"), 1)
@@ -135,16 +150,18 @@ class HudCombate:
         self.caixa_atacante = RetanguloTexto(self.janela, "", 1, self.atacante_texto.width, self.defensor_texto.height, 10, False)
         self.caixa_atacante.centralizado = True
         self.caixa_atacante.set_position(
-                                            self.atacante_texto.x,
+                                            self.atacante_texto.x + int(self.atacante_texto.width/2) - int(self.caixa_atacante.width/2),
                                             self.atacante_texto.y + self.atacante_texto.height + int(0.3*self.caixa_atacante.height)
                                         )
-        
+        self.posicao_caixa_atacante = [self.caixa_atacante.x, self.caixa_atacante.y]
+
         self.caixa_defensor = RetanguloTexto(self.janela, "", 2, self.defensor_texto.width, self.defensor_texto.height, 10, False)
         self.caixa_defensor.centralizado = True
         self.caixa_defensor.set_position(
-                                            self.defensor_texto.x,
+                                            self.defensor_texto.x + int(self.defensor_texto.width/2) - int(self.caixa_defensor.width/2),
                                             self.defensor_texto.y + self.defensor_texto.height + int(0.3*self.caixa_defensor.height)
                                         )
+        self.posicao_caixa_defensor = [self.caixa_defensor.x, self.caixa_defensor.y]
     
     def inicializa_etapa_combate_1(self):
 

@@ -30,7 +30,8 @@ class HudMovimenta:
         self.terr_destino_texto = None
         self.caixa_terr_inicial = None
         self.caixa_terr_destino = None
-
+        self.pos_inicial = []
+        self.pos_destino = []
         self.quantidade_texto = None
         self.caixa_quantidade = None
 
@@ -72,8 +73,20 @@ class HudMovimenta:
         if(self.etapa_movimenta==0):
             self.terr_inicial_texto.draw()
             self.terr_destino_texto.draw()
-            self.caixa_terr_inicial.render()
-            self.caixa_terr_destino.render()
+            #self.caixa_terr_inicial.render()
+            #self.caixa_terr_destino.render()
+            self.janela.draw_text(
+                self.caixa_terr_inicial.texto,
+                self.pos_inicial[0],
+                self.pos_inicial[1],
+                bold=True
+            )
+            self.janela.draw_text(
+                self.caixa_terr_destino.texto,
+                self.pos_destino[0],
+                self.pos_destino[1],
+                bold=True
+            )
         elif(self.etapa_movimenta==1):
             self.quantidade_texto.draw()
             self.caixa_quantidade.render()
@@ -106,14 +119,14 @@ class HudMovimenta:
 
         self.terr_inicial_texto = GameImage(self.caminho_assets + "inicial.png")
         self.terr_inicial_texto.set_position(
-                                            self.box.x + int(0.3*self.terr_inicial_texto.width),
-                                            self.box.y + int(0.3*self.terr_inicial_texto.height)
+                                            self.box.x + int(0.25*self.box.width) - int(self.terr_inicial_texto.width/2),
+                                            self.box.y + int(0.1*self.box.height)
                                         )
 
         self.terr_destino_texto = GameImage(self.caminho_assets + "destino.png")
         self.terr_destino_texto.set_position(
-                                            self.box.x + self.box.width - (self.terr_destino_texto.width + int(0.3*self.terr_destino_texto.width)),
-                                            self.box.y + int(0.3*self.terr_destino_texto.height)
+                                            self.box.x + int(0.75*self.box.width) - int(self.terr_destino_texto.width/2),
+                                            self.box.y + int(0.1*self.box.height)
                                         )
 
         botao_ok = Botao(Sprite(self.caminho_assets + "botao_ok.png"), Sprite(self.caminho_assets + "botao_ok_select.png"), 1)
@@ -134,17 +147,19 @@ class HudMovimenta:
         self.caixa_terr_inicial = RetanguloTexto(self.janela, "", 1, self.terr_inicial_texto.width, self.terr_destino_texto.height, 10, False)
         self.caixa_terr_inicial.centralizado = True
         self.caixa_terr_inicial.set_position(
-                                            self.terr_inicial_texto.x,
+                                            self.terr_inicial_texto.x + int(self.terr_inicial_texto.width/2) - int(self.caixa_terr_inicial.width/2),
                                             self.terr_inicial_texto.y + self.terr_inicial_texto.height + int(0.3*self.caixa_terr_inicial.height)
                                         )
-        
+        self.pos_inicial = [self.caixa_terr_inicial.x, self.caixa_terr_inicial.y]
+
         self.caixa_terr_destino = RetanguloTexto(self.janela, "", 2, self.terr_destino_texto.width, self.terr_destino_texto.height, 10, False)
         self.caixa_terr_destino.centralizado = True
         self.caixa_terr_destino.set_position(
-                                            self.terr_destino_texto.x,
+                                            self.terr_destino_texto.x + int(self.terr_destino_texto.width/2) - int(self.caixa_terr_destino.width/2),
                                             self.terr_destino_texto.y + self.terr_destino_texto.height + int(0.3*self.caixa_terr_destino.height)
                                         )
-    
+        self.pos_destino = [self.caixa_terr_destino.x, self.caixa_terr_destino.y]
+
     def inicializa_etapa_movimenta_1(self):
 
         self.terr_inicial_texto = None

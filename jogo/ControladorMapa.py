@@ -128,7 +128,9 @@ class ControladorMapa:
                         territorio.img_highlight.draw()
                     if territorio_selecionado == territorio:
                         territorio.img_select.draw()
-                    
+
+                self.desenha_quantidade_tropas(territorio)
+                '''    
                 tamanho_texto = 18
                 cor_texto = (255,0,127)
                 self.janela.draw_text(str(territorio.quantidade_tropas),
@@ -137,7 +139,33 @@ class ControladorMapa:
                     tamanho_texto, 
                     cor_texto
                     )
-    
+                '''
+    def desenha_quantidade_tropas(self, territorio:Territorio):
+        '''
+        tamanho_texto = 28
+        cor_texto = (255,255,255)
+        self.janela.draw_text(
+            str(territorio.quantidade_tropas),
+            territorio.pos_texto_x-3, 
+            territorio.pos_texto_y-3, 
+            tamanho_texto, 
+            cor_texto
+            )
+        '''
+        tamanho_texto = 24
+        #cor_texto = (255,0,127)
+        #cor_texto = (255, 95, 31)
+        cor_texto = (106,106,106)
+        self.janela.draw_text(
+            str(territorio.quantidade_tropas),
+            territorio.pos_texto_x, 
+            territorio.pos_texto_y, 
+            tamanho_texto, 
+            cor_texto,
+            bold=True
+            )
+        
+
     def carrega_imagens_dos_territorios(self):
 
         for territorio in self.lista_territorios:
