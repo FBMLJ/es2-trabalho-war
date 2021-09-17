@@ -68,6 +68,9 @@ class hudTurno:
                                             self.barra.x + int(self.barra.width/2) - int(self.indicador_turno.width/2),
                                             self.barra.y - self.indicador_turno.height
                                           )
+        self.indicador_objetivo = RetanguloTexto(janela, "", 2, self.indicador_turno.width, self.indicador_turno.height)
+        self.indicador_objetivo.set_position(self.indicador_turno.x, self.indicador_turno.y - self.indicador_objetivo.height)
+
     def render(self):
         self.barra.draw()
         self.icone_distribuir.render()
@@ -78,6 +81,10 @@ class hudTurno:
         self.finalizar_texto.draw()
         self.pular_texto.draw()
         self.indicador_turno.render()
+        self.indicador_objetivo.render()
     
     def escreve_indicador_turno(self, cor_jogador:str, etapa:str):
         self.indicador_turno.texto = "O jogador "+cor_jogador+" esta na etapa de "+etapa
+
+    def escreve_objetivo(self, jogador):
+        self.indicador_objetivo.texto = "Objetivo: " + jogador.objetivo.descricao

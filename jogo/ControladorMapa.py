@@ -30,6 +30,7 @@ class ControladorMapa:
 
     def __init__(self, janela: Window):
         self.pode_desenhar = True
+        self.clicou = False
         self.colisao_mouse = GameImage(self.caminho_img_mapa+self.img_colisao)
         self.janela = janela
         self.fundo = GameImage(self.caminho_img_mapa+self.img_fundo)
@@ -46,12 +47,16 @@ class ControladorMapa:
             #territorio.img_select.image = transform.scale(territorio.img_select.image, (int(PERCT_MAPA*LARGURA_PADRAO), int(PERCT_MAPA*ALTURA_PADRAO)))
         
     
-    def selecionar_territorio(self, mouse:Mouse, jogador:Player, etapa:int) -> None: 
-        x,y = mouse.get_position()
-        self.colisao_mouse.set_position(x,y)
+    def selecionar_territorio(self, mouse:Mouse, jogador:Player, etapa:int) -> None:
         if etapa > 1:
             return
         if mouse.is_button_pressed(1):
+            self.clicou = True
+
+        if self.clicou and not mouse.is_button_pressed(1):
+            x, y = mouse.get_position()
+            self.clicou = False
+            self.colisao_mouse.set_position(x, y)
             self.colisao_mouse.draw()
             self.pode_desenhar = True
             for territorio in jogador.territorios:
@@ -66,11 +71,15 @@ class ControladorMapa:
                     break
 
     def selecionar_inicial(self, mouse:Mouse, jogador:Player, etapa:int):
-        x,y = mouse.get_position()
-        self.colisao_mouse.set_position(x,y)
         if etapa < 2:
             return
         if mouse.is_button_pressed(1):
+            self.clicou = True
+
+        if self.clicou and not mouse.is_button_pressed(1):
+            self.clicou = False
+            x, y = mouse.get_position()
+            self.colisao_mouse.set_position(x, y)
             self.colisao_mouse.draw()
             self.pode_desenhar = True
             for territorio in jogador.territorios:
@@ -81,9 +90,13 @@ class ControladorMapa:
                     self.territorios_selecionados.append(territorio)
 
     def selecionar_vizinho(self, mouse:Mouse, jogador:Player, etapa:int): #  argumento 'etapa' indica em que etapa o turno esta
-        x,y = mouse.get_position()
-        self.colisao_mouse.set_position(x,y)
         if mouse.is_button_pressed(1) and len(self.territorios_selecionados) >= 1:
+            self.clicou = True
+
+        if self.clicou and not mouse.is_button_pressed(1):
+            self.clicou = False
+            x, y = mouse.get_position()
+            self.colisao_mouse.set_position(x, y)
             self.colisao_mouse.draw()
             self.pode_desenhar = True
             for territorio in self.lista_territorios:

@@ -169,7 +169,7 @@ class HudMovimenta:
 
         self.botoes.clear()
 
-        self.quantidade_texto = GameImage(self.caminho_assets + "quantidade.png")
+        self.quantidade_texto = GameImage(self.caminho_assets + "Quantidade.png")
         self.quantidade_texto.set_position(
                                             self.box.x + int(self.box.width/2) - int(self.quantidade_texto.width/2),
                                             self.box.y + int(0.4*self.quantidade_texto.height)
