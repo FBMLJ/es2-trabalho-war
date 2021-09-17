@@ -14,16 +14,16 @@ class CardManager:
         self.cartas_no_monte = []
     
     '''
-    Funcao que inicializa o baralho de cartas, exceto coringa, com base no dicionario em constant.py
+    Funcao que inicializa o baralho de cartas, com base no dicionario em constant.py
     '''
-    def inicia_cartas(self) -> list:
+    def inicia_cartas(self):
         lista_de_cartas = []
         # Coringas
-        lista_de_cartas.append(Card(None, "coringa_card.png", None, True))
-        lista_de_cartas.append(Card(None, "coringa_card.png", None, True))
+        lista_de_cartas.append(Card(None, "coringa.png", None, True))
+        lista_de_cartas.append(Card(None, "coringa.png", None, True))
         for id_territorio in dicionario_territorios:
             nome_territorio = dicionario_territorios[id_territorio]
-            imagem = id_territorio + "_card.png"
+            imagem = str(id_territorio) + "_card.png"
             figura = dicionario_figura_territorio[id_territorio]
             lista_de_cartas.append(Card(nome_territorio, imagem, figura, False))
         if AMBIENTE != "TEST":
@@ -31,6 +31,13 @@ class CardManager:
         # Atualizo o baralho
         self.cartas_no_monte = lista_de_cartas
         return lista_de_cartas
+
+    '''
+    Funcao que carrega as imagens das cartas
+    '''
+    def carrega_imagens(self):
+        for carta in self.cartas_no_monte:
+            carta.carrega_imagem()
 
     '''
     Funcao que retorna o bonus de tropas por troca
@@ -42,6 +49,8 @@ class CardManager:
         # Remove as cartas a serem trocadas da mao do jogador
         for i in range(3):
             mao_do_jogador.remove(cartas_trocadas[i])
+            self.cartas_no_monte.append(cartas_trocadas[i])
+        shuffle(self.cartas_no_monte)
 
         #Confere o bonus de tropa aos territorios conquistados
         for territorio in territorios:

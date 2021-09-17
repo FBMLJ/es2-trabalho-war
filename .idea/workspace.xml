@@ -5,10 +5,67 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2450b4a6-aa34-4e0a-97df-e8909e458315" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/10_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/11_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/12_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/13_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/14_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/15_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/16_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/17_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/18_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/19_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/1_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/20_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/21_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/22_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/23_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/24_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/25_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/26_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/27_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/28_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/29_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/2_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/30_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/31_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/32_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/33_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/34_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/35_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/36_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/37_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/38_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/39_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/3_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/40_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/41_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/42_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/4_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/5_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/6_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/7_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/8_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/9_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/card_select.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/cartas/coringa.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/hud/botao_retorna.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/hud/botao_retorna_select.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/hud/botao_seta_select.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/hud/botao_seta_volta.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/hud/botao_seta_volta_select.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/hud/botao_x_select.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/imagem/hud/mouse_colisao.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/componentes/hudCartas.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jogo/ControladorCartas.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jogo/ActionManager.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/componentes/hudTroca.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/componentes/hudTurno.py" beforeDir="false" afterPath="$PROJECT_DIR$/componentes/hudTurno.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constant.py" beforeDir="false" afterPath="$PROJECT_DIR$/constant.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jogo/Bots/BotGeral.py" beforeDir="false" afterPath="$PROJECT_DIR$/jogo/Bots/BotGeral.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jogo/Card.py" beforeDir="false" afterPath="$PROJECT_DIR$/jogo/Card.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jogo/CombateManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/jogo/CombateManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jogo/CardManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/jogo/CardManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jogo/ControladorPartida.py" beforeDir="false" afterPath="$PROJECT_DIR$/jogo/ControladorPartida.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/teste/test_CardManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/teste/test_CardManager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

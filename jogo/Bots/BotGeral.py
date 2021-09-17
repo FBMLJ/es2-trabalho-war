@@ -33,30 +33,67 @@ class BotGeral(Player):
     Se tiver 3 cartas de simbolos diferentes, coloca na lista de cartas para trocar
     '''
     def escolhe_cartas_para_trocar(self) -> None:
-        #Procura pelas cartas de quadrado
-        cartas_quadrado = (c for c in self.cartas if c.figura == "QUADRADO")
-        #Procura pelas cartas de triangulo
-        cartas_triangulo = (c for c in self.cartas if c.figura == "TRIANGULO")
-        #Procura pelas cartas de circulo
-        cartas_circulo = (c for c in self.cartas if c.figura == "CIRCULO")
+        if len(self.cartas) < 3:
+            return
+        # Procura pelas cartas de quadrado
+        cartas_quadrado = []
+        for carta in self.cartas:
+            if carta.figura == "Quadrado":
+                cartas_quadrado.append(carta)
+        # Procura pelas cartas de triangulo
+        cartas_triangulo = []
+        for carta in self.cartas:
+            if carta.figura == "Triangulo":
+                cartas_triangulo.append(carta)
+        # Procura pelas cartas de circulo
+        cartas_circulo = []
+        for carta in self.cartas:
+            if carta.figura == "Circulo":
+                cartas_circulo.append(carta)
         # Se tiver 3 ou mais cartas com o mesmo simbolo, bota na lista de cartas para trocar
-        if(len(cartas_quadrado) >= 3):
+        if len(cartas_quadrado) >= 3:
             self.cartas_a_trocar.append(cartas_quadrado[0])
             self.cartas_a_trocar.append(cartas_quadrado[1])
             self.cartas_a_trocar.append(cartas_quadrado[2])
-        elif(len(cartas_triangulo) >= 3):
+            return
+        elif len(cartas_triangulo) >= 3:
             self.cartas_a_trocar.append(cartas_triangulo[0])
             self.cartas_a_trocar.append(cartas_triangulo[1])
             self.cartas_a_trocar.append(cartas_triangulo[2])
-        elif(len(cartas_circulo) >= 3):
+            return
+        elif len(cartas_circulo) >= 3:
             self.cartas_a_trocar.append(cartas_circulo[0])
             self.cartas_a_trocar.append(cartas_circulo[1])
             self.cartas_a_trocar.append(cartas_circulo[2])
-        #Se tiver 3 cartas de simbolos diferentes, coloca na lista de cartas para trocar
+            return
+        # Se tiver 3 cartas de simbolos diferentes, coloca na lista de cartas para trocar
         elif len(cartas_quadrado) >= 1 and len(cartas_triangulo) >= 1 and len(cartas_circulo) >= 1:
             self.cartas_a_trocar.append(cartas_quadrado[0])
             self.cartas_a_trocar.append(cartas_triangulo[0])
             self.cartas_a_trocar.append(cartas_circulo[0])
+            return
+        # Busca pelas cartas coringas
+        cartas_coringa = []
+        for carta in self.cartas:
+            if carta.coringa:
+                cartas_coringa.append(carta)
+        if len(cartas_coringa) == 1:
+            # Busca duas cartas nao coringas para participar da troca
+            duas_cartas_para_achar = 2
+            for carta in self.cartas:
+                if not carta.coringa and duas_cartas_para_achar > 0:
+                    duas_cartas_para_achar -= 1
+                    self.cartas_a_trocar.append(carta)
+            self.cartas_a_trocar.append(cartas_coringa[0])
+        if len(cartas_coringa) == 2:
+            # Busca duas cartas nao coringas para participar da troca
+            duas_cartas_para_achar = 1
+            for carta in self.cartas:
+                if not carta.coringa and duas_cartas_para_achar > 0:
+                    duas_cartas_para_achar -= 1
+                    self.cartas_a_trocar.append(carta)
+            self.cartas_a_trocar.append(cartas_coringa[0])
+            self.cartas_a_trocar.append(cartas_coringa[1])
         return
 
     '''
@@ -85,7 +122,7 @@ class BotGeral(Player):
         
         i = 0
         while tropas_a_distribuir > 0:
-            tropas_enviadas = randint(1,tropas_a_distribuir)
+            tropas_enviadas = randint(1, tropas_a_distribuir)
             tropas_a_distribuir -= tropas_enviadas
             self.territorios[i].recebe_tropas(tropas_enviadas)
             i += 1

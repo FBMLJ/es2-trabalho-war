@@ -6,8 +6,9 @@ class Card:
     
     def __init__(self, territorio: str, frente: str, fig: str, coringa: bool) -> None:
         self.territorio_nome = territorio
-        self.img = None
         self.frente = frente
+        self.img = None
+        self.img_select = None
         self.figura = fig
         self.coringa = coringa
 
@@ -16,3 +17,4 @@ class Card:
 
     def carrega_imagem(self):
         self.img = GameImage(self.caminho_cartas + self.frente)
+        self.img_select = GameImage(self.caminho_cartas + "card_select.png")
