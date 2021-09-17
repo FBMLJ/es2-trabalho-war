@@ -95,12 +95,19 @@ class BotGeral(Player):
             self.cartas_a_trocar.append(cartas_coringa[0])
             self.cartas_a_trocar.append(cartas_coringa[1])
         return
-
+ 
+    def distribuir_tropas(self) -> None:
+        escolha = randint(0,1)
+        if escolha:
+            self.distribui_igual()
+        else:
+            self.distribui_aleatorio()
+    
     '''
     Funcao que faz o bot distribuir suas tropas
     Embaralha a lista de territorios, e coloca 1 tropa em cada ciclicamente.
     '''
-    def distribuir_tropas(self) -> None:
+    def distribui_igual(self):
         #Embaralha a lista de territorios
         shuffle(self.territorios)
         #Coloca 1 tropa em cada ciclicamente.
@@ -113,9 +120,9 @@ class BotGeral(Player):
             if i >= len(self.territorios):
                 i = 0
         return
-    
+
     #Distribui aleatoriamente tropas entre os territorios
-    def distribui_tropas_v2(self) -> None:
+    def distribui_aleatorio(self) -> None:
         shuffle(self.territorios)
         #Quantidade total de tropas a serem distribuidas
         tropas_a_distribuir = self.tropas_pendentes
