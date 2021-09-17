@@ -83,6 +83,7 @@ class TestCardManager(TestCase):
         card_manager = CardManager()
 
         lista_cartas = card_manager.inicia_cartas()
+
         cartas_a_trocar = [lista_cartas[2], lista_cartas[5], lista_cartas[8]]
 
         # Act

@@ -30,7 +30,14 @@ class CardManager:
             shuffle(lista_de_cartas)
         # Atualizo o baralho
         self.cartas_no_monte = lista_de_cartas
-        #return lista_de_cartas
+        return lista_de_cartas
+
+    '''
+    Funcao que carrega as imagens das cartas
+    '''
+    def carrega_imagens(self):
+        for carta in self.cartas_no_monte:
+            carta.carrega_imagem()
 
     '''
     Funcao que retorna o bonus de tropas por troca
@@ -43,6 +50,7 @@ class CardManager:
         for i in range(3):
             mao_do_jogador.remove(cartas_trocadas[i])
             self.cartas_no_monte.append(cartas_trocadas[i])
+        shuffle(self.cartas_no_monte)
 
         #Confere o bonus de tropa aos territorios conquistados
         for territorio in territorios:
