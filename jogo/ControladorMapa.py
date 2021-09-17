@@ -30,7 +30,8 @@ class ControladorMapa:
 
     def __init__(self, janela: Window):
         self.pode_desenhar = True
-        self.clicou = False
+        self.clicou_inicial = False
+        self.clicou_vizinho = False
         self.colisao_mouse = GameImage(self.caminho_img_mapa+self.img_colisao)
         self.janela = janela
         self.fundo = GameImage(self.caminho_img_mapa+self.img_fundo)
@@ -51,11 +52,11 @@ class ControladorMapa:
         if etapa > 1:
             return
         if mouse.is_button_pressed(1):
-            self.clicou = True
+            self.clicou_inicial = True
 
-        if self.clicou and not mouse.is_button_pressed(1):
+        if self.clicou_inicial and not mouse.is_button_pressed(1):
             x, y = mouse.get_position()
-            self.clicou = False
+            self.clicou_inicial = False
             self.colisao_mouse.set_position(x, y)
             self.colisao_mouse.draw()
             self.pode_desenhar = True
@@ -74,10 +75,10 @@ class ControladorMapa:
         if etapa < 2:
             return
         if mouse.is_button_pressed(1):
-            self.clicou = True
+            self.clicou_inicial = True
 
-        if self.clicou and not mouse.is_button_pressed(1):
-            self.clicou = False
+        if self.clicou_inicial and not mouse.is_button_pressed(1):
+            self.clicou_inicial = False
             x, y = mouse.get_position()
             self.colisao_mouse.set_position(x, y)
             self.colisao_mouse.draw()
@@ -91,10 +92,10 @@ class ControladorMapa:
 
     def selecionar_vizinho(self, mouse:Mouse, jogador:Player, etapa:int): #  argumento 'etapa' indica em que etapa o turno esta
         if mouse.is_button_pressed(1) and len(self.territorios_selecionados) >= 1:
-            self.clicou = True
+            self.clicou_vizinho = True
 
-        if self.clicou and not mouse.is_button_pressed(1):
-            self.clicou = False
+        if self.clicou_vizinho and not mouse.is_button_pressed(1):
+            self.clicou_vizinho = False
             x, y = mouse.get_position()
             self.colisao_mouse.set_position(x, y)
             self.colisao_mouse.draw()
