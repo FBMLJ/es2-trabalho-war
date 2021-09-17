@@ -98,13 +98,6 @@ class ControladorPartida:
         if(self.etapa_turno == 3):
             self.hud_movimenta.render()
 
-    def inicia_cartas(self) -> None:
-        for id_territorio in dicionario_territorios:
-            nome_territorio = dicionario_territorios[id_territorio]
-            imagem = nome_territorio + "_carta.png"
-            figura = dicionario_figura_territorio[id_territorio]
-            self.todas_as_cartas.append(Card(nome_territorio, imagem, figura, False))
-
     #=======================================
     #==============DISTRIBUICAO=============
     #=======================================
