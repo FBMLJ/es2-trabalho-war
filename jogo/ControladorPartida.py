@@ -78,7 +78,6 @@ class ControladorPartida:
                     '''
                     self.etapa_turno = 3
                     if not finalizar_turno:
-                        print("entrei na etapa de movimentacao")
                         self.movimentacao_exercitos(jogador)
                         self.jogador_vencedor = self.gerenciador_objetivos.verifica_objetivos(self.jogadores)
 
@@ -106,6 +105,10 @@ class ControladorPartida:
             figura = dicionario_figura_territorio[id_territorio]
             self.todas_as_cartas.append(Card(nome_territorio, imagem, figura, False))
 
+    #=======================================
+    #==============DISTRIBUICAO=============
+    #=======================================
+
     def distribuicao_exercitos(self, jogador:Player) -> None:
         self.hud_turno.escreve_indicador_turno(jogador.cor, "distribuicao de exercitos")
 
@@ -120,11 +123,19 @@ class ControladorPartida:
         self.hud_seleciona_quantidade.maximo = jogador.tropas_pendentes #  Quantidade de tropas a ser distribuida
         self.gerenciador_mapa.territorios_selecionados = []
         
+        #  Checando se o jogador deve trocar cartas
+        if self.gerenciador_cartas.jogador_deve_trocar(jogador):
+            self.gerenciador_cartas.forca_troca(jogador)
+
         etapa_concluida = False
         while not etapa_concluida:
             self.gerenciador_mapa.selecionar_territorio(self.mouse, jogador, self.etapa_turno)
             
             clicou_cartas = self.gerenciador_cartas.update(self.mouse)
+            if clicou_cartas == 2: #  Fechar o menu de cartas
+                self.gerenciador_mapa.pode_desenhar = True
+
+            #  Condicional para a HUD de distirbuicao de cartas
             clicou_ok = self.hud_seleciona_quantidade.update(self.mouse)
             if clicou_ok: #  Apos clicar no OK da hud, termina de distribuir tropas para o territorio selecionado
                 tropas_distribuidas = self.hud_seleciona_quantidade.quantidade
@@ -136,9 +147,17 @@ class ControladorPartida:
                 self.gerenciador_mapa.pode_desenhar = True 
                 self.gerenciador_mapa.limpa_territorios_selecionados()
 
+            #  Condicional para troca de cartas por tropas
+            if clicou_cartas == 1 and self.baralho.pode_trocar(self.gerenciador_cartas.cartas_selecionadas):
+                jogador.tropas_pendentes += self.baralho.troca_cartas(
+                    jogador.cartas, 
+                    self.gerenciador_cartas.cartas_selecionadas,
+                    jogador.territorios
+                )
+                self.gerenciador_cartas.hud_cartas.deve_trocar = False
 
-
-            if jogador.tropas_pendentes == 0: #  A etapa termina automaticamente assim que o jogador distribui todas as tropas
+            #  A etapa termina automaticamente assim que o jogador distribui todas as tropas
+            if self.hud_turno.finalizar.update() and jogador.tropas_pendentes == 0:
                 etapa_concluida = True
             
             self.render()
@@ -148,12 +167,17 @@ class ControladorPartida:
         self.gerenciador_mapa.limpa_territorios_selecionados() #  Limpa os territorios selecionados antes de ir para a proxima etapa
         self.hud_turno.icone_distribuir.is_normal = True #  Fazendo o icone da etapa de distribuicao voltar ao normal
 
+    #=======================================
+    #================COMBATE================
+    #=======================================
+
     def combate(self, jogador) -> bool:
         self.hud_turno.escreve_indicador_turno(jogador.cor, "combate")
         self.hud_turno.icone_combate.is_normal = False
         etapa_em_andamento = True
         pulou_turno = False #  Para indicar caso o jogador nao vai fazer nada na etapa 2 e 3 do turno
         self.hud_combate.set_etapa_combate(0)
+        conquistou_um_territorio = False
 
         if jogador.bot:
             
@@ -214,6 +238,7 @@ class ControladorPartida:
                             if conquistou_territorio:
                                 territorio_defensor.set_cor_tropas(jogador.cor)
                                 conquistou_territorio = False
+                                conquistou_um_territorio = True #  O jogador recebera uma carta ao final da etapa
 
                             self.gerenciador_mapa.pode_desenhar = True
                             self.gerenciador_mapa.limpa_territorios_selecionados()
@@ -233,7 +258,17 @@ class ControladorPartida:
         self.gerenciador_mapa.limpa_territorios_selecionados()
         self.hud_turno.icone_combate.is_normal = True
         self.hud_combate.limpa_hud()
+
+        #  O jogador recebe uma carta se conquistou pelo menos um territorio nesta rodada
+        if conquistou_um_territorio:
+            self.baralho.recebe_uma_carta(jogador)
+            conquistou_um_territorio = False
+
         return pulou_turno
+
+    #=======================================
+    #==============MOVIMENTACAO=============
+    #=======================================
 
     def movimentacao_exercitos(self, jogador) -> None:
         self.hud_turno.escreve_indicador_turno(jogador.cor, "movimento de tropas")
@@ -281,7 +316,6 @@ class ControladorPartida:
                 codigo_hud_movimenta = self.hud_movimenta.update(self.mouse)
                 movimento_sucesso = False
                 if codigo_hud_movimenta == 3 and len(self.gerenciador_mapa.territorios_selecionados) == 2: #  Botao OK da segunda parte da hud foi clicada
-                    #print("movimentacao inciada")
                     territorio_inicial = self.gerenciador_mapa.territorios_selecionados[0]
                     territorio_destino = self.gerenciador_mapa.territorios_selecionados[1]
                     tropas_movidas = self.hud_movimenta.quantidade_atual

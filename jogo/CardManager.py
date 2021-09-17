@@ -42,6 +42,7 @@ class CardManager:
         # Remove as cartas a serem trocadas da mao do jogador
         for i in range(3):
             mao_do_jogador.remove(cartas_trocadas[i])
+            self.cartas_no_monte.append(cartas_trocadas[i])
 
         #Confere o bonus de tropa aos territorios conquistados
         for territorio in territorios:

@@ -42,7 +42,7 @@ class hudTurno:
         dist_acc += self.icone_movimento.width + offset
 
         finalizar_normal = Sprite(caminho_hud+"botao_seta.png")
-        finalizar_destacado = Sprite(caminho_hud+"botao_seta.png")
+        finalizar_destacado = Sprite(caminho_hud+"botao_seta_select.png")
         self.finalizar = Botao(finalizar_normal, finalizar_destacado, 1)
         pos_y = self.icone_movimento.y + self.icone_movimento.heigth - self.finalizar.height
         self.finalizar.setposition(dist_acc, pos_y)
@@ -54,7 +54,7 @@ class hudTurno:
         dist_acc += self.finalizar.width + offset
 
         pular_normal = Sprite(caminho_hud+"botao_x.png")
-        pular_destacado = Sprite(caminho_hud+"botao_x.png")
+        pular_destacado = Sprite(caminho_hud+"botao_x_select.png")
         self.pular = Botao(pular_normal, pular_destacado, 2)
         self.pular.setposition(dist_acc, pos_y)
 

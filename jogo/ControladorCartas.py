@@ -32,13 +32,14 @@ class ControladorCartas:
         if retorno == 1:
             self.hud_cartas.cria() #  Abrir o menu de cartas
         if retorno == 2:
-            return True #  Somente retorna TRUE quando o jogador tenta trocar as cartas
+            return 1 #  Somente retorna TRUE quando o jogador tenta trocar as cartas
         if retorno == 3:
             self.cartas_selecionadas = [] #  Cancelar a selecao feita
         if retorno == 4:
             self.cartas_selecionadas = []
             self.hud_cartas.limpa() #  Fechar o menur de cartas
-        return False
+            return 2 
+        return 0
 
     def render(self, jogador:Player):
         
@@ -46,3 +47,12 @@ class ControladorCartas:
         for carta in self.cartas_selecionadas:
             carta.img_select.set_position(carta.img.x, carta.img.y)
             carta.img_select.draw()
+
+    def jogador_deve_trocar(self, jogador:Player):
+        if len(jogador.cartas) >= 5:
+            return True
+        return False
+
+    def forca_troca(self, jogador:Player):
+        self.hud_cartas.cria()
+        self.hud_cartas.deve_trocar = True 

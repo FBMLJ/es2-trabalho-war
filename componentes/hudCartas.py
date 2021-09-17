@@ -10,7 +10,6 @@ from constant import *
 class HudCartas:
     def __init__(self):
         #179 x 279
-        self.cartas_selecionados = []
 
         self.botao_foi_clicado = False
         self.botao_clicado = None
@@ -21,6 +20,8 @@ class HudCartas:
 
         self.cria()
         self.mostrar_cartas = False
+
+        self.deve_trocar = False
 
     def update(self, mouse:Mouse):
 
@@ -42,13 +43,13 @@ class HudCartas:
                 if not self.mostrar_cartas:
                     self.mostrar_cartas = True
             if self.botao_clicado == 2: # Botao OK
-                pass
+                retorno = self.botao_clicado
             if self.botao_clicado == 3: # Botao CANCELAR
                 pass
             if self.botao_clicado == 4: # Botao VOLTAR
                 self.mostrar_cartas = False
-                pass
-            retorno = self.botao_clicado
+            if not self.deve_trocar:
+                retorno = self.botao_clicado
             self.botao_clicado = 0
         
         return retorno
@@ -60,7 +61,6 @@ class HudCartas:
             for botao in self.botoes:
                 botao.render()
             self.desenha_cartas(jogador)
-        return
 
     def desenha_cartas(self, jogador:Player):
         dist_padrao = 48
@@ -77,7 +77,7 @@ class HudCartas:
     def cria(self):
         caminho_hud = "assets/imagem/hud/"
         self.mostrar_cartas = True
-        self.cartas_selecionados = []
+        self.deve_trocar = False
 
         self.hud_trocas = GameImage(caminho_hud + "barra_hud_card.png") #  Fundo para a exibicao das cartas
                                                                         #  Cabem 5 cartas com espacamento de 50 pixels
@@ -121,7 +121,6 @@ class HudCartas:
 
     def limpa(self):
         self.mostrar_cartas = False
-        self.cartas_selecionados = []
 
         self.botao_foi_clicado = False
         self.botao_clicado = None
