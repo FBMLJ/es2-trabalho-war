@@ -30,6 +30,7 @@ class ControladorPartida:
         self.gerenciador_cartas = ControladorCartas()
         self.baralho = CardManager()
         self.baralho.inicia_cartas()
+        self.baralho.carrega_imagens()
         self.gerenciador_objetivos = ObjectiveVerifier()
         self.gerenciador_tropas = TroopsManager()
         self.gerenciador_combate = CombateManager()
@@ -106,15 +107,17 @@ class ControladorPartida:
         self.hud_turno.escreve_indicador_turno(jogador.cor, "distribuicao de exercitos")
 
         self.gerenciador_tropas.recebimento_rodada(jogador, self.gerenciador_mapa.lista_continentes)
+        
+        self.hud_turno.icone_distribuir.is_normal = False #  Destacando o icone da etapa de distribuicao de tropas
+        self.hud_seleciona_quantidade.maximo = jogador.tropas_pendentes #  Quantidade de tropas a ser distribuida
+        self.gerenciador_mapa.territorios_selecionados = []
+        
         if jogador.bot:
             jogador.distribuir_tropas()
             self.render()
             self.janela.update()
             return
         
-        self.hud_turno.icone_distribuir.is_normal = False #  Destacando o icone da etapa de distribuicao de tropas
-        self.hud_seleciona_quantidade.maximo = jogador.tropas_pendentes #  Quantidade de tropas a ser distribuida
-        self.gerenciador_mapa.territorios_selecionados = []
         
         #  Checando se o jogador deve trocar cartas
         if self.gerenciador_cartas.jogador_deve_trocar(jogador):
@@ -163,7 +166,7 @@ class ControladorPartida:
         
         self.gerenciador_mapa.limpa_territorios_selecionados() #  Limpa os territorios selecionados antes de ir para a proxima etapa
         self.hud_turno.icone_distribuir.is_normal = True #  Fazendo o icone da etapa de distribuicao voltar ao normal
-
+        self.gerenciador_mapa.fim_de_turno(jogador)
     #=======================================
     #================COMBATE================
     #=======================================
@@ -179,9 +182,13 @@ class ControladorPartida:
         if jogador.bot:
             
             jogador.escolhe_atacar()
-            self.gerenciador_combate.ataques_do_bot(jogador, self.jogadores)
+            recebe_carta =  self.gerenciador_combate.ataques_do_bot(jogador, self.jogadores)
+            if recebe_carta:
+                self.baralho.recebe_uma_carta(jogador)
+                recebe_carta = False
             self.render()
             self.janela.update()
+            self.hud_turno.icone_combate.is_normal = True
             return pulou_turno
 
         while etapa_em_andamento:
@@ -261,6 +268,7 @@ class ControladorPartida:
             self.baralho.recebe_uma_carta(jogador)
             conquistou_um_territorio = False
 
+        self.gerenciador_mapa.fim_de_turno(jogador)
         return pulou_turno
 
     #=======================================
@@ -278,6 +286,7 @@ class ControladorPartida:
             jogador.deslocar_tropas()
             self.render()
             self.janela.update()
+            self.hud_turno.icone_movimento.is_normal = True
             return
 
         while etapa_em_andamento:
@@ -338,3 +347,4 @@ class ControladorPartida:
         self.gerenciador_mapa.limpa_territorios_selecionados()
         self.hud_turno.icone_movimento.is_normal = True
         self.hud_movimenta.limpa_hud()
+        self.gerenciador_mapa.fim_de_turno(jogador)

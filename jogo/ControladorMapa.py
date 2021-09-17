@@ -194,3 +194,7 @@ class ControladorMapa:
         for territorio in self.territorios_selecionados:
             territorio.selecionado = False
         self.territorios_selecionados = []
+
+    def fim_de_turno(self,jogador:Player):
+        for territorio in jogador.territorios:
+            territorio.fim_de_turno()
