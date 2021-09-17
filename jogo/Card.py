@@ -6,9 +6,13 @@ class Card:
     
     def __init__(self, territorio: str, frente: str, fig: str, coringa: bool) -> None:
         self.territorio_nome = territorio
-        self.img = GameImage(self.caminho_cartas + frente)
+        self.img = None
+        self.frente = frente
         self.figura = fig
         self.coringa = coringa
 
     def __eq__(self, other):
         return self.territorio_nome == other.territorio_nome
+
+    def carrega_imagem(self):
+        self.img = GameImage(self.caminho_cartas + self.frente)

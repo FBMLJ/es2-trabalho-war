@@ -34,10 +34,10 @@ class CombateManager:
         rolagens_ataque = []
         rolagens_defesa = []
 
-        dados_a_rolar = min(dados_atacantes, dados_defensores)
-        for i in range(dados_a_rolar):
+        for i in range(dados_atacantes):
             rolagem_atacante = self.rolador_de_dados.rolar_dados_atacante()
             rolagens_ataque.append(rolagem_atacante)
+        for i in range(dados_defensores):
             rolagem_defensor = self.rolador_de_dados.rolar_dados_defensor()
             rolagens_defesa.append(rolagem_defensor)
             #print(f"Olha a rolagem nº{i} do atacante({atacante.nome}): {rolagem_atacante}")
@@ -48,8 +48,9 @@ class CombateManager:
         vitorias_defesa = 0
         rolagens_ataque.sort(reverse=True)
         rolagens_defesa.sort(reverse=True)
+        dados_a_comparar = min(dados_atacantes, dados_defensores)
         #print(f"Olha as rolagens de ataque: {rolagens_ataque}\nOlha as rolagens de defesa: {rolagens_defesa}")
-        for i in range(dados_a_rolar):
+        for i in range(dados_a_comparar):
             if rolagens_ataque[i] > rolagens_defesa[i]:
                 vitorias_ataque += 1
             else:
