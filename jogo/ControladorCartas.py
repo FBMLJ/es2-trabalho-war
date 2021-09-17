@@ -19,11 +19,13 @@ class ControladorCartas:
         x,y = mouse.get_position()
         self.colisao_mouse.set_position(x,y)
         if mouse.is_button_pressed(1) and self.hud_cartas.mostrar_cartas:
+            self.colisao_mouse.draw()
             for carta in jogador.cartas:
                 if(
                     self.colisao_mouse.collided_perfect(carta.img) and
                     len(self.cartas_selecionadas) < 2
                 ):
+                    #print("carta selecionada")
                     self.cartas_selecionadas.append(carta)
     
 

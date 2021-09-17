@@ -129,15 +129,19 @@ class ControladorPartida:
 
         etapa_concluida = False
         while not etapa_concluida:
-            self.gerenciador_mapa.selecionar_territorio(self.mouse, jogador, self.etapa_turno)
             
+            if not self.gerenciador_cartas.hud_cartas.mostrar_cartas:
+                self.gerenciador_mapa.selecionar_territorio(self.mouse, jogador, self.etapa_turno)
+            
+            self.gerenciador_cartas.selecionar_cartas(self.mouse, jogador)
+
             clicou_cartas = self.gerenciador_cartas.update(self.mouse)
             if clicou_cartas == 2: #  Fechar o menu de cartas
                 self.gerenciador_mapa.pode_desenhar = True
 
             #  Condicional para a HUD de distirbuicao de cartas
             clicou_ok = self.hud_seleciona_quantidade.update(self.mouse)
-            if clicou_ok: #  Apos clicar no OK da hud, termina de distribuir tropas para o territorio selecionado
+            if clicou_ok and not self.gerenciador_cartas.hud_cartas.mostrar_cartas: #  Apos clicar no OK da hud, termina de distribuir tropas para o territorio selecionado
                 tropas_distribuidas = self.hud_seleciona_quantidade.quantidade
                 self.gerenciador_mapa.territorios_selecionados[0].quantidade_tropas += tropas_distribuidas
                 jogador.tropas_pendentes -= tropas_distribuidas
