@@ -1,6 +1,6 @@
 # Jogo WAR
 
-Para executar o jogo, basta dar um duplo clique no executável de nome “main”.
+Para executar o jogo, basta dar um duplo clique no executável de nome “main”, que está na pasta compactada WAR.zip entregue, ou na pasta WAR neste repositório. Precisamos montar uma pasta desse jeito para ter acesso aos arquivos do código.
 
 ## Passos para a inicialização do Jogo:
 1. No menu que abre no início do jogo, selecione partida local. (A implementação do jogo online não foi feita, então, apesar de ser possível fazer login, cadastro, criar salas e entrar em uma sala, não é possível criar uma partida online.)
