@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2450b4a6-aa34-4e0a-97df-e8909e458315" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telas/BuscaSaguao.py" beforeDir="false" afterPath="$PROJECT_DIR$/telas/BuscaSaguao.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telas/Saguao.py" beforeDir="false" afterPath="$PROJECT_DIR$/telas/Saguao.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jogo/ControladorMapa.py" beforeDir="false" afterPath="$PROJECT_DIR$/jogo/ControladorMapa.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,9 +31,11 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/teste" />
+    <property name="settings.editor.selected.configurable" value="coverage" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="es2-trabalho-war" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -56,13 +57,92 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+<<<<<<< HEAD
+    <configuration name="Unittests for test_CardManager.TestCardManager.test_pode_trocar_iguais" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+=======
+    <configuration name="Unittests for test_CardManager.TestCardManager" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+>>>>>>> 0f95d0a7724029d3d689f2cc46e2bbafc057fd9b
+      <module name="es2-trabalho-war" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/teste" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+<<<<<<< HEAD
+      <option name="_new_target" value="&quot;test_CardManager.TestCardManager.test_pode_trocar_iguais&quot;" />
+=======
+      <option name="_new_target" value="&quot;test_CardManager.TestCardManager&quot;" />
+>>>>>>> 0f95d0a7724029d3d689f2cc46e2bbafc057fd9b
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for test_CombateManager.TestCombateManager" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="es2-trabalho-war" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/teste" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_CombateManager.TestCombateManager&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for test_TroopsManager.TestTroopsManager" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="es2-trabalho-war" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/teste" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_TroopsManager.TestTroopsManager&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for test_TroopsManager.TestTroopsManager.test_movimenta_tropas" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="es2-trabalho-war" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/teste" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_TroopsManager.TestTroopsManager.test_movimenta_tropas&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+<<<<<<< HEAD
+        <item itemvalue="Python tests.Unittests for test_TroopsManager.TestTroopsManager.test_movimenta_tropas" />
+        <item itemvalue="Python tests.Unittests for test_TroopsManager.TestTroopsManager" />
+=======
         <item itemvalue="Python.main" />
+>>>>>>> 0f95d0a7724029d3d689f2cc46e2bbafc057fd9b
+        <item itemvalue="Python tests.Unittests for test_CardManager.TestCardManager.test_pode_trocar_iguais" />
+        <item itemvalue="Python tests.Unittests for test_CardManager.TestCardManager" />
+<<<<<<< HEAD
+        <item itemvalue="Python tests.Unittests for test_CombateManager.TestCombateManager" />
+=======
+        <item itemvalue="Python tests.Unittests for test_CardManager.TestCardManager.test_recebe_uma_carta" />
+>>>>>>> 0f95d0a7724029d3d689f2cc46e2bbafc057fd9b
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>$USER_HOME$/.subversion</configuration>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="2450b4a6-aa34-4e0a-97df-e8909e458315" name="Default Changelist" comment="" />
@@ -71,35 +151,52 @@
       <option name="presentableId" value="Default" />
       <updated>1628773485372</updated>
     </task>
+    <task id="LOCAL-00001" summary="Resolvidos conflitos">
+      <created>1631662538715</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1631662538715</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Resolvidos conflitos" />
+    <option name="LAST_COMMIT_MESSAGE" value="Resolvidos conflitos" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="418" y="185" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1628729540418">
+    <state width="1897" height="258" key="GridCell.Tab.0.bottom" timestamp="1631883454795">
       <screen x="0" y="27" width="1920" height="1001" />
     </state>
-    <state x="418" y="185" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1920.1001@0.27.1920.1001" timestamp="1628729540418" />
-    <state x="743" y="285" width="424" height="491" key="FileChooserDialogImpl" timestamp="1628779888834">
+    <state width="1897" height="258" key="GridCell.Tab.0.bottom/0.27.1920.1001@0.27.1920.1001" timestamp="1631883454795" />
+    <state width="1897" height="258" key="GridCell.Tab.0.center" timestamp="1631883454795">
       <screen x="0" y="27" width="1920" height="1001" />
     </state>
-    <state x="743" y="285" width="424" height="491" key="FileChooserDialogImpl/0.27.1920.1001@0.27.1920.1001" timestamp="1628779888834" />
-    <state width="1897" height="258" key="GridCell.Tab.0.bottom" timestamp="1628865865733">
+    <state width="1897" height="258" key="GridCell.Tab.0.center/0.27.1920.1001@0.27.1920.1001" timestamp="1631883454795" />
+    <state width="1897" height="258" key="GridCell.Tab.0.left" timestamp="1631883454794">
       <screen x="0" y="27" width="1920" height="1001" />
     </state>
-    <state width="1897" height="258" key="GridCell.Tab.0.bottom/0.27.1920.1001@0.27.1920.1001" timestamp="1628865865733" />
-    <state width="1897" height="258" key="GridCell.Tab.0.center" timestamp="1628865865732">
+    <state width="1897" height="258" key="GridCell.Tab.0.left/0.27.1920.1001@0.27.1920.1001" timestamp="1631883454794" />
+    <state width="1897" height="258" key="GridCell.Tab.0.right" timestamp="1631883454795">
       <screen x="0" y="27" width="1920" height="1001" />
     </state>
-    <state width="1897" height="258" key="GridCell.Tab.0.center/0.27.1920.1001@0.27.1920.1001" timestamp="1628865865732" />
-    <state width="1897" height="258" key="GridCell.Tab.0.left" timestamp="1628865865732">
+    <state width="1897" height="258" key="GridCell.Tab.0.right/0.27.1920.1001@0.27.1920.1001" timestamp="1631883454795" />
+    <state x="651" y="266" width="618" height="522" key="find.popup" timestamp="1631882334515">
       <screen x="0" y="27" width="1920" height="1001" />
     </state>
-    <state width="1897" height="258" key="GridCell.Tab.0.left/0.27.1920.1001@0.27.1920.1001" timestamp="1628865865732" />
-    <state width="1897" height="258" key="GridCell.Tab.0.right" timestamp="1628865865733">
-      <screen x="0" y="27" width="1920" height="1001" />
-    </state>
-    <state width="1897" height="258" key="GridCell.Tab.0.right/0.27.1920.1001@0.27.1920.1001" timestamp="1628865865733" />
+    <state x="651" y="266" width="618" height="522" key="find.popup/0.27.1920.1001@0.27.1920.1001" timestamp="1631882334515" />
   </component>
 </project>

@@ -1,19 +1,20 @@
+from jogo.Player import Player
 from pygame import transform
 from PPlay.mouse import Mouse
 from PPlay.window import Window
 from PPlay.gameimage import GameImage
-from jogo.Territorio import *
-from jogo.Continente import *
+from jogo.Territorio import Territorio
+from jogo.Continente import Continente
 from constant import *
 
 class ControladorMapa:
 
     caminho_img_mapa = "assets/imagem/mapa/"
-    caminho_matriz_adjacencia = "jogo/matrizAdjacencia.txt"
     img_mapa = "mapa_war_conexoes.png"
     img_fundo = "fundo.jpg"
     img_colisao = "mouse_colisao.jpg"
     lista_territorios = [] #  Lista de todos os territorios do jogo
+    lista_continentes = []
     #Instancias da classe Continentes
     africa = None
     america_do_norte = None
@@ -21,90 +22,193 @@ class ControladorMapa:
     asia = None
     europa = None
     oceania = None
+    territorios_selecionados = [] #  primeira posicao armazenara o territorio que recebera tropa na etapa 1,
+                                  #  atacante na etapa 2, ou territorio que tera sua tropa movida na etapa 3
+                                  #  a segunda posicao armazenara o territorio desensor na etapa 2 ou o territorio que recebera tropa
+                                  #  movida de outro territorio na etapa 3
 
-    perct_mapa = 0.85 #  Variavel para diminuir o tamanho do mapa e continentes
 
-    def __init__(self, janela:Window):
+    def __init__(self, janela: Window):
+        self.pode_desenhar = True
+        self.clicou_inicial = False
+        self.clicou_vizinho = False
         self.colisao_mouse = GameImage(self.caminho_img_mapa+self.img_colisao)
         self.janela = janela
         self.fundo = GameImage(self.caminho_img_mapa+self.img_fundo)
         self.mapa = GameImage(self.caminho_img_mapa+self.img_mapa)
-        self.inicia_territorios()
-        self.inicia_continentes()
-        
+        #self.inicia_territorios()
+        #self.inicia_continentes()
+        self.primeira_vez = True
         #Redimensionando as imagens, eh necessario usar .image pois eh classe do Pygame
         self.fundo.image = transform.scale(self.fundo.image, (janela.width, janela.height))
-        self.mapa.image = transform.scale(self.mapa.image, (int(self.perct_mapa*LARGURA_PADRAO), int(self.perct_mapa*ALTURA_PADRAO)))
+        self.mapa.image = transform.scale(self.mapa.image, (int(PERCT_MAPA*LARGURA_PADRAO), int(PERCT_MAPA*ALTURA_PADRAO)))
         for territorio in self.lista_territorios:
-            territorio.img.image = transform.scale(territorio.img.image, (int(self.perct_mapa*LARGURA_PADRAO), int(self.perct_mapa*ALTURA_PADRAO)))
-            territorio.img_select.image = transform.scale(territorio.img_select.image, (int(self.perct_mapa*LARGURA_PADRAO), int(self.perct_mapa*ALTURA_PADRAO)))
-    def inicia_territorios(self):
-        #Criando uma lista com todas as instancias de territorios
-        for id_territorio in dicionario_territorios:
-            self.lista_territorios.append(Territorio(id_territorio))
+            territorio.muda_escala(int(PERCT_MAPA*LARGURA_PADRAO), int(PERCT_MAPA*ALTURA_PADRAO))
+            #territorio.img.image = transform.scale(territorio.img.image, (int(PERCT_MAPA*LARGURA_PADRAO), int(PERCT_MAPA*ALTURA_PADRAO)))
+            #territorio.img_select.image = transform.scale(territorio.img_select.image, (int(PERCT_MAPA*LARGURA_PADRAO), int(PERCT_MAPA*ALTURA_PADRAO)))
         
-        #Criando lista de vizinhos de cada territorio
-        arq = open(self.caminho_matriz_adjacencia,'r')
-        linhas = arq.readlines()
-        arq.close()
-        matriz_adj = []
-        for linha in linhas:
-            matriz_adj.append(linha.strip('\n').split('\t'))
-        for i in range(len(matriz_adj)):
-            for j in range(len(matriz_adj[0])):
-                if matriz_adj[i][j] == '1':
-                    self.lista_territorios[i].vizinho.append( self.lista_territorios[j] )
-
-    def inicia_continentes(self):
-        #Listas de territorios por continentes para a criacao das instancias de continentes
-        territorios_africa = []
-        territorios_an = []
-        territorios_as = []
-        territorios_asia = []
-        territorios_eu = []
-        territorios_oc = []
-
-        #Separando territorios por continentes, de acordo com seu id
-        for i in range(len(self.lista_territorios)):
-            if i+1 < 6:
-                territorios_africa.append(self.lista_territorios[i])
-            if i+1 > 6 and i+1 <= 15:
-                territorios_an.append(self.lista_territorios[i])
-            if i+1 > 16 and i+1 <= 19:
-                territorios_as.append(self.lista_territorios[i])
-            if i+1 > 19 and i+1 <=31:
-                territorios_asia.append(self.lista_territorios[i])
-            if i+1 > 31 and i+1 <= 38:
-                territorios_eu.append(self.lista_territorios[i])
-            if i+1 > 38 and i+1 <= 42:
-                territorios_oc.append(self.lista_territorios[i])
-
-        #Criando os continentes
-        self.africa = Continente("Africa", territorios_africa, 3)
-        self.america_do_norte = Continente("America do Norte", territorios_an, 5)
-        self.america_do_sul = Continente("America do Sul", territorios_as, 2)
-        self.asia = Continente("Asia", territorios_asia, 7)
-        self.europa = Continente("Europa", territorios_eu, 5)
-        self.oceania = Continente("Oceania", territorios_oc, 2)
     
-    def selecionar_territorio(self, mouse:Mouse):
-        x,y = mouse.get_position()
-        self.colisao_mouse.set_position(x,y)
-        territorio_selecionado = None
+    def selecionar_territorio(self, mouse:Mouse, jogador:Player, etapa:int) -> None:
+        if etapa > 1:
+            return
         if mouse.is_button_pressed(1):
-            for territorio in self.lista_territorios:
-                if self.colisao_mouse.collided_perfect(territorio.img):
-                    territorio.selecionado = True
-                    territorio_selecionado = territorio.nome
-                elif territorio.selecionado: #  Caso o usuario tenha selecionado um novo territorio
-                    territorio.selecionado = False
-        return territorio_selecionado
+            self.clicou_inicial = True
 
-    def render(self):
-        self.fundo.draw()
-        self.mapa.draw()
+        if self.clicou_inicial and not mouse.is_button_pressed(1):
+            x, y = mouse.get_position()
+            self.clicou_inicial = False
+            self.colisao_mouse.set_position(x, y)
+            self.colisao_mouse.draw()
+            self.pode_desenhar = True
+            for territorio in jogador.territorios:
+                if self.colisao_mouse.collided_perfect(territorio.img):
+                    #  durante a etapa de combate, nao posso selecionar um territorio atacante com um exercito
+                    if(etapa == 2 and territorio.quantidade_tropas <= 1):
+                        break
+                    if len(self.territorios_selecionados) == 1:
+                        self.limpa_territorios_selecionados()
+                    territorio.selecionado = True
+                    self.territorios_selecionados.append(territorio)
+                    break
+
+    def selecionar_inicial(self, mouse:Mouse, jogador:Player, etapa:int):
+        if etapa < 2:
+            return
+        if mouse.is_button_pressed(1):
+            self.clicou_inicial = True
+
+        if self.clicou_inicial and not mouse.is_button_pressed(1):
+            self.clicou_inicial = False
+            x, y = mouse.get_position()
+            self.colisao_mouse.set_position(x, y)
+            self.colisao_mouse.draw()
+            self.pode_desenhar = True
+            for territorio in jogador.territorios:
+                if self.colisao_mouse.collided_perfect(territorio.img):
+                    #  durante a etapa de combate, nao posso selecionar um territorio atacante com um exercito
+                    if (etapa == 2 and territorio.quantidade_tropas <= 1) or len(self.territorios_selecionados) > 0:
+                        break
+                    self.territorios_selecionados.append(territorio)
+
+    def selecionar_vizinho(self, mouse:Mouse, jogador:Player, etapa:int): #  argumento 'etapa' indica em que etapa o turno esta
+        if mouse.is_button_pressed(1) and len(self.territorios_selecionados) >= 1:
+            self.clicou_vizinho = True
+
+        if self.clicou_vizinho and not mouse.is_button_pressed(1):
+            self.clicou_vizinho = False
+            x, y = mouse.get_position()
+            self.colisao_mouse.set_position(x, y)
+            self.colisao_mouse.draw()
+            self.pode_desenhar = True
+            for territorio in self.lista_territorios:
+                if (
+                    self.colisao_mouse.collided_perfect(territorio.img) and 
+                    territorio != self.territorios_selecionados[0] and
+                    territorio.eh_vizinho(self.territorios_selecionados[0])
+                   ):
+
+                    if( 
+                        (etapa == 2 and territorio.cor_tropas != self.territorios_selecionados[0].cor_tropas) or 
+                        (etapa == 3 and territorio.cor_tropas == self.territorios_selecionados[0].cor_tropas)
+                      ):
+                        if len(self.territorios_selecionados) == 1:
+                            territorio.selecionado = True
+                            self.territorios_selecionados.append(territorio)
+                        elif len(self.territorios_selecionados) == 2:
+                            self.territorios_selecionados[1].selecionado = False
+                            territorio.selecionado = True
+                            self.territorios_selecionados[1] = territorio
+                        #print("primario {} {}, secundario {} {}".format(self.territorios_selecionados[0].nome, self.territorios_selecionados[0].id, territorio.nome, territorio.id))
+                        break #  Para nao percorrer toda a lista de territorios
+                        
+    def render(self, etapa):
+        
+        if (self.pode_desenhar):
+            self.pode_desenhar = False
+        
+            self.fundo.draw()
+            self.mapa.draw()
+            for territorio in self.lista_territorios:
+                territorio.img.draw()
+            for territorio in self.lista_territorios:
+                for territorio_selecionado in self.territorios_selecionados:
+                    if (
+                            territorio.eh_vizinho(self.territorios_selecionados[0]) and
+                            ( 
+                                (etapa == 2 and territorio.cor_tropas != self.territorios_selecionados[0].cor_tropas) or
+                                (etapa == 3 and territorio.cor_tropas == self.territorios_selecionados[0].cor_tropas)
+                            )
+                        ):
+                        territorio.img_highlight.draw()
+                    if territorio_selecionado == territorio:
+                        territorio.img_select.draw()
+
+                self.desenha_quantidade_tropas(territorio)
+                '''    
+                tamanho_texto = 18
+                cor_texto = (255,0,127)
+                self.janela.draw_text(str(territorio.quantidade_tropas),
+                    territorio.pos_texto_x, 
+                    territorio.pos_texto_y, 
+                    tamanho_texto, 
+                    cor_texto
+                    )
+                '''
+    def desenha_quantidade_tropas(self, territorio:Territorio):
+        '''
+        tamanho_texto = 28
+        cor_texto = (255,255,255)
+        self.janela.draw_text(
+            str(territorio.quantidade_tropas),
+            territorio.pos_texto_x-3, 
+            territorio.pos_texto_y-3, 
+            tamanho_texto, 
+            cor_texto
+            )
+        '''
+        tamanho_texto = 24
+        #cor_texto = (255,0,127)
+        #cor_texto = (255, 95, 31)
+        cor_texto = (106,106,106)
+        self.janela.draw_text(
+            str(territorio.quantidade_tropas),
+            territorio.pos_texto_x, 
+            territorio.pos_texto_y, 
+            tamanho_texto, 
+            cor_texto,
+            bold=True
+            )
+        
+
+    def carrega_imagens_dos_territorios(self):
+
         for territorio in self.lista_territorios:
-            territorio.img.draw()
-            if territorio.selecionado:
-                territorio.img_select.draw()
-        self.colisao_mouse.draw()
+            territorio.carrega_imagem()
+
+    def set_lista_continentes(self, lista_continentes):
+
+        for continente in lista_continentes:
+            
+            if continente.nome == "Africa":
+                self.africa = continente
+            elif continente.nome == "America do Norte":
+                self.america_do_norte = continente
+            elif continente.nome == "America do Sul":
+                self.america_do_sul = continente
+            elif continente.nome == "Asia":
+                self.asia = continente
+            elif continente.nome == "Europa":
+                self.europa = continente
+            elif continente.nome == "Oceania":
+                self.oceania = continente
+        
+        self.lista_continentes = lista_continentes
+    
+    def limpa_territorios_selecionados(self):
+        for territorio in self.territorios_selecionados:
+            territorio.selecionado = False
+        self.territorios_selecionados = []
+
+    def fim_de_turno(self,jogador:Player):
+        for territorio in jogador.territorios:
+            territorio.fim_de_turno()

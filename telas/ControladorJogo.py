@@ -9,8 +9,11 @@ from telas.Login import *
 from telas.Cadastro import *
 from telas.MenuLogado import *
 from telas.MenuInicial import *
+from telas.MenuJogadores import MenuJogadores
 from jogo.ControladorPartida import ControladorPartida
 from constant import estados
+from jogo.Player import *
+from jogo.Bots.BotGeral import BotGeral
 
 
 class ControladorJogo:
@@ -61,8 +64,18 @@ class ControladorJogo:
                 exit(0)
 
             elif self.estado_do_jogo == estados["partida_local"]:
-                controlador_partida = ControladorPartida(self.janela)
-                self.estado_do_jogo = controlador_partida.loop()
+                menu_jogadores = MenuJogadores(self.janela)
+                self.estado_do_jogo = menu_jogadores.loop()
+                if self.estado_do_jogo == 0:
+                    jogadores = []
+                    for _ in range(menu_jogadores.qnt_jogadores):
+                        jogadores.append(Player())
+                    for _ in range(menu_jogadores.qnt_bots):
+                        jogadores.append(BotGeral())
+                    controlador_partida = ControladorPartida(self.janela, jogadores)
+                    controlador_partida.loop()
+                    self.estado_do_jogo = 1
+                    
 
             else:
                 exit(0)

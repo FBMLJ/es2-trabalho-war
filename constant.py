@@ -1,5 +1,9 @@
 LARGURA_PADRAO = 1366
 ALTURA_PADRAO = 768
+# TEST, PRODUCTION, DEVELOPMENT
+AMBIENTE = "PRODUCTION"
+
+PERCT_MAPA = 0.85 #  Variavel para diminuir o tamanho do mapa e continentes em relacao a janela
 
 estados = {
     "menu_inicial": 1,
@@ -15,12 +19,21 @@ estados = {
 }
 
 cores = {
-    "azul":"blue",
-    "amarelo":"yellow",
-    "branco":"white",
-    "preto":"black",
-    "verde":"green",
-    "vermelho":"red"
+    "azul": [25, 25, 112],
+    "amarelo": [255, 255, 0],
+    "branco": [240, 248, 255],
+    "preto": [0, 0, 0],
+    "verde": [0, 128, 0],
+    "vermelho": [255, 0, 0]
+}
+
+cores_traducao = {
+    "azul": "blue",
+    "amarelo": "yellow",
+    "branco": "white",
+    "preto": "black",
+    "verde": "green",
+    "vermelho": "red"
 }
 
 API_KEY = 'AIzaSyC-YLbsPI1jh9iTTn0oowvoJRx0i7mcVmY'
@@ -68,4 +81,94 @@ dicionario_territorios = {
     40:"Sumatra",
     41:"Nova Guine",
     42:"Australia Ocidental"
+}
+
+dicionario_territorios_pos_texto = {
+    1:(611,376),
+    2:(664,328),
+    3:(614,251),
+    4:(705+20,468),
+    5:(533,289),
+    6:(617,478),
+    7:(79,73),
+    8:(138,123),
+    9:(131,266),
+    10:(200,206),
+    11:(428,39),
+    12:(178,77),
+    13:(222,128),
+    14:(294,128),
+    15:(126,178),
+    16:(283,540),
+    17:(326,426),
+    18:(233,440),
+    19:(251,347),
+    20:(762,166),
+    21:(938,239),
+    22:(828,277),
+    23:(889,121),
+    24:(1046+20,207),
+    25:(1037,69),
+    26:(695,232),
+    27:(917,171),
+    28:(931,305),
+    29:(815,58),
+    30:(755,91),
+    31:(927,64),
+    32:(509,122),
+    33:(497+10,71-20),
+    34:(574,131),
+    35:(584,64-10),
+    36:(606,180),
+    37:(661,113),
+    38:(509,188),
+    39:(1067,476),
+    40:(964,383),
+    41:(1084,396-10),
+    42:(989,503)
+}
+
+dicionario_figura_territorio = {
+    1:"Triangulo",
+    2:"Quadrado",
+    3:"Circulo",
+    4:"Triangulo",
+    5:"Quadrado",
+    6:"Circulo",
+    7:"Triangulo",
+    8:"Quadrado",
+    9:"Circulo",
+    10:"Triangulo",
+    11:"Quadrado",
+    12:"Circulo",
+    13:"Triangulo",
+    14:"Quadrado",
+    15:"Circulo",
+    16:"Triangulo",
+    17:"Quadrado",
+    18:"Circulo",
+    19:"Triangulo",
+    20:"Quadrado",
+    21:"Circulo",
+    22:"Triangulo",
+    23:"Quadrado",
+    24:"Circulo",
+    25:"Triangulo",
+    26:"Quadrado",
+    27:"Circulo",
+    28:"Triangulo",
+    29:"Quadrado",
+    30:"Circulo",
+    31:"Triangulo",
+    32:"Quadrado",
+    33:"Circulo",
+    34:"Triangulo",
+    35:"Quadrado",
+    36:"Circulo",
+    37:"Triangulo",
+    38:"Quadrado",
+    39:"Circulo",
+    40:"Triangulo",
+    41:"Quadrado",
+    42:"Circulo"
 }
