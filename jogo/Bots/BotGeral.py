@@ -97,7 +97,7 @@ class BotGeral(Player):
         return
  
     def distribuir_tropas(self) -> None:
-        escolha = randint(0,1)
+        escolha = randint(0, 1)
         if escolha:
             self.distribui_igual()
         else:
@@ -133,6 +133,8 @@ class BotGeral(Player):
             tropas_a_distribuir -= tropas_enviadas
             self.territorios[i].recebe_tropas(tropas_enviadas)
             i += 1
+            if i >= len(self.territorios):
+                i = 0
         return
     '''
     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -148,15 +150,15 @@ class BotGeral(Player):
     Adiciona na lista de territorios para atacar, o atacante[0] e o vizinho[1]
     '''
     def escolhe_atacar(self):
-        #Embaralha a lista de territorios
+        # Embaralha a lista de territorios
         shuffle(self.territorios)
-        #Seleciona os territorios com tropas o suficiente para ser o atacante
+        # Seleciona os territorios com tropas o suficiente para ser o atacante
         territorios_com_tropas_para_atacar = (t for t in self.territorios if t.quantidade_tropas > 1)
         for territorio in territorios_com_tropas_para_atacar:
-            #Procura pelos territorios vizinhos que o bot nao tem
+            # Procura pelos territorios vizinhos que o bot nao tem
             for vizinho in territorio.vizinho:
                 if vizinho not in self.territorios:
-                    #Adiciona na lista de ataques a fazer
+                    # Adiciona na lista de ataques a fazer
                     ataque = []
                     ataque.append(territorio)
                     ataque.append(vizinho)
