@@ -23,9 +23,9 @@ class ControladorCartas:
             for carta in jogador.cartas:
                 if(
                     self.colisao_mouse.collided_perfect(carta.img) and
-                    len(self.cartas_selecionadas) < 2
+                    len(self.cartas_selecionadas) < 3 and
+                    carta not in self.cartas_selecionadas
                 ):
-                    #print("carta selecionada")
                     self.cartas_selecionadas.append(carta)
     
 

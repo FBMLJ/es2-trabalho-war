@@ -21,8 +21,8 @@ class MenuJogadores:
 
         self.box = GameImage(caminho_assets + "barra_hud_jogadores.png")
         self.box.set_position(
-            int(self.janela.width/2) - int(self.box.width/2),
-            int(self.janela.height/2) - int(self.box.height/2)
+            self.logo.x + int(self.logo.width/2) - int(self.box.width/2),
+            self.logo.y + int(1.1*self.logo.height)
         )
 
         self.quantidade_maxima = 6
@@ -38,6 +38,7 @@ class MenuJogadores:
         )
         
         self.caixa_jogadores = RetanguloTexto(self.janela, str(self.qnt_jogadores), 1, int(self.jogadores_texto.width/2), self.jogadores_texto.height, moldura=True)
+        self.caixa_jogadores.centralizado = True
         self.caixa_jogadores.set_position(
             self.jogadores_texto.x + int(self.jogadores_texto.width/2) - int(self.caixa_jogadores.width/2),
             self.jogadores_texto.y + int(1.1*self.jogadores_texto.height)
@@ -50,6 +51,7 @@ class MenuJogadores:
         )
 
         self.caixa_bots = RetanguloTexto(self.janela, str(self.qnt_bots), 1, self.caixa_jogadores.width, self.caixa_jogadores.height, moldura=True)
+        self.caixa_bots.centralizado = True
         self.caixa_bots.set_position(
             self.bots_texto.x + int(self.bots_texto.width/2) - int(self.caixa_bots.width/2),
             self.bots_texto.y + int(1.1*self.bots_texto.height)

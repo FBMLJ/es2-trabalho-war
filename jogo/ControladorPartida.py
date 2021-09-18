@@ -6,6 +6,7 @@ from jogo.ControladorMapa import ControladorMapa
 from jogo.MatchStarter import MatchStarter
 from jogo.Objetivo import *
 from jogo.Card import Card
+from componentes.RetanguloTexto import *
 from jogo.Player import Player
 from jogo.CardManager import CardManager
 from jogo.ObjectiveVerifier import ObjectiveVerifier
@@ -30,11 +31,12 @@ class ControladorPartida:
         self.gerenciador_cartas = ControladorCartas()
         self.baralho = CardManager()
         self.baralho.inicia_cartas()
+        self.baralho.carrega_imagens()
         self.gerenciador_objetivos = ObjectiveVerifier()
         self.gerenciador_tropas = TroopsManager()
         self.gerenciador_combate = CombateManager()
         self.jogadores = jogadores
-        self.todos_os_objetivos = self.gerenciador_objetivos.gera_objetivos(self.gerenciador_mapa.lista_continentes)        
+        self.todos_os_objetivos = self.gerenciador_objetivos.gera_objetivos(self.gerenciador_mapa.lista_continentes)
 
         self.iniciador_de_partida.distribui_cores(self.jogadores)
         self.iniciador_de_partida.distribui_territorios(self.gerenciador_mapa.lista_territorios, self.jogadores)
@@ -57,6 +59,7 @@ class ControladorPartida:
         #game loop
         while self.jogador_vencedor == None:  #Condicional para checar se algum objetivo foi alcancado
             for jogador in self.jogadores:
+                self.hud_turno.escreve_objetivo(jogador)
                 if self.jogador_vencedor:
                     break
                 '''
@@ -106,15 +109,19 @@ class ControladorPartida:
         self.hud_turno.escreve_indicador_turno(jogador.cor, "distribuicao de exercitos")
 
         self.gerenciador_tropas.recebimento_rodada(jogador, self.gerenciador_mapa.lista_continentes)
+        
+        self.hud_turno.icone_distribuir.is_normal = False #  Destacando o icone da etapa de distribuicao de tropas
+        self.hud_seleciona_quantidade.maximo = jogador.tropas_pendentes #  Quantidade de tropas a ser distribuida
+        self.gerenciador_mapa.territorios_selecionados = []
+
+        clicou_finalizar = False
+
         if jogador.bot:
             jogador.distribuir_tropas()
             self.render()
             self.janela.update()
             return
         
-        self.hud_turno.icone_distribuir.is_normal = False #  Destacando o icone da etapa de distribuicao de tropas
-        self.hud_seleciona_quantidade.maximo = jogador.tropas_pendentes #  Quantidade de tropas a ser distribuida
-        self.gerenciador_mapa.territorios_selecionados = []
         
         #  Checando se o jogador deve trocar cartas
         if self.gerenciador_cartas.jogador_deve_trocar(jogador):
@@ -155,6 +162,9 @@ class ControladorPartida:
 
             #  A etapa termina automaticamente assim que o jogador distribui todas as tropas
             if self.hud_turno.finalizar.update() and jogador.tropas_pendentes == 0:
+                clicou_finalizar = True
+
+            if clicou_finalizar and not self.mouse.is_button_pressed(1):
                 etapa_concluida = True
             
             self.render()
@@ -163,7 +173,7 @@ class ControladorPartida:
         
         self.gerenciador_mapa.limpa_territorios_selecionados() #  Limpa os territorios selecionados antes de ir para a proxima etapa
         self.hud_turno.icone_distribuir.is_normal = True #  Fazendo o icone da etapa de distribuicao voltar ao normal
-
+        self.gerenciador_mapa.fim_de_turno(jogador)
     #=======================================
     #================COMBATE================
     #=======================================
@@ -175,13 +185,18 @@ class ControladorPartida:
         pulou_turno = False #  Para indicar caso o jogador nao vai fazer nada na etapa 2 e 3 do turno
         self.hud_combate.set_etapa_combate(0)
         conquistou_um_territorio = False
+        clicou_finalizar = False
 
         if jogador.bot:
             
             jogador.escolhe_atacar()
-            self.gerenciador_combate.ataques_do_bot(jogador, self.jogadores)
+            recebe_carta =  self.gerenciador_combate.ataques_do_bot(jogador, self.jogadores)
+            if recebe_carta:
+                self.baralho.recebe_uma_carta(jogador)
+                recebe_carta = False
             self.render()
             self.janela.update()
+            self.hud_turno.icone_combate.is_normal = True
             return pulou_turno
 
         while etapa_em_andamento:
@@ -244,10 +259,13 @@ class ControladorPartida:
 
             # Condicionais para terminar a etapa de combate
             if self.hud_turno.finalizar.update():
-                etapa_em_andamento = False
+                clicou_finalizar = True
             elif self.hud_turno.pular.update():
-                etapa_em_andamento = False
+                clicou_finalizar = True
                 pulou_turno = True
+
+            if clicou_finalizar and not self.mouse.is_button_pressed(1):
+                etapa_em_andamento = False
 
             self.render()
             self.janela.update()
@@ -261,6 +279,7 @@ class ControladorPartida:
             self.baralho.recebe_uma_carta(jogador)
             conquistou_um_territorio = False
 
+        self.gerenciador_mapa.fim_de_turno(jogador)
         return pulou_turno
 
     #=======================================
@@ -271,6 +290,7 @@ class ControladorPartida:
         self.hud_turno.escreve_indicador_turno(jogador.cor, "movimento de tropas")
         self.hud_turno.icone_movimento.is_normal = False
         etapa_em_andamento = True
+        clicou_finalizar = False
         
         self.hud_movimenta.set_etapa_movimenta(0)
         
@@ -278,6 +298,7 @@ class ControladorPartida:
             jogador.deslocar_tropas()
             self.render()
             self.janela.update()
+            self.hud_turno.icone_movimento.is_normal = True
             return
 
         while etapa_em_andamento:
@@ -330,6 +351,9 @@ class ControladorPartida:
 
             # Condicionais para terminar a etapa de movimentacao
             if self.hud_turno.finalizar.update() or self.hud_turno.pular.update():
+                clicou_finalizar = True
+
+            if clicou_finalizar and not self.mouse.is_button_pressed(1):
                 etapa_em_andamento = False
 
             self.render()
@@ -338,3 +362,4 @@ class ControladorPartida:
         self.gerenciador_mapa.limpa_territorios_selecionados()
         self.hud_turno.icone_movimento.is_normal = True
         self.hud_movimenta.limpa_hud()
+        self.gerenciador_mapa.fim_de_turno(jogador)

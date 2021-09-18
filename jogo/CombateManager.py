@@ -69,8 +69,7 @@ class CombateManager:
             self.conquista(territorios_atacante, territorios_defensor, atacante, defensor, sobreviventes)
             conquistou = True
 
-        # Retorna as tropas sobreviventes do ataque
-        return conquistou #  retorno redundante, a funcao de conquista ja trata as tropas
+        return conquistou
 
     '''
     Funcao que checa se o atacante pode atacar o defensor
@@ -127,6 +126,8 @@ class CombateManager:
     '''
     def ataques_do_bot(self, bot: BotGeral, jogadores: list) -> None:
         #Itera pela lista de ataques do bot
+        recebe_carta = False
+        conquistou = False
         for i in range(len(bot.ataques_a_fazer)):
             #Verifica se o ataque pode acontecer
             if self.pode_atacar(bot.ataques_a_fazer[i][0], bot.ataques_a_fazer[i][1]):
@@ -136,5 +137,10 @@ class CombateManager:
                         if territorio.nome == bot.ataques_a_fazer[i][1].nome:
                             defensor = jogador
                 #Realiza o ataque
-                self.atacar(bot.territorios, defensor.territorios, bot.ataques_a_fazer[i][0], bot.ataques_a_fazer[i][1])
-        return
+                conquistou = self.atacar(bot.territorios, defensor.territorios, bot.ataques_a_fazer[i][0], bot.ataques_a_fazer[i][1])
+
+                if conquistou:
+                    bot.ataques_a_fazer[i][1].set_cor_tropas(bot.cor)
+                    conquistou = False
+                    recebe_carta = True
+        return recebe_carta

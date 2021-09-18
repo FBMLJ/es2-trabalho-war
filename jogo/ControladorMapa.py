@@ -30,6 +30,8 @@ class ControladorMapa:
 
     def __init__(self, janela: Window):
         self.pode_desenhar = True
+        self.clicou_inicial = False
+        self.clicou_vizinho = False
         self.colisao_mouse = GameImage(self.caminho_img_mapa+self.img_colisao)
         self.janela = janela
         self.fundo = GameImage(self.caminho_img_mapa+self.img_fundo)
@@ -46,12 +48,16 @@ class ControladorMapa:
             #territorio.img_select.image = transform.scale(territorio.img_select.image, (int(PERCT_MAPA*LARGURA_PADRAO), int(PERCT_MAPA*ALTURA_PADRAO)))
         
     
-    def selecionar_territorio(self, mouse:Mouse, jogador:Player, etapa:int) -> None: 
-        x,y = mouse.get_position()
-        self.colisao_mouse.set_position(x,y)
+    def selecionar_territorio(self, mouse:Mouse, jogador:Player, etapa:int) -> None:
         if etapa > 1:
             return
         if mouse.is_button_pressed(1):
+            self.clicou_inicial = True
+
+        if self.clicou_inicial and not mouse.is_button_pressed(1):
+            x, y = mouse.get_position()
+            self.clicou_inicial = False
+            self.colisao_mouse.set_position(x, y)
             self.colisao_mouse.draw()
             self.pode_desenhar = True
             for territorio in jogador.territorios:
@@ -66,11 +72,15 @@ class ControladorMapa:
                     break
 
     def selecionar_inicial(self, mouse:Mouse, jogador:Player, etapa:int):
-        x,y = mouse.get_position()
-        self.colisao_mouse.set_position(x,y)
         if etapa < 2:
             return
         if mouse.is_button_pressed(1):
+            self.clicou_inicial = True
+
+        if self.clicou_inicial and not mouse.is_button_pressed(1):
+            self.clicou_inicial = False
+            x, y = mouse.get_position()
+            self.colisao_mouse.set_position(x, y)
             self.colisao_mouse.draw()
             self.pode_desenhar = True
             for territorio in jogador.territorios:
@@ -81,9 +91,13 @@ class ControladorMapa:
                     self.territorios_selecionados.append(territorio)
 
     def selecionar_vizinho(self, mouse:Mouse, jogador:Player, etapa:int): #  argumento 'etapa' indica em que etapa o turno esta
-        x,y = mouse.get_position()
-        self.colisao_mouse.set_position(x,y)
         if mouse.is_button_pressed(1) and len(self.territorios_selecionados) >= 1:
+            self.clicou_vizinho = True
+
+        if self.clicou_vizinho and not mouse.is_button_pressed(1):
+            self.clicou_vizinho = False
+            x, y = mouse.get_position()
+            self.colisao_mouse.set_position(x, y)
             self.colisao_mouse.draw()
             self.pode_desenhar = True
             for territorio in self.lista_territorios:
@@ -128,7 +142,9 @@ class ControladorMapa:
                         territorio.img_highlight.draw()
                     if territorio_selecionado == territorio:
                         territorio.img_select.draw()
-                    
+
+                self.desenha_quantidade_tropas(territorio)
+                '''    
                 tamanho_texto = 18
                 cor_texto = (255,0,127)
                 self.janela.draw_text(str(territorio.quantidade_tropas),
@@ -137,7 +153,33 @@ class ControladorMapa:
                     tamanho_texto, 
                     cor_texto
                     )
-    
+                '''
+    def desenha_quantidade_tropas(self, territorio:Territorio):
+        '''
+        tamanho_texto = 28
+        cor_texto = (255,255,255)
+        self.janela.draw_text(
+            str(territorio.quantidade_tropas),
+            territorio.pos_texto_x-3, 
+            territorio.pos_texto_y-3, 
+            tamanho_texto, 
+            cor_texto
+            )
+        '''
+        tamanho_texto = 24
+        #cor_texto = (255,0,127)
+        #cor_texto = (255, 95, 31)
+        cor_texto = (106,106,106)
+        self.janela.draw_text(
+            str(territorio.quantidade_tropas),
+            territorio.pos_texto_x, 
+            territorio.pos_texto_y, 
+            tamanho_texto, 
+            cor_texto,
+            bold=True
+            )
+        
+
     def carrega_imagens_dos_territorios(self):
 
         for territorio in self.lista_territorios:
@@ -166,3 +208,7 @@ class ControladorMapa:
         for territorio in self.territorios_selecionados:
             territorio.selecionado = False
         self.territorios_selecionados = []
+
+    def fim_de_turno(self,jogador:Player):
+        for territorio in jogador.territorios:
+            territorio.fim_de_turno()
