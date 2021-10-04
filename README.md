@@ -1,4 +1,4 @@
-# Jogo WAR
+# Jogo WAR para desktop
 
 Para executar o jogo, basta dar um duplo clique no executável de nome “main”, que está na pasta compactada WAR.zip entregue, ou na pasta WAR neste repositório. Precisamos montar uma pasta desse jeito para ter acesso aos arquivos do código.
 
